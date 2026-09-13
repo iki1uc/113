@@ -1,1234 +1,1304 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>♟️ STAGE · SCHACHBRETT · TOOLATOR · MASTER · iki1uc</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>◈ DER LETZTE SOMMER · 81 MOMENTE · ATEM · ATOM · WUNDER</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
   :root{
-    --bg:#05070e; --fg:#c0d0d0;
-    --cyan:#6cf; --gold:#f0d080; --purple:#b388ff;
-    --green:#8cf0d0; --red:#ff6666; --orange:#ff8c00;
-    --line:rgba(120,220,150,0.08);
-    --panel:rgba(6,8,16,0.75);
+    --ink:#04060c; --deep:#080d18; --panel:#0c1622;
+    --line:#1e3a4a; --text:#d8f0e8; --muted:#6a8e94;
+    --mint:#68f6c0; --amber:#ffbd5c; --pink:#ff6d9d;
+    --blue:#6cc9ff; --violet:#b388ff; --gold:#ffcc66;
+    --o2:#7ce0a8; --co2:#ffcc44; --h2o:#5fc8ff; --atom:#b388ff;
+    --mana:#ff66c8; --aura:#ffd93d; --zen:#8cf0d0;
+    --shadow:0 0 0 1px rgba(104,246,192,.14),0 12px 44px rgba(0,0,0,.5);
   }
-  html,body{min-height:100%;}
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
   body{
-    background:#05070e;
-    background-image:
-      radial-gradient(ellipse at 50% 30%, #0c1a2c 0%, #05070e 60%, #020409 100%);
-    color:var(--fg);
-    font-family:'Consolas','Courier New',monospace;
-    min-height:100vh;
-    overflow-x:hidden;
+    margin:0;color:var(--text);
+    background:
+      radial-gradient(circle at 25% 15%,rgba(104,246,192,.06),transparent 30rem),
+      radial-gradient(circle at 78% 80%,rgba(179,136,255,.05),transparent 34rem),
+      linear-gradient(145deg,#04060c,#080f1a 54%,#04080e);
+    font-family:"Courier New",monospace;letter-spacing:.03em;overflow-x:hidden;
   }
+  button,input{font:inherit;}
+  button{
+    color:var(--text);background:#0d202a;border:1px solid #2c5560;
+    padding:.55rem .85rem;cursor:pointer;text-transform:uppercase;
+    letter-spacing:.08em;transition:.15s;font-size:11px;
+  }
+  button:hover,button:focus-visible{color:#04110f;background:var(--mint);border-color:var(--mint);outline:none;}
+  button.active{color:#04110f;background:var(--mint);border-color:var(--mint);}
+  .app-shell{min-height:100%;padding:14px;}
 
-  /* ─── 9×9 RESPO HINTERGRUND ─────────────────── */
-  #respoBg{
-    position:fixed; inset:0; z-index:-1;
-    opacity:0.05; pointer-events:none;
-    display:grid; grid-template-columns:repeat(9,1fr);
-    grid-template-rows:repeat(9,1fr); gap:2px;
+  .topbar{
+    max-width:1560px;margin:0 auto 10px;display:flex;gap:16px;
+    align-items:center;justify-content:space-between;flex-wrap:wrap;
+    padding:11px 16px;border:1px solid var(--line);
+    background:rgba(6,14,22,.94);box-shadow:var(--shadow);
   }
-  #respoBg div{
-    background:rgba(120,220,150,0.03);
-    border-radius:2px;
-    transition:background .5s;
+  .brand{display:flex;align-items:center;gap:12px;min-width:0;}
+  .brand-mark{
+    width:38px;height:38px;flex:0 0 auto;display:grid;place-items:center;
+    color:#04110f;background:var(--mint);font-weight:900;font-size:13px;
+    box-shadow:4px 4px 0 #1f5750;animation:markPulse 3s ease-in-out infinite;
   }
+  @keyframes markPulse{0%,100%{box-shadow:4px 4px 0 #1f5750;}
+    50%{box-shadow:4px 4px 0 #1f5750,0 0 22px rgba(104,246,192,.6);}}
+  .brand h1{margin:0;font-size:clamp(13px,1.7vw,19px);line-height:1.15;
+    background:linear-gradient(90deg,var(--mint),var(--violet),var(--gold));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .brand p{margin:4px 0 0;color:var(--muted);font-size:10px;}
+  .top-status{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;font-size:10px;color:var(--muted);}
+  .led{display:inline-flex;align-items:center;gap:6px;}
+  .led::before{content:"";width:7px;height:7px;background:var(--pink);border-radius:50%;box-shadow:0 0 9px var(--pink);}
+  .led.online::before{background:var(--mint);box-shadow:0 0 9px var(--mint);animation:ledBreath 4s ease-in-out infinite;}
+  @keyframes ledBreath{0%,100%{transform:scale(.85);}50%{transform:scale(1.3);}}
 
-  /* ─── MASTER LAYOUT ─────────────────────────── */
-  #master{
-    display:flex; flex-direction:column;
-    min-height:100vh;
-    padding:16px 20px 20px;
-    max-width:1500px; margin:0 auto;
-    gap:16px;
+  .elem-strip{
+    max-width:1560px;margin:0 auto 10px;display:grid;
+    grid-template-columns:repeat(7,1fr);gap:6px;padding:8px 10px;
+    background:rgba(6,14,22,.9);border:1px solid var(--line);box-shadow:var(--shadow);
   }
+  @media(max-width:1000px){.elem-strip{grid-template-columns:repeat(4,1fr);}}
+  @media(max-width:600px){.elem-strip{grid-template-columns:repeat(3,1fr);}}
+  .elem-chip{
+    padding:6px 8px;background:rgba(2,8,12,.6);
+    border:1px solid var(--line);border-left:3px solid #2a3644;
+    border-radius:4px;font-size:10px;display:flex;
+    justify-content:space-between;align-items:center;transition:.3s;
+  }
+  .elem-chip.o2{border-left-color:var(--o2);}
+  .elem-chip.co2{border-left-color:var(--co2);}
+  .elem-chip.h2o{border-left-color:var(--h2o);}
+  .elem-chip.atom{border-left-color:var(--atom);}
+  .elem-chip.mana{border-left-color:var(--mana);}
+  .elem-chip.aura{border-left-color:var(--aura);}
+  .elem-chip.zen{border-left-color:var(--zen);}
+  .elem-chip .k{color:var(--muted);letter-spacing:1.5px;font-size:9px;font-weight:bold;}
+  .elem-chip .v{font-weight:bold;font-size:12px;}
+  .elem-chip.o2 .v{color:var(--o2);}
+  .elem-chip.co2 .v{color:var(--co2);}
+  .elem-chip.h2o .v{color:var(--h2o);}
+  .elem-chip.atom .v{color:var(--atom);}
+  .elem-chip.mana .v{color:var(--mana);}
+  .elem-chip.aura .v{color:var(--aura);}
+  .elem-chip.zen .v{color:var(--zen);}
 
-  /* ─── HEADER / COMMANDER ───────────────────── */
-  #commander{
-    display:flex; flex-wrap:wrap;
-    justify-content:space-between; align-items:center;
-    padding:12px 20px;
-    background:var(--panel);
-    backdrop-filter:blur(10px);
-    border-radius:16px;
-    border:1px solid var(--line);
+  .workspace{
+    max-width:1560px;margin:0 auto;display:grid;
+    grid-template-columns:minmax(0,1.5fr) minmax(300px,.5fr);gap:10px;
   }
-  #commander .brand{
-    font-size:22px; font-weight:300; letter-spacing:3px;
-    background:linear-gradient(135deg,#7ee0a0,#d8f0c0,#b388ff);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    display:flex; align-items:center; gap:12px;
+  @media(max-width:1040px){
+    .workspace{grid-template-columns:1fr;}
+    .side-stack{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .side-panel:first-child{grid-column:1/-1;}
   }
-  #commander .brand small{
-    font-size:11px; -webkit-text-fill-color:#4a5a6a;
-    letter-spacing:1px;
+  @media(max-width:690px){
+    .app-shell{padding:8px;}
+    .side-stack{grid-template-columns:1fr;}
+    .side-panel:first-child{grid-column:auto;}
   }
-  .commander-status{
-    display:flex; gap:18px; font-size:11px;
-    color:#6a8a7a; flex-wrap:wrap;
+  .panel{border:1px solid var(--line);background:rgba(8,18,26,.92);box-shadow:var(--shadow);}
+  .panel-title{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:9px 12px;border-bottom:1px solid var(--line);
+    color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.12em;
   }
-  .commander-status .led{
-    display:inline-block; width:8px; height:8px;
-    border-radius:50%; margin-right:4px;
-  }
-  .led.green{ background:#8cf0d0; box-shadow:0 0 8px #8cf0d0; }
-  .led.gold{ background:#f0d080; box-shadow:0 0 8px #f0d080; }
-  .led.purple{ background:#b388ff; box-shadow:0 0 8px #b388ff; }
-  .led.off{ background:#2a3a3a; }
-  .led.pulse{ animation:pulse 1.4s infinite; }
-  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  .panel-title strong{color:var(--mint);font-weight:700;}
 
-  /* ─── 8 RICHTUNGEN ─────────────────────────── */
-  #directions{
-    display:flex; flex-wrap:wrap; gap:6px;
-    padding:8px 16px;
-    background:rgba(0,0,0,0.25);
-    border-radius:12px;
-    border:1px solid rgba(120,220,150,0.04);
-    justify-content:center;
+  .monitor-wrap{position:relative;padding:10px;background:#040b12;}
+  canvas#stage{
+    width:100%;display:block;aspect-ratio:16/9;background:#040b12;
+    border:1px solid #2e5666;image-rendering:auto;
+    box-shadow:inset 0 0 0 5px rgba(2,8,12,.6),0 0 24px rgba(104,246,192,.1);
   }
-  .dir-item{
-    padding:4px 14px; border-radius:20px;
-    font-size:11px; letter-spacing:1px;
-    color:#5a7a6a;
-    background:rgba(20,28,20,0.3);
-    border:1px solid rgba(120,220,150,0.04);
-    transition:0.2s; cursor:pointer;
+  .monitor-overlay{
+    position:absolute;inset:18px;pointer-events:none;
+    display:flex;justify-content:space-between;align-items:flex-start;
+    color:rgba(216,240,232,.75);font-size:9px;
+    text-shadow:0 0 6px #35dca7;letter-spacing:.15em;
   }
-  .dir-item:hover{ color:#d0e8e0; }
-  .dir-item.active{
-    color:#f0d080;
-    border-color:rgba(240,208,128,0.2);
-    background:rgba(240,208,128,0.04);
-  }
-  .dir-item .sym{ color:#7ee0a0; margin-right:4px; }
+  .monitor-overlay span:last-child{text-align:right;}
 
-  /* ─── WORKSPACE: SCHACHBRETT + TOOLATOR ────── */
-  #workspace{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
+  .scene-tabs{
+    display:grid;grid-template-columns:repeat(9,minmax(80px,1fr));
+    gap:5px;padding:10px 10px 0;background:rgba(4,12,20,.7);overflow-x:auto;
   }
-  @media (max-width:1000px){
-    #workspace{ grid-template-columns:1fr; }
+  @media(max-width:900px){.scene-tabs{grid-template-columns:repeat(5,minmax(80px,1fr));}}
+  @media(max-width:600px){.scene-tabs{grid-template-columns:repeat(3,minmax(80px,1fr));}}
+  .scene-tab{
+    min-height:58px;text-align:left;padding:8px;
+    border-color:#1f4150;background:#0a1a22;color:var(--muted);font-size:10px;
   }
+  .scene-tab small{display:block;margin-top:4px;color:#4f7a80;font-size:9px;}
+  .scene-tab.active{color:#04110f;background:var(--mint);border-color:var(--mint);}
+  .scene-tab.active small{color:#155a48;}
+  .scene-tab[data-color="amber"].active{background:var(--amber);border-color:var(--amber);}
+  .scene-tab[data-color="pink"].active{background:var(--pink);border-color:var(--pink);}
+  .scene-tab[data-color="blue"].active{background:var(--blue);border-color:var(--blue);}
+  .scene-tab[data-color="violet"].active{background:var(--violet);border-color:var(--violet);}
+  .scene-tab[data-color="mint"].active{background:var(--mint);border-color:var(--mint);}
+  .scene-tab[data-color="gold"].active{background:var(--gold);border-color:var(--gold);}
+  .scene-tab[data-color="red"].active{background:#ff8a8a;border-color:#ff8a8a;}
 
-  .box{
-    background:var(--panel);
-    backdrop-filter:blur(10px);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:16px;
+  .transport{
+    display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+    padding:10px;border-top:1px solid var(--line);background:#08161e;
   }
-  .box h2{
-    font-size:13px; font-weight:400; letter-spacing:3px;
-    color:var(--gold); margin-bottom:10px;
-    text-transform:uppercase;
-    display:flex; justify-content:space-between; align-items:center;
-  }
-  .box h2 .badge{
-    font-size:10px; color:#5a7a8a; font-weight:400;
-    letter-spacing:1px;
-  }
+  .transport .primary{min-width:150px;color:#04110f;background:var(--mint);border-color:var(--mint);font-weight:700;}
+  .transport .primary:hover{background:#a0ffdd;}
+  .transport .grow{flex:1;}
+  .transport label{color:var(--muted);font-size:10px;}
+  .speed-group{display:flex;gap:4px;}
+  .speed-group button{padding:.45rem .55rem;font-size:10px;}
 
-  /* ─── SCHACHBRETT ──────────────────────────── */
-  #chessWrap{
-    display:flex; justify-content:center; align-items:center;
-    padding:8px 0;
+  .timeline{padding:10px 12px 12px;border-top:1px solid #1a3a44;background:#06121a;}
+  .timeline-head{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:10px;margin-bottom:7px;}
+  .timeline-head strong{color:var(--amber);}
+  .range-wrap{position:relative;}
+  input[type=range]{width:100%;height:18px;margin:0;appearance:none;background:transparent;cursor:pointer;}
+  input[type=range]::-webkit-slider-runnable-track{height:5px;background:#1e3a44;border:1px solid #2e5866;}
+  input[type=range]::-moz-range-track{height:5px;background:#1e3a44;border:1px solid #2e5866;}
+  input[type=range]::-webkit-slider-thumb{
+    appearance:none;width:14px;height:18px;margin-top:-7px;
+    background:var(--mint);border:1px solid #d7ffed;box-shadow:0 0 10px var(--mint);
   }
-  #chess{
-    display:grid;
-    grid-template-columns:repeat(9,1fr);
-    grid-template-rows:repeat(9,1fr);
-    gap:2px;
-    width:100%;
-    max-width:450px;
-    aspect-ratio:1;
-    background:#0a1018;
-    padding:6px;
-    border-radius:10px;
-    border:1px solid rgba(120,220,150,0.15);
-  }
-  .cell{
-    background:rgba(20,28,20,0.4);
-    border-radius:4px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:15px;
-    color:#4a6a5a;
-    cursor:pointer;
-    transition:all 0.2s cubic-bezier(.2,.9,.25,1);
-    user-select:none;
-    position:relative;
-  }
-  .cell:hover{
-    background:rgba(120,220,150,0.12);
-    transform:scale(1.05);
-    z-index:2;
-  }
-  .cell.light{ background:rgba(30,40,55,0.5); }
-  .cell.dark{ background:rgba(15,20,30,0.6); }
-  .cell.booked{
-    background:rgba(140,240,208,0.2);
-    color:#8cf0d0;
-    box-shadow:inset 0 0 12px rgba(140,240,208,0.3);
-  }
-  .cell.booked.special{
-    background:rgba(240,208,128,0.2);
-    color:#f0d080;
-    box-shadow:inset 0 0 12px rgba(240,208,128,0.4);
-  }
-  .cell.cluster{
-    outline:1px solid rgba(179,136,255,0.6);
-    outline-offset:1px;
-  }
-  .cell .v{
-    position:absolute;
-    bottom:1px; right:3px;
-    font-size:7px;
-    color:#3a5a4a;
-    font-family:'Consolas',monospace;
-  }
-  .cell.booked .v{ color:#4a9a7a; }
+  input[type=range]::-moz-range-thumb{width:14px;height:18px;border-radius:0;background:var(--mint);border:1px solid #d7ffed;box-shadow:0 0 10px var(--mint);}
+  .markers{position:absolute;inset:0 0 auto;height:18px;pointer-events:none;}
+  .marker{position:absolute;top:4px;width:1px;height:11px;background:var(--amber);opacity:.85;}
+  .marker em{position:absolute;top:13px;left:3px;white-space:nowrap;color:#5e898d;font-style:normal;font-size:8px;}
 
-  /* ─── TOOLATOR (Messgerät) ─────────────────── */
-  #toolator{
-    display:flex; flex-direction:column; gap:10px;
-  }
-  .metric{
-    display:flex; justify-content:space-between;
-    align-items:center;
-    padding:6px 10px;
-    background:rgba(0,0,0,0.3);
-    border-radius:8px;
-    border-left:3px solid var(--green);
-    font-size:11px;
-  }
-  .metric.purple{ border-left-color:var(--purple); }
-  .metric.gold{ border-left-color:var(--gold); }
-  .metric.red{ border-left-color:var(--red); }
-  .metric.cyan{ border-left-color:var(--cyan); }
-  .metric .lbl{ color:#8aa8a0; }
-  .metric .val{
-    font-weight:bold; color:#d0e8e0; font-size:13px;
-  }
-  .metric .val.green{ color:#8cf0d0; }
-  .metric .val.purple{ color:#b388ff; }
-  .metric .val.gold{ color:#f0d080; }
-  .metric .val.red{ color:#ff6666; }
-  .metric .val.cyan{ color:#6cf; }
+  .side-stack{display:grid;align-content:start;gap:10px;}
+  .side-panel{min-width:0;}
+  .side-content{padding:11px;}
+  .cue-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .scene-big{color:var(--amber);font-size:20px;font-weight:700;line-height:1;}
+  .scene-big span{display:block;margin-top:5px;color:var(--text);font-size:11px;}
+  .source-chip{padding:4px 7px;border:1px solid #2c5666;color:var(--muted);font-size:9px;white-space:nowrap;letter-spacing:.1em;}
+  .progress-meter{height:5px;margin:12px 0 10px;background:#0f2b34;overflow:hidden;}
+  .progress-meter > i{display:block;height:100%;width:0%;background:var(--mint);box-shadow:0 0 12px rgba(104,246,192,.6);transition:width .3s;}
+  .time-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;}
+  .time-box{padding:7px;border:1px solid #1e3a44;background:#06141d;}
+  .time-box small{display:block;color:var(--muted);font-size:8px;margin-bottom:3px;}
+  .time-box strong{color:var(--text);font-size:13px;}
 
-  .bar{
-    width:100%; height:6px;
-    background:rgba(20,28,20,0.6);
-    border-radius:3px; overflow:hidden;
-    margin-top:3px;
-  }
-  .bar .fill{
-    height:100%;
-    background:linear-gradient(90deg,#7ee0a0,#b388ff);
-    border-radius:3px; transition:width .4s;
-  }
-  .bar .fill.gold{
-    background:linear-gradient(90deg,#f0d080,#ff8c00);
-  }
-  .bar .fill.cyan{
-    background:linear-gradient(90deg,#6cf,#b388ff);
-  }
+  .readout{min-height:76px;color:#a9d9ca;font-size:11px;line-height:1.55;white-space:pre-wrap;}
+  .readout .quote{color:var(--amber);}
+  .readout-title{margin:0 0 6px;color:var(--mint);font-size:10px;}
 
-  .toolator-section{
-    margin-top:6px;
-    border-top:1px solid rgba(120,220,150,0.04);
-    padding-top:8px;
-  }
-  .toolator-section h3{
-    font-size:10px; color:var(--gold);
-    letter-spacing:2px; margin-bottom:6px;
-    text-transform:uppercase;
-  }
+  .cue-list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:5px;}
+  .cue-list li{display:grid;grid-template-columns:48px 1fr;gap:8px;color:#5a8488;font-size:9px;line-height:1.35;position:relative;padding-left:6px;}
+  .cue-list li b{color:var(--amber);font-weight:400;}
+  .cue-list li.active{color:var(--text);}
+  .cue-list li.active b{color:var(--mint);}
+  .cue-list li.active::before{content:"▶";position:absolute;left:-6px;color:var(--pink);font-size:8px;}
 
-  /* ─── MACHT PANEL ──────────────────────────── */
-  #macht{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-    gap:10px;
-  }
-  .macht-card{
-    background:rgba(0,0,0,0.3);
-    border:1px solid rgba(120,220,150,0.08);
-    border-radius:10px;
-    padding:10px 12px;
-    font-size:10px;
-  }
-  .macht-card h4{
-    font-size:10px; color:var(--cyan);
-    letter-spacing:2px; margin-bottom:6px;
-    text-transform:uppercase;
-    display:flex; justify-content:space-between;
-  }
-  .macht-card h4 .dot{
-    display:inline-block; width:6px; height:6px;
-    border-radius:50%; background:#3a3a3a;
-  }
-  .macht-card h4 .dot.on{
-    background:#8cf0d0; box-shadow:0 0 6px #8cf0d0;
-  }
-  .macht-card h4 .dot.fail{
-    background:#ff6666; box-shadow:0 0 6px #ff6666;
-  }
-  .macht-card .row{
-    display:flex; justify-content:space-between;
-    padding:2px 0; font-size:10px;
-    border-bottom:1px solid rgba(255,255,255,0.02);
-  }
-  .macht-card .row .lbl{ color:#8aa8a0; }
-  .macht-card .row .val{ font-weight:bold; color:#d0e8e0; }
-  .macht-card .actions{
-    display:flex; gap:5px; margin-top:6px;
-  }
-  .macht-card button{
-    flex:1;
-    background:rgba(20,28,20,0.6);
-    border:1px solid rgba(120,220,150,0.2);
-    color:#d0e8e0; padding:4px 0;
-    border-radius:5px; font-size:9px;
-    font-family:inherit; cursor:pointer;
-    letter-spacing:1px;
-  }
-  .macht-card button:hover{
-    border-color:#7ee0a0;
-    background:rgba(120,220,150,0.1);
-  }
+  .sfx-log{display:flex;flex-direction:column;gap:5px;font-size:9px;color:#79a1a4;min-height:80px;}
+  .sfx-line{display:flex;gap:8px;border-bottom:1px dashed #1e3a44;padding-bottom:4px;}
+  .sfx-line b{color:var(--pink);font-weight:400;}
+  .sfx-line span{color:#8cb7ae;}
 
-  /* ─── MODULE LINKS ─────────────────────────── */
-  #moduleList{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-    gap:10px;
-  }
-  .modul-card{
-    background:rgba(10,14,22,0.7);
-    border:1px solid rgba(120,220,150,0.06);
-    border-radius:12px;
-    padding:12px 12px 10px;
-    cursor:pointer;
-    transition:all 0.3s;
-    text-decoration:none;
-    color:#c0d0d0;
-    position:relative;
-  }
-  .modul-card:hover{
-    transform:translateY(-3px);
-    border-color:rgba(120,220,150,0.25);
-    box-shadow:0 8px 20px rgba(0,0,0,0.5);
-    background:rgba(16,22,34,0.8);
-  }
-  .modul-card .icon{
-    font-size:20px; display:block; margin-bottom:4px;
-  }
-  .modul-card .name{
-    font-size:12px; font-weight:600;
-    color:#d0e8e0;
-  }
-  .modul-card .desc{
-    font-size:9px; color:#6a8a7a; margin-top:2px;
-  }
+  .mini-plot{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;padding:8px 10px;background:#040d14;border-top:1px solid #1a3a44;}
+  .mini-plot .cell{aspect-ratio:1;background:#0a1c24;border:1px solid #17303a;position:relative;overflow:hidden;transition:.3s;}
+  .mini-plot .cell.active{border-color:var(--amber);box-shadow:0 0 8px rgba(255,189,92,.6);}
+  .mini-plot .cell.thumb{background-size:cover;background-position:center;}
+  .mini-plot .cell.done{opacity:.55;}
 
-  /* ─── LOG ──────────────────────────────────── */
-  #logBox{
-    background:rgba(0,0,0,0.5);
-    border-radius:12px;
-    border:1px solid var(--line);
-    padding:8px 12px;
-    font-size:9.5px; line-height:1.6;
-    color:#8ab0c0;
-    max-height:110px; overflow-y:auto;
+  .story-overlay{
+    position:absolute;left:20px;bottom:20px;max-width:min(560px,55%);
+    padding:12px 16px;background:rgba(4,10,14,.85);
+    border-left:3px solid var(--mint);border-radius:2px;
+    color:var(--text);font-size:12px;line-height:1.55;
+    backdrop-filter:blur(4px);pointer-events:none;
+    text-shadow:0 0 6px rgba(104,246,192,.35);
+    opacity:0;transition:opacity .6s;
   }
-  #logBox .entry{padding:1px 0;border-bottom:1px solid rgba(255,255,255,0.02);}
-  #logBox .time{color:#3a4a5a;margin-right:6px;}
-  #logBox .tag{color:#6cf;margin-right:4px;}
-  #logBox .ok{color:#8cf0d0;}
-  #logBox .warn{color:#f0d080;}
-  #logBox .err{color:#ff6666;}
-  #logBox .gold{color:#f0d080;font-weight:bold;}
+  .story-overlay.show{opacity:1;}
+  .story-overlay .ch{color:var(--amber);font-size:10px;letter-spacing:.15em;margin-bottom:6px;text-transform:uppercase;}
+  .story-overlay .title{color:var(--mint);font-size:14px;font-weight:700;margin-bottom:6px;}
+  .story-overlay .line{color:#d8f0e8;}
+  .story-overlay .track{margin-top:8px;color:var(--pink);font-size:10px;letter-spacing:.05em;}
 
-  /* ─── FOOTER ───────────────────────────────── */
-  footer{
-    text-align:center;
-    font-size:9px; color:#3a4a4a;
-    padding:8px 16px;
-    border-top:1px solid rgba(120,220,150,0.03);
+  .footer-strip{
+    max-width:1560px;margin:10px auto 0;display:flex;gap:12px;
+    flex-wrap:wrap;align-items:center;justify-content:space-between;
+    color:#4a6e72;font-size:9px;letter-spacing:.08em;
   }
-  footer .gold{ color:#f0d080; }
-
-  /* ─── FL76 Monitor ─────────────────────────── */
-  #fl76mon{
-    position:fixed; bottom:14px; right:14px;
-    padding:6px 12px;
-    background:rgba(6,8,16,0.9);
-    border:1px solid rgba(140,240,208,0.3);
-    border-radius:6px;
-    font-size:10px; letter-spacing:1.5px;
-    color:#8cf0b0; z-index:12;
-    text-align:right; min-width:130px;
-  }
-  #fl76mon .num{font-size:16px;font-weight:bold;color:#8cf0b0;}
-  #fl76mon.outside{border-color:rgba(255,102,102,0.5);}
-  #fl76mon.outside .num{color:#ff6666;}
-  #fl76mon.edge{border-color:rgba(240,208,128,0.5);}
-  #fl76mon.edge .num{color:#f0d080;}
-
-  /* Responsive */
-  @media (max-width:700px){
-    #master{padding:10px;}
-    #commander .brand{font-size:16px;}
-    #grid, #moduleList{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
-    #chess{max-width:100%;}
-    .cell{font-size:12px;}
-    #fl76mon{bottom:8px;right:8px;font-size:9px;padding:4px 8px;min-width:100px;}
-  }
+  .footer-strip strong{color:var(--mint);font-weight:400;}
+  .key{padding:2px 6px;border:1px solid #2c5660;color:#8ab8af;font-size:9px;}
 </style>
 </head>
 <body>
+<div class="app-shell">
 
-<!-- 9×9 RESPO Hintergrund -->
-<div id="respoBg"></div>
-
-<div id="master">
-
-  <!-- COMMANDER HEADER -->
-  <header id="commander">
+  <header class="topbar">
     <div class="brand">
-      ♟️ STAGE · SCHACHBRETT · TOOLATOR
-      <small>MASTER · MAcht · algorithmierter Neustand</small>
+      <div class="brand-mark">幻</div>
+      <div>
+        <h1>DER LETZTE SOMMER · 81 MOMENTE · ATEM · ATOM · WUNDER</h1>
+        <p>IRFAN · INDIla · AURORA · STROMAE · LADY GAGA · KEY MOZART · RESPO 9×9</p>
+      </div>
     </div>
-    <div class="commander-status">
-      <span><span class="led green"></span> NC‑LIVE</span>
-      <span><span class="led gold pulse"></span> TOOLATOR</span>
-      <span><span class="led purple"></span> MASTER_KERNEL</span>
-      <span>KlicK <b id="hdrKlick" style="color:#f0d080;">0</b></span>
-      <span>Service <b id="hdrService" style="color:#8cf0d0;">0%</b></span>
-      <span id="hdrClock" style="color:#4a5a6a;">⏱️ --:--</span>
+    <div class="top-status">
+      <span class="led online">RUNTIME ATMET</span>
+      <span>CANVAS 2D · ANIME + FOTO</span>
+      <span>OFFLINE · SINGLE HTML</span>
     </div>
   </header>
 
-  <!-- 8 RICHTUNGEN -->
-  <div id="directions">
-    <span class="dir-item active" data-dir="S"><span class="sym">●</span> S · Sonne</span>
-    <span class="dir-item" data-dir="H"><span class="sym">○</span> H · Engine</span>
-    <span class="dir-item" data-dir="B"><span class="sym">◆</span> B · Matrix</span>
-    <span class="dir-item" data-dir="T"><span class="sym">△</span> T · Triangle</span>
-    <span class="dir-item" data-dir="O"><span class="sym">◉</span> O · Orbit</span>
-    <span class="dir-item" data-dir="D"><span class="sym">▣</span> D · DS9</span>
-    <span class="dir-item" data-dir="t"><span class="sym">⚙</span> t · Helper</span>
-    <span class="dir-item" data-dir="sys"><span class="sym">🧠</span> sys · System</span>
+  <div class="elem-strip">
+    <div class="elem-chip atom"><span class="k">◈ ATOM</span><span class="v" id="chipAtom">—</span></div>
+    <div class="elem-chip o2"><span class="k">O₂</span><span class="v" id="chipO2">—</span></div>
+    <div class="elem-chip co2"><span class="k">CO₂</span><span class="v" id="chipCO2">—</span></div>
+    <div class="elem-chip h2o"><span class="k">H₂O</span><span class="v" id="chipH2O">—</span></div>
+    <div class="elem-chip mana"><span class="k">MANA</span><span class="v" id="chipMana">—</span></div>
+    <div class="elem-chip aura"><span class="k">AURA</span><span class="v" id="chipAura">—</span></div>
+    <div class="elem-chip zen"><span class="k">ZEN</span><span class="v" id="chipZen">—</span></div>
   </div>
 
-  <!-- WORKSPACE: SCHACHBRETT + TOOLATOR -->
-  <div id="workspace">
-
-    <!-- SCHACHBRETT -->
-    <div class="box">
-      <h2>
-        ♟️ SCHACHBRETT · RESPO‑BUCHUNG
-        <span class="badge" id="chessBadge">0/81 gebucht</span>
-      </h2>
-      <div id="chessWrap">
-        <div id="chess"></div>
+  <main class="workspace">
+    <section class="panel monitor-panel">
+      <div class="panel-title">
+        <span>◈ PREVIEW / <strong>LIVE ANIME + FOTO CANVAS</strong></span>
+        <span id="canvasMode">WAITING</span>
       </div>
-      <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;">
-        <button id="btnBookAll" style="flex:1;min-width:100px;background:rgba(20,28,20,0.6);border:1px solid rgba(120,220,150,0.25);color:#8cf0d0;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">✅ ALLE BUCHEN</button>
-        <button id="btnUnbookAll" style="flex:1;min-width:100px;background:rgba(30,20,20,0.6);border:1px solid rgba(255,102,102,0.25);color:#ff6666;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">⟲ ALLE FREI</button>
-        <button id="btnResetChess" style="flex:1;min-width:100px;background:rgba(20,20,30,0.6);border:1px solid rgba(179,136,255,0.25);color:#b388ff;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">🔄 NEUSTAND</button>
+      <div class="monitor-wrap">
+        <canvas id="stage" width="960" height="540"></canvas>
+        <div class="monitor-overlay">
+          <span id="overlayLeft">CH1 / DER LETZTE SOMMER</span>
+          <span id="overlayRight">00:00.0 / HOLD</span>
+        </div>
+        <div id="storyOverlay" class="story-overlay"></div>
       </div>
-    </div>
-
-    <!-- TOOLATOR -->
-    <div class="box">
-      <h2>
-        📊 TOOLATOR · RESPO‑SERVICE
-        <span class="badge" id="toolBadge">bereit</span>
-      </h2>
-      <div id="toolator">
-
-        <!-- MATHEMATISCH -->
-        <div class="toolator-section">
-          <h3>· mathematisch ·</h3>
-          <div class="metric">
-            <span class="lbl">Buchungen</span>
-            <span class="val green" id="t-booked">0 / 81</span>
-          </div>
-          <div class="bar"><div class="fill" id="t-booked-bar" style="width:0%"></div></div>
-
-          <div class="metric purple">
-            <span class="lbl">Service‑Summe</span>
-            <span class="val purple" id="t-service">0.00</span>
-          </div>
-
-          <div class="metric gold">
-            <span class="lbl">Respo‑Score</span>
-            <span class="val gold" id="t-respo">0.00</span>
-          </div>
-
-          <div class="metric cyan">
-            <span class="lbl">Clusters (zusammenhängend)</span>
-            <span class="val cyan" id="t-clusters">0</span>
-          </div>
-
-          <div class="metric">
-            <span class="lbl">Entropie (Chaos)</span>
-            <span class="val" id="t-entropy">0.00</span>
-          </div>
+      <nav id="sceneTabs" class="scene-tabs" aria-label="Kapitel-Navigation"></nav>
+      <div id="miniPlot" class="mini-plot" aria-label="81-Moment-Matrix"></div>
+      <div class="transport">
+        <button id="startBtn" class="primary">▶ START STORY</button>
+        <button id="stepBack">◀ ZURÜCK</button>
+        <button id="stepForward">▶ VOR</button>
+        <span class="grow"></span>
+        <label>TEMPO</label>
+        <div class="speed-group">
+          <button data-speed="0.5">0.5×</button>
+          <button data-speed="1" class="active">1.0×</button>
+          <button data-speed="2">2.0×</button>
         </div>
-
-        <!-- PHYSIKALISCH -->
-        <div class="toolator-section">
-          <h3>· physikalisch ·</h3>
-          <div class="metric gold">
-            <span class="lbl">Masse (Σ Buchung × Wert)</span>
-            <span class="val gold" id="t-mass">0.00 g</span>
-          </div>
-
-          <div class="metric purple">
-            <span class="lbl">Waage (links ↔ rechts)</span>
-            <span class="val purple" id="t-balance">0.00</span>
-          </div>
-          <div class="bar"><div class="fill gold" id="t-balance-bar" style="width:50%"></div></div>
-
-          <div class="metric red">
-            <span class="lbl">Kraft (Cluster‑Gravitation)</span>
-            <span class="val red" id="t-force">0.00</span>
-          </div>
-
-          <div class="metric cyan">
-            <span class="lbl">Energie (E ∝ Masse)</span>
-            <span class="val cyan" id="t-energy">0.00</span>
-          </div>
+        <button id="autoBtn" class="active">⟳ AUTO</button>
+        <button id="breathBtn" class="active">◈ ATEM: AN</button>
+        <button id="fullscreenBtn">⛶ FULL</button>
+        <button id="resetBtn">⟲ RESET</button>
+      </div>
+      <div class="timeline">
+        <div class="timeline-head">
+          <span>MASTER TIMELINE / <strong id="timelineScene">CH1</strong></span>
+          <span id="timelineTime">00:00.0 / 06:00</span>
         </div>
-
-        <!-- TOOLATOR BUTTONS -->
-        <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
-          <button id="btnMeasure" style="flex:1;min-width:100px;background:rgba(20,28,20,0.6);border:1px solid rgba(120,220,150,0.3);color:#8cf0d0;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">📏 MESSEN</button>
-          <button id="btnAutoMeasure" style="flex:1;min-width:100px;background:rgba(20,20,30,0.6);border:1px solid rgba(179,136,255,0.3);color:#b388ff;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">⏯ AUTO</button>
-          <button id="btnEvalRith" style="flex:1;min-width:100px;background:rgba(30,20,20,0.6);border:1px solid rgba(255,140,0,0.3);color:#ff8c00;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">🔬 RITH</button>
+        <div class="range-wrap">
+          <div id="markers" class="markers"></div>
+          <input id="timeline" type="range" min="0" max="360" step="0.1" value="0">
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
+    <aside class="side-stack">
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ DIRECTOR STATE</span><span id="runState">IDLE</span></div>
+        <div class="side-content">
+          <div class="cue-row">
+            <div class="scene-big"><span id="sceneCode">CH1</span><span id="sceneTitle">DER LETZTE SOMMER</span></div>
+            <span id="sourceChip" class="source-chip">IRFAN</span>
+          </div>
+          <div class="progress-meter"><i id="sceneProgress"></i></div>
+          <div class="time-grid">
+            <div class="time-box"><small>MOMENT</small><strong id="sceneTime">01 / 09</strong></div>
+            <div class="time-box"><small>MASTER</small><strong id="masterTime">00:00.0</strong></div>
+          </div>
+        </div>
+      </section>
 
-  <!-- MACHT PANEL -->
-  <div class="box">
-    <h2>
-      ⚙️ MASTER · MACHT
-      <span class="badge" id="machtBadge">autostart läuft</span>
-    </h2>
-    <div id="macht">
-      <!-- Wird vom JS gefüllt -->
-    </div>
-    <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;">
-      <button id="btnStartAll" style="flex:1;min-width:110px;background:rgba(20,30,20,0.6);border:1px solid rgba(120,220,150,0.3);color:#8cf0d0;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">▶ START ALL</button>
-      <button id="btnStopAll" style="flex:1;min-width:110px;background:rgba(30,20,20,0.6);border:1px solid rgba(255,102,102,0.3);color:#ff6666;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">⏸ STOP ALL</button>
-      <button id="btnMasterKernel" style="flex:1;min-width:110px;background:rgba(30,20,30,0.6);border:1px solid rgba(179,136,255,0.3);color:#b388ff;padding:6px;border-radius:6px;font-family:inherit;font-size:10px;cursor:pointer;">🧠 MASTER_KERNEL.start()</button>
-    </div>
-  </div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ ATEM · MOVE · SEIN · SOUND</span><span id="beatTag">CH1-01</span></div>
+        <div class="side-content"><div id="axisBars"></div></div>
+      </section>
 
-  <!-- MODULE LINKS -->
-  <div class="box">
-    <h2>
-      🧩 MODULE · EXPLORER
-      <span class="badge">klick auf Karte öffnet Ordner</span>
-    </h2>
-    <div id="moduleList">
-      <!-- Wird vom JS gefüllt -->
-    </div>
-  </div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ LIVE PROMPTER</span><span>CUE</span></div>
+        <div class="side-content">
+          <h2 class="readout-title" id="promptHeading">STORY / MOMENT</h2>
+          <div id="prompter" class="readout"></div>
+        </div>
+      </section>
 
-  <!-- LOG -->
-  <div id="logBox">
-    <div class="entry"><span class="time">[init]</span><span class="tag">stage</span><span class="ok">STAGE · SCHACHBRETT · TOOLATOR geladen</span></div>
-  </div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ SOUNDTRACK</span><span>♫</span></div>
+        <div class="side-content">
+          <ul id="trackList" class="cue-list"></ul>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+            <audio id="audioEl" controls preload="none" style="width:100%;height:30px;"></audio>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
 
-  <footer>
-    <span class="gold">✦</span> STAGE · SCHACHBRETT · TOOLATOR · MASTER · iki1uc
-    <span class="gold">✦</span> Buchen · Messen · Verstehen · Neu formen
+  <footer class="footer-strip">
+    <span><strong>STORY:</strong> DER LETZTE SOMMER MIT IRFAN · 81 MOMENTE</span>
+    <span><strong>CONTROL:</strong> <span class="key">SPACE</span> PLAY <span class="key">← →</span> MOMENT <span class="key">F</span> FULL <span class="key">B</span> ATEM</span>
+    <span><strong>BUILD:</strong> RESPO 9×9 · OFFLINE</span>
   </footer>
-</div>
 
-<!-- FL76 Monitor -->
-<div id="fl76mon">
-  <div>FL76</div>
-  <div class="num" id="fl76num">76</div>
-  <div style="font-size:8px;color:#4a5a5a;">ms · Kaiser‑Fenster</div>
 </div>
 
 <script>
+(() => {
 "use strict";
-// ═══════════════════════════════════════════════════════════════════
-// STAGE · SCHACHBRETT · TOOLATOR · MASTER · iki1uc
-// Das Schachbrett als buchbares Respo-System.
-// Der Toolator misst mathematisch und physikalisch.
-// MASTER_KERNEL orchestriert mit Fallback.
-// ═══════════════════════════════════════════════════════════════════
 
-// ─── 1. KONSTANTEN ─────────────────────────────────────────────
-const N = 9;                       // 9×9 Schachbrett
-const PIECE_VALUES = {              // Figurenwerte
-  ' ': 1,   // leeres Feld = Basis-Service
-  '·': 1,
-  '♟': 1,   // Bauer
-  '♞': 3,   // Springer
-  '♝': 3,   // Läufer
-  '♜': 5,   // Turm
-  '♛': 9,   // Dame
-  '♚': 12,  // König
-  'Ω': 6,   // Omega (Spezial)
-  '◉': 8,   // Respo-Kern
-};
+// ═══════════════════════════════════════════════════════════════
+// ◈ DER LETZTE SOMMER · 81 MOMENTE
+// 9 Kapitel × 9 Bilder = RESPO-Matrix
+// Atem · Atom · Wunder · Sound-Reaktiv · Kamera-Schwebe · Grain
+// ═══════════════════════════════════════════════════════════════
 
-// Symbolisches Ausgangsbrett (wie im ORT-Penthouse-Design)
-const BOARD_SEED = [
-  ['♜','♞','♝','♛','♚','♝','♞','♜','Ω'],
-  ['♟','♟','♟','♟','♟','♟','♟','♟','·'],
-  ['·','·','·','·','·','·','·','·','·'],
-  ['·','·','·','◉','·','◉','·','·','·'],
-  ['·','·','·','·','◉','·','·','·','·'],
-  ['·','·','·','◉','·','◉','·','·','·'],
-  ['·','·','·','·','·','·','·','·','·'],
-  ['♙','♙','♙','♙','♙','♙','♙','♙','·'],
-  ['♖','♘','♗','♕','♔','♗','♘','♖','Ω'],
+const W = 960, H = 540;
+const SEC_PER_IMAGE = 4;          // Basis: 4s pro Bild bei 1.0×
+const TOTAL_IMAGES = 81;
+const MASTER_DURATION = TOTAL_IMAGES * SEC_PER_IMAGE; // 324s ≈ 5:24
+
+// ─── KAPITEL-DEFINITION (9×9 RESPO) ──────────────────────────
+// Jedes Kapitel: 9 Bilder, ein Track, ein Text
+const chapters = [
+  {
+    id:"CH1", title:"DER LETZTE SOMMER", color:"amber", source:"IRFAN",
+    track:"Indila — Comme un bateau",
+    trackUrl:"", // hier optional MP3-URL eintragen
+    subtitle:"wo mit Irfan noch alles in Ordnung war",
+    story:"Das war der Sommer, in dem mit Irfan noch alles in Ordnung war. Wir hatten keine Achsen, keine Monster, keine Cinematic-Schwere. Nur Licht. Nur Zeit. Nur uns.",
+    prompt:"Totale · warmes Licht · Zeitlupe · Wärme im Bild",
+    folder:"1",
+    images:["th (45).webp","th (46).webp","th (47).webp","th (48).webp","th (49).webp","th (50).webp","th (51).webp","th (52).webp","th (53).webp"],
+  },
+  {
+    id:"CH2", title:"MONSTER IM ID", color:"violet", source:"DARK",
+    track:"THE WITCH — Dark Pulse",
+    trackUrl:"",
+    subtitle:"roh, dunkel, ehrlich",
+    story:"Das Monster war kein Feind. Es war ein Spiegel. Es zeigte mir, was ich war, bevor ich wusste, wer ich bin.",
+    prompt:"Nahaufnahme · Schatten · Atem · langsames Ziehen",
+    folder:"2",
+    images:["th (35).webp","th (36).webp","th (37).webp","th (38).webp","th (39).webp","th (40).webp","th (41).webp","th (42).webp","th (43).webp"],
+  },
+  {
+    id:"CH3", title:"CINEMATIC", color:"blue", source:"KEY",
+    track:"Key — Mozart Techno Reimagined",
+    trackUrl:"",
+    subtitle:"i miss u cinematic",
+    story:"Ich vermisse die Cinematic-Ära. Die Zeit, in der Musik ein Ort war. Ein Raum, in dem ich atmen konnte.",
+    prompt:"Weite · Filmkorn · Kameraschwebe · kalte Farben",
+    folder:"3",
+    images:["th (26).webp","th (27).webp","th (28).webp","th (29).webp","th (30).webp","th (31).webp","th (32).webp","th (33).webp","th (34).webp"],
+  },
+  {
+    id:"CH4", title:"AINSI BAS LA VIDA", color:"pink", source:"INDILA",
+    track:"Indila — Ainsi Bas La Vida (dark orchestral)",
+    trackUrl:"",
+    subtitle:"ich war außer mir, weil ich offen war",
+    story:"Da war ein Track, der hat mich aus mir rausgehoben. Ich war außer mir. Nicht weil ich schwach war. Sondern weil ich offen war.",
+    prompt:"Halbnah · warmes Rosa · langsamer Zoom · Verletzlichkeit",
+    folder:"4",
+    images:["th (21).webp","th (22).webp","th (23).webp","th (24).webp","th (25).webp","1.webp","2.webp","3.webp","4.webp"],
+  },
+  {
+    id:"CH5", title:"DIE LADY VOM MEER", color:"mint", source:"AURORA",
+    track:"AURORA — Runaway (dark edit)",
+    trackUrl:"",
+    subtitle:"nicht real, aber Präsenz",
+    story:"Sie war nicht real. Aber sie war eine Präsenz. Ein Gefühl, das blieb, obwohl es nie da war.",
+    prompt:"Traum · Wasser · weiches Licht · Zeit dehnt sich",
+    folder:"5",
+    images:["1.webp","2.webp","3.webp","4.webp","5.webp","6.webp","7.webp","8.webp","9.webp"],
+  },
+  {
+    id:"CH6", title:"STROMAE-ENERGIE", color:"gold", source:"STROMAE",
+    track:"Stromae — Santé (orchestral)",
+    trackUrl:"",
+    subtitle:"markant, erzählend, rhythmisch",
+    story:"Stromae war ein Motor. Er erzählte, ohne zu erklären. Er trug mich, ohne mich zu kennen.",
+    prompt:"Rhythmus · Schnitt · Struktur · Markanz",
+    folder:"6",
+    images:["th (69).webp","th (70).webp","th (71).webp","th (72).webp","th (73).webp","1.webp","2.webp","3.webp","4.webp"],
+  },
+  {
+    id:"CH7", title:"ANDERES KALIBER", color:"pink", source:"GAGA",
+    track:"Lady Gaga — Bloody Mary (Dark Orchestra)",
+    trackUrl:"",
+    subtitle:"ein Diebstahl aus zwanzig Welten",
+    story:"Das war ein anderes Kaliber. Ein Diebstahl aus zwanzig Welten. Ein Gefühl, das nicht hätte existieren dürfen.",
+    prompt:"Kraft · Kontrast · Orchestral · dunkel",
+    folder:"7",
+    images:["th (74).webp","th (75).webp","th (76).webp","th (77).webp","th (78).webp","th (79).webp","th (80).webp","th (81).webp","th (82).webp"],
+  },
+  {
+    id:"CH8", title:"DIE ACHSEN", color:"blue", source:"AURORA",
+    track:"AURORA — Cure For Me (dark edit)",
+    trackUrl:"",
+    subtitle:"Druck, Zug, Öffnung, Tiefe, Wahrheit",
+    story:"Die Achsen kamen. Druck. Zug. Öffnung. Tiefe. Wahrheit. Ich war nicht mehr derselbe.",
+    prompt:"Achsen sichtbar · Gitter · Druck · Öffnung",
+    folder:"8",
+    images:["th (83).webp","th (84).webp","th (85).webp","th (86).webp","th (87).webp","th (88).webp","th (89).webp","th (90).webp","th (91).webp"],
+  },
+  {
+    id:"CH9", title:"DAS WUNDER IST UNTER UNS", color:"mint", source:"INDILA",
+    track:"Indila — S.O.S (orchestral)",
+    trackUrl:"",
+    subtitle:"Atem, Atom, O₂, CO₂, H₂O",
+    story:"Das Wunder war nie weg. Es war unter uns. Im Atem. Im Atom. Im Licht. Im Sommer.",
+    prompt:"Atem · Atom · Licht · Offenbarung",
+    folder:"9",
+    images:["th (92).webp","th (93).webp","th (94).webp","th (95).webp","th (96).webp","th (97).webp","th (98).webp","th (99).webp","th (100).webp"],
+  },
 ];
 
-// ─── 2. STATE ──────────────────────────────────────────────────
+// ─── SZENEN-ZEITEN ─────────────────────────────────────────
+let cursor = 0;
+chapters.forEach((ch, ci) => {
+  ch.start = cursor;
+  ch.runtimeDuration = ch.images.length * SEC_PER_IMAGE;
+  ch.end = cursor + ch.runtimeDuration;
+  cursor = ch.end;
+  ch.index = ci;
+});
+chapters[chapters.length - 1].end = MASTER_DURATION;
+
+// ─── CANVAS ─────────────────────────────────────────────
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = true;
+
+// ─── STATE ──────────────────────────────────────────────
 const S = {
-  booked: Array(N*N).fill(false),
-  seed: BOARD_SEED,
-  autoMeasure: true,
-  measureTimer: null,
-  tick: 0,
-  klick: 0,
-  // Metriken
-  bookedCount: 0,
-  serviceSum: 0,
-  respo: 0,
-  clusters: 0,
-  entropy: 0,
-  mass: 0,
-  balance: 0,
-  force: 0,
-  energy: 0,
-  // FL76
-  flRaw: 76, flSmooth: 76,
-  fps: 0, frameCount: 0, lastFpsT: 0, lastFrameT: 0,
-  // Module
-  mods: {},
-  autoChain: [],
+  time: 0, playing: false, speed: 1, breathOn: true, autoOn: true,
+  lastFrame: performance.now(), frame: 0, shake: 0,
+  audio: null, audioCtx: null, analyser: null, source: null,
+  spectrum: new Uint8Array(128),
+  soundEnergy: 0, soundBass: 0, soundPulse: 0, lastBeat: 0,
+  // Atem
+  breathPhase: 0, breathCycleMs: 4000,
+  // Elemente
+  atom: 0.72, o2: 0.84, co2: 0.68, h2o: 0.76,
+  mana: 0.66, aura: 0.74, zen: 0.88,
+  // MOVE
+  move: 0.4, moveValues: { rot:0.4, orb:0.6, wav:0.3, lin:0.5, spr:0.4 },
+  sparks: [],
+  // Bilder
+  imageCache: {},   // key: chapterIdx-imgIdx → Image|false
+  currentChapter: 0, currentImage: 0,
 };
 
-// ─── 3. MODULE-DEFINITION ─────────────────────────────────────
-const MODULES = [
-  { id:'kit',     name:'kit.js',     label:'KERNEL · KIT=3',      global:'KIT' },
-  { id:'groub',   name:'groub.js',   label:'GROUP · GROUB=9',     global:'GROUB' },
-  { id:'work',    name:'work.js',    label:'PIPELINE · WORK=81',  global:'WORK' },
-  { id:'zam',     name:'ZaM.js',     label:'GATE · OFFER · PACT', global:'ZaM' },
-  { id:'ui',      name:'ui.js',      label:'UI · PANELS',         global:'UI' },
-  { id:'economy', name:'economy.js', label:'WERTE · KlicK/ZacK',  global:'ECONOMY' },
-];
-
-// Ordner-Module (Links)
-const FOLDERS = [
-  { id:'BOERSE',   icon:'📈', name:'BOERSE',   desc:'Börsen-Daten · Stage',   path:'./BOERSE/index.html' },
-  { id:'DOM',      icon:'🏛', name:'DOM',      desc:'Dom-Struktur · NC',       path:'./DOM/index.html' },
-  { id:'EOS',      icon:'🌌', name:'EOS',      desc:'Ende-of-System · Orbit',  path:'./EOS/index.html' },
-  { id:'EVO',      icon:'🔮', name:'EVO',      desc:'Evolution · Axiom-Map',   path:'./EVO/index.html' },
-  { id:'MARKT',    icon:'🏪', name:'MARKT',    desc:'Markt-Platz · RESPO',     path:'./MARKT/index.html' },
-  { id:'respo',    icon:'🌀', name:'RESPO',    desc:'9×9-Mesh · Live',         path:'./respo/index.html' },
-  { id:'tool48',   icon:'🛠', name:'TOOL48',   desc:'48-Tools · Werkzeug',     path:'./tool48/index.html' },
-  { id:'funktion', icon:'⚙️', name:'FUNKTION', desc:'Funktions-Achse · VEC',   path:'./funktion/index.html' },
-  { id:'orbit',    icon:'👁', name:'ORBIT-VIEWER', desc:'8-Etagen-Orbit · 3D',  path:'./etage-8-orbit-viewer/index.html' },
-  { id:'b',        icon:'📐', name:'Breite (b)', desc:'Breiten-Achse · HDF',   path:'./b/index.html' },
-  { id:'h',        icon:'↗',  name:'Hoch (h)',   desc:'Hoch-Achse · Vektor',   path:'./h/index.html' },
-  { id:'t',        icon:'↕',  name:'Tiefe (t)',  desc:'Tiefen-Achse · NC',     path:'./t/index.html' },
-];
-
-// ─── 4. TOOLATOR: MATHEMATIK ──────────────────────────────────
-function pieceValue(ch){ return PIECE_VALUES[ch] || 1; }
-
-// Union-Find für Cluster-Erkennung
-function computeClusters(){
-  const parent = {};
-  const find = (x) => parent[x] === x ? x : (parent[x] = find(parent[x]));
-  const union = (a,b) => {
-    const ra = find(a), rb = find(b);
-    if (ra !== rb) parent[ra] = rb;
-  };
-  const idx = (r,c) => r*N + c;
-
-  for(let r=0;r<N;r++) for(let c=0;c<N;c++) parent[idx(r,c)] = idx(r,c);
-
-  for(let r=0;r<N;r++){
-    for(let c=0;c<N;c++){
-      if (!S.booked[idx(r,c)]) continue;
-      // Nachbar rechts
-      if (c+1 < N && S.booked[idx(r,c+1)]) union(idx(r,c), idx(r,c+1));
-      // Nachbar unten
-      if (r+1 < N && S.booked[idx(r+1,c)]) union(idx(r,c), idx(r+1,c));
-    }
-  }
-
-  const groups = {};
-  for(let r=0;r<N;r++) for(let c=0;c<N;c++){
-    if (!S.booked[idx(r,c)]) continue;
-    const root = find(idx(r,c));
-    (groups[root] = groups[root] || []).push(idx(r,c));
-  }
-  return Object.values(groups);
+// ─── BILD-LOADER (mit elegantem Fallback) ───────────────
+function getImage(chIdx, imgIdx){
+  const key = chIdx + ":" + imgIdx;
+  if (S.imageCache[key] !== undefined) return S.imageCache[key];
+  const ch = chapters[chIdx];
+  const name = ch.images[imgIdx];
+  if (!name) { S.imageCache[key] = false; return false; }
+  const img = new Image();
+  img.onload = () => { S.imageCache[key] = img; };
+  img.onerror = () => { S.imageCache[key] = false; };
+  // Ordner + Dateiname
+  img.src = encodeURI(ch.folder + "/" + name);
+  S.imageCache[key] = null; // pending
+  return null;
+}
+function preloadAll(){
+  chapters.forEach((ch, ci) => ch.images.forEach((_, ii) => getImage(ci, ii)));
 }
 
-// Entropie: -Σ p·log(p), p = gebucht/total pro Zeile
-function computeEntropy(){
-  let entropy = 0;
-  for(let r=0;r<N;r++){
-    let booked = 0;
-    for(let c=0;c<N;c++) if (S.booked[r*N+c]) booked++;
-    const p = booked / N;
-    if (p > 0 && p < 1) entropy -= p * Math.log2(p) + (1-p) * Math.log2(1-p);
+// ─── AUDIO ANALYSE (sound-reaktiv) ──────────────────────
+const audioEl = document.getElementById('audioEl');
+function setupAudio(){
+  if (S.audioCtx) return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    S.audioCtx = new AC();
+    S.analyser = S.audioCtx.createAnalyser();
+    S.analyser.fftSize = 256;
+    S.analyser.smoothingTimeConstant = 0.84;
+    S.source = S.audioCtx.createMediaElementSource(audioEl);
+    S.source.connect(S.analyser);
+    S.analyser.connect(S.audioCtx.destination);
+  } catch(_){ S.audioCtx = null; }
+}
+function readSound(now){
+  if (!S.analyser || audioEl.paused){
+    // Fallback: Atem-getriebene Pulsation
+    S.soundEnergy += ((S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2) * 0.6 - S.soundEnergy) * 0.08;
+    S.soundBass = S.soundEnergy;
+    S.soundPulse *= 0.94;
+    return;
   }
-  return entropy / N; // normalisiert 0..1
+  S.analyser.getByteFrequencyData(S.spectrum);
+  let total = 0, low = 0;
+  const bassBins = Math.floor(S.spectrum.length * 0.12);
+  for (let i = 0; i < S.spectrum.length; i++) total += S.spectrum[i];
+  for (let i = 0; i < bassBins; i++) low += S.spectrum[i];
+  const rawE = total / S.spectrum.length / 255;
+  const rawB = low / bassBins / 255;
+  S.soundEnergy += (rawE - S.soundEnergy) * 0.12;
+  S.soundBass += (rawB - S.soundBass) * 0.18;
+  if (rawB > 0.58 && rawB > S.soundBass + 0.12 && now - S.lastBeat > 180){
+    S.soundPulse = 1; S.lastBeat = now;
+    for (let i = 0; i < 12; i++) spawnSpark(
+      Math.random()*W, Math.random()*H*0.8 + 40,
+      ['#ffcc66','#68f6c0','#b388ff','#6cc9ff','#ff6d9d'][Math.floor(Math.random()*5)],
+      1, Math.random()<0.4?'star':'spark'
+    );
+  }
+  S.soundPulse *= 0.91;
 }
 
-// Waage: linke Hälfte vs rechte Hälfte
-function computeBalance(){
-  let left = 0, right = 0;
-  for(let r=0;r<N;r++){
-    for(let c=0;c<N;c++){
-      if (!S.booked[r*N+c]) continue;
-      const v = pieceValue(S.seed[r][c]);
-      if (c < N/2) left += v;
-      else right += v;
-    }
-  }
-  const total = left + right || 1;
-  return { left, right, ratio: right / total }; // 0 = links, 1 = rechts
-}
+// ─── ELEMENTE-ZYKLUS ────────────────────────────────────
+function updateElements(dt){
+  S.breathPhase = ((performance.now() % S.breathCycleMs) / S.breathCycleMs);
+  const ph = S.breathPhase;
+  let intensity;
+  if (ph < 0.4) intensity = ph / 0.4;
+  else if (ph < 0.5) intensity = 1.0;
+  else if (ph < 0.9) intensity = 1 - (ph - 0.5) / 0.4;
+  else intensity = 0.0;
 
-// Kraft: Cluster-Gravitation (Summe der paarweisen Kräfte in Clustern)
-function computeForce(clusters){
-  let force = 0;
-  clusters.forEach(cl => {
-    if (cl.length < 2) return;
-    // Für jeden Cluster: alle Paare → Kraft ~ m1*m2/d² (d = Abstand)
-    for(let i=0;i<cl.length;i++){
-      for(let j=i+1;j<cl.length;j++){
-        const ra = Math.floor(cl[i]/N), ca = cl[i]%N;
-        const rb = Math.floor(cl[j]/N), cb = cl[j]%N;
-        const d2 = (ra-rb)**2 + (ca-cb)**2;
-        if (d2 === 0) continue;
-        const ma = pieceValue(S.seed[ra][ca]);
-        const mb = pieceValue(S.seed[rb][cb]);
-        force += (ma * mb) / d2;
-      }
-    }
+  if (ph < 0.4){
+    S.o2 = Math.min(1, S.o2 + 0.0035);
+    S.co2 = Math.max(0, S.co2 - 0.0025);
+    S.h2o = Math.min(1, S.h2o + 0.0012);
+  } else if (ph >= 0.5 && ph < 0.9){
+    S.co2 = Math.min(1, S.co2 + 0.0030);
+    S.o2 = Math.max(0, S.o2 - 0.0020);
+    S.h2o = Math.min(1, S.h2o + 0.0020);
+  }
+  S.atom = Math.max(0, Math.min(1, S.atom + (Math.random()-0.5) * 0.003));
+  S.mana = Math.max(0, Math.min(1, S.mana + (intensity - 0.5) * 0.004 + (Math.random()-0.5)*0.002));
+  S.aura = Math.max(0, Math.min(1, S.aura + (intensity - 0.5) * 0.003));
+  S.zen  = Math.max(0, Math.min(1, S.zen  + (0.5 - Math.abs(intensity - 0.5)) * 0.002));
+
+  Object.keys(S.moveValues).forEach(k => {
+    S.moveValues[k] = Math.max(0, Math.min(1, S.moveValues[k] + (Math.random()-0.5)*0.02));
   });
-  return force * 0.001; // Skalierung
+  S.move = (S.moveValues.rot + S.moveValues.orb + S.moveValues.wav + S.moveValues.lin + S.moveValues.spr) / 5;
+  S.move = Math.max(S.move, S.soundEnergy * 0.9); // Sound treibt MOVE mit
+
+  setChip('chipAtom', (S.atom*100).toFixed(0)+'%');
+  setChip('chipO2', (S.o2*100).toFixed(0)+'%');
+  setChip('chipCO2', (S.co2*100).toFixed(0)+'%');
+  setChip('chipH2O', (S.h2o*100).toFixed(0)+'%');
+  setChip('chipMana', (S.mana*100).toFixed(0)+'%');
+  setChip('chipAura', (S.aura*100).toFixed(0)+'%');
+  setChip('chipZen', (S.zen*100).toFixed(0)+'%');
+  renderAxisBars();
 }
-
-// ─── 5. TOOLATOR: BERECHNEN ───────────────────────────────────
-function measure(){
-  let booked = 0, mass = 0;
-  for(let i=0;i<N*N;i++){
-    if (!S.booked[i]) continue;
-    booked++;
-    const r = Math.floor(i/N), c = i % N;
-    mass += pieceValue(S.seed[r][c]);
-  }
-  const clusters = computeClusters();
-  const entropy = computeEntropy();
-  const balance = computeBalance();
-  const force = computeForce(clusters);
-
-  S.bookedCount = booked;
-  S.mass = mass;
-  S.serviceSum = mass;
-  S.respo = mass / (81 * 9);       // Normiert auf Maximum (81 Felder × 9)
-  S.clusters = clusters.length;
-  S.entropy = entropy;
-  S.balance = balance.ratio;
-  S.force = force;
-  S.energy = mass * 0.5;           // E ∝ m (metaphorisch)
-
-  renderToolator(clusters);
-  document.getElementById('chessBadge').textContent = `${booked}/81 gebucht`;
-  document.getElementById('hdrService').textContent = (S.respo * 100).toFixed(0) + '%';
-  document.getElementById('toolBadge').textContent = S.autoMeasure ? 'auto' : 'bereit';
-  document.getElementById('hdrKlick').textContent = S.klick;
-}
-
-// ─── 6. RENDER: TOOLATOR ──────────────────────────────────────
-function renderToolator(clusters){
-  document.getElementById('t-booked').textContent = `${S.bookedCount} / 81`;
-  document.getElementById('t-booked-bar').style.width = (S.bookedCount / 81 * 100) + '%';
-  document.getElementById('t-service').textContent = S.serviceSum.toFixed(2);
-  document.getElementById('t-respo').textContent = S.respo.toFixed(3);
-  document.getElementById('t-clusters').textContent = S.clusters;
-  document.getElementById('t-entropy').textContent = S.entropy.toFixed(3);
-  document.getElementById('t-mass').textContent = S.mass.toFixed(2) + ' g';
-  document.getElementById('t-balance').textContent = S.balance.toFixed(3);
-  document.getElementById('t-balance-bar').style.width = (S.balance * 100) + '%';
-  document.getElementById('t-force').textContent = S.force.toFixed(3);
-  document.getElementById('t-energy').textContent = S.energy.toFixed(2) + ' J';
-
-  // Cluster-Outline auf dem Brett
-  const clusterCells = new Set();
-  clusters.forEach(cl => {
-    if (cl.length >= 2) cl.forEach(i => clusterCells.add(i));
-  });
-  document.querySelectorAll('.cell').forEach(el => {
-    const i = parseInt(el.dataset.idx, 10);
-    el.classList.toggle('cluster', clusterCells.has(i));
-  });
-}
-
-// ─── 7. RENDER: SCHACHBRETT ──────────────────────────────────
-function buildChess(){
-  const chess = document.getElementById('chess');
-  chess.innerHTML = '';
-  for(let r=0;r<N;r++){
-    for(let c=0;c<N;c++){
-      const i = r*N + c;
-      const piece = S.seed[r][c];
-      const isLight = (r+c) % 2 === 0;
-      const cell = document.createElement('div');
-      cell.className = 'cell ' + (isLight ? 'light' : 'dark');
-      if (S.booked[i]) cell.classList.add('booked');
-      if (piece === 'Ω' || piece === '◉' || piece === '♚' || piece === '♛') cell.classList.add('special');
-      cell.dataset.idx = i;
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-      cell.title = `${piece} · Wert ${pieceValue(piece)}`;
-      cell.innerHTML = `${piece === ' ' ? '·' : piece}<span class="v">${pieceValue(piece)}</span>`;
-      cell.addEventListener('click', () => toggleCell(i));
-      chess.appendChild(cell);
-    }
-  }
-}
-
-function toggleCell(i){
-  S.booked[i] = !S.booked[i];
-  S.klick++;
-  const cell = document.querySelector(`.cell[data-idx="${i}"]`);
-  if (cell){
-    cell.classList.toggle('booked', S.booked[i]);
-    // kleine Animation
-    cell.style.transform = 'scale(1.2)';
-    setTimeout(()=>{ cell.style.transform = ''; }, 150);
-  }
-  measure();
-}
-
-// ─── 8. SCHACHBRETT-BUTTONS ──────────────────────────────────
-document.getElementById('btnBookAll').addEventListener('click', () => {
-  S.booked.fill(true);
-  buildChess();
-  measure();
-  log('♟️ Alle Zellen gebucht', 'chess', 'gold');
-});
-document.getElementById('btnUnbookAll').addEventListener('click', () => {
-  S.booked.fill(false);
-  buildChess();
-  measure();
-  log('⟲ Alle Zellen freigegeben', 'chess', 'warn');
-});
-document.getElementById('btnResetChess').addEventListener('click', () => {
-  // NEUSTAND: Würfel aus ursprünglichem Seed neu buchen (die Ω, ◉, ♚, ♛, ♜, ♞, ♝)
-  S.booked.fill(false);
-  for(let r=0;r<N;r++){
-    for(let c=0;c<N;c++){
-      const p = S.seed[r][c];
-      if (p === 'Ω' || p === '◉' || p === '♚' || p === '♛') {
-        S.booked[r*N+c] = true;
-      }
-    }
-  }
-  buildChess();
-  measure();
-  log('🔄 NEUSTAND · Kernfiguren gebucht', 'chess', 'ok');
-});
-
-// ─── 9. TOOLATOR BUTTONS ─────────────────────────────────────
-document.getElementById('btnMeasure').addEventListener('click', () => {
-  measure();
-  log(`📏 Messung · Service=${S.serviceSum.toFixed(2)} · Respo=${S.respo.toFixed(3)} · Cluster=${S.clusters}`, 'toolator', 'ok');
-});
-
-document.getElementById('btnAutoMeasure').addEventListener('click', (e) => {
-  S.autoMeasure = !S.autoMeasure;
-  e.currentTarget.textContent = S.autoMeasure ? '⏯ AUTO' : '▶ AUTO';
-  e.currentTarget.style.color = S.autoMeasure ? '#b388ff' : '#8cf0d0';
-  if (S.autoMeasure) startAutoMeasure(); else stopAutoMeasure();
-  log(`Toolator AUTO ${S.autoMeasure ? 'an' : 'aus'}`, 'toolator', 'warn');
-});
-
-document.getElementById('btnEvalRith').addEventListener('click', () => {
-  // RITH-Eval auf Basis der aktuellen Buchungen
-  const res = evaluateRith();
-  log(`🔬 RITH · level=${res.rith} · score=${res.score} · emotion=${res.emotion}`, 'rith', 'ok');
-  document.getElementById('toolBadge').textContent = `rith ${res.rith}`;
-});
-
-// Einfache RITH-Eval (aus rith.engine.js nachempfunden)
-function evaluateRith(){
-  const total = 81;
-  const booked = S.bookedCount;
-  const clusters = S.clusters;
-  const entropy = S.entropy;
-  const score = Math.round((booked/total) * 60 + (clusters / 12) * 40);
-  let rith = 0;
-  if (booked > 0) rith++;
-  if (clusters > 0) rith++;
-  if (S.respo > 0.3) rith++;
-  if (S.respo > 0.6 && entropy < 0.7) rith++;
-  const emotion = score >= 70 ? 'FREUDE' : score >= 40 ? 'NEUTRAL' : 'MÜDE';
-  return { rith, score, emotion };
-}
-
-function startAutoMeasure(){
-  if (S.measureTimer) return;
-  S.measureTimer = setInterval(() => {
-    if (!S.autoMeasure) return;
-    // Nur die Cluster/Dynamik neu berechnen (nicht die Buchung)
-    const clusters = computeClusters();
-    const entropy = computeEntropy();
-    const balance = computeBalance();
-    const force = computeForce(clusters);
-    S.clusters = clusters.length;
-    S.entropy = entropy;
-    S.balance = balance.ratio;
-    S.force = force;
-    renderToolator(clusters);
-  }, 800);
-}
-function stopAutoMeasure(){
-  if (S.measureTimer) { clearInterval(S.measureTimer); S.measureTimer = null; }
-}
-
-// ─── 10. MODULE (MASTER · MACHT) ─────────────────────────────
-function makeFallback(id){
-  return {
-    __fallback:true, id,
-    init(){ return true; },
-    run(){ return { ok:false, reason:'fallback' }; },
-    stop(){ return true; },
-    state(){ return { id, present:false }; },
-  };
-}
-
-function detectModules(){
-  MODULES.forEach(m => {
-    const obj = window[m.global];
-    const present = !!(obj && (typeof obj === 'object' || typeof obj === 'function'));
-    S.mods[m.id] = {
-      present,
-      api: present ? obj : makeFallback(m.id),
-    };
-  });
-}
-
-function renderMacht(){
-  const box = document.getElementById('macht');
-  box.innerHTML = '';
-  MODULES.forEach(m => {
-    const mod = S.mods[m.id];
-    const present = mod?.present;
-    const div = document.createElement('div');
-    div.className = 'macht-card';
-    div.innerHTML = `
-      <h4><span>${m.label}</span><span class="dot ${present ? 'on' : 'fail'}"></span></h4>
-      <div class="row"><span class="lbl">Modul</span><span class="val">${m.name}</span></div>
-      <div class="row"><span class="lbl">Status</span><span class="val" style="color:${present ? '#8cf0d0' : '#ff6666'};">${present ? 'ok' : 'fallback'}</span></div>
-      <div class="actions">
-        <button data-mod="${m.id}" data-act="run">RUN</button>
-        <button data-mod="${m.id}" data-act="stop">STOP</button>
+function setChip(id, v){ const el = document.getElementById(id); if (el) el.textContent = v; }
+function renderAxisBars(){
+  const el = document.getElementById('axisBars'); if (!el) return;
+  const rows = [
+    { k:'MOVE',  v:S.move, color:'var(--amber)' },
+    { k:'SOUND', v:S.soundEnergy, color:'var(--pink)' },
+    { k:'BASS',  v:S.soundBass, color:'var(--violet)' },
+    { k:'ATEM',  v: S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2, color:'var(--mint)' },
+    { k:'LEBEN', v: (S.mana+S.aura+S.zen)/3, color:'var(--blue)' },
+  ];
+  el.innerHTML = rows.map(r => `
+    <div style="display:grid;grid-template-columns:56px 1fr 42px;gap:6px;align-items:center;
+                padding:3px 0;border-bottom:1px dashed rgba(104,246,192,.06);font-size:10px;">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:1px;font-weight:bold;">${r.k}</span>
+      <div style="height:6px;background:#0a1c24;border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${(r.v*100).toFixed(0)}%;background:${r.color};transition:width .35s;"></div>
       </div>
-    `;
-    box.appendChild(div);
-  });
-  box.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.mod, act = btn.dataset.act;
-      const api = S.mods[id]?.api;
-      if (act === 'run'){
-        try { if (api?.run) api.run(); else if (api?.start) api.start(); log(`▶ ${id} · RUN`, 'macht', 'ok'); }
-        catch(e){ log(`✗ ${id} · ${e.message}`, 'macht', 'err'); }
-      } else {
-        try { if (api?.stop) api.stop(); log(`⏸ ${id} · STOP`, 'macht', 'warn'); }
-        catch(e){ log(`✗ ${id} · ${e.message}`, 'macht', 'err'); }
-      }
+      <span style="text-align:right;color:${r.color};font-weight:bold;font-size:10px;">${(r.v*100).toFixed(0)}%</span>
+    </div>`).join('');
+}
+
+// ─── PARTIKEL ───────────────────────────────────────────
+function spawnSpark(x, y, color, count=1, kind='spark'){
+  for (let i = 0; i < count; i++){
+    const a = Math.random() * Math.PI * 2;
+    const sp = 1 + Math.random() * 3;
+    S.sparks.push({
+      x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp,
+      life: 1, maxLife: 30 + Math.random()*40,
+      color, size: 1 + Math.random()*2, kind,
     });
-  });
-}
-
-// Auto-Start-Kette: KIT → GROUB → WORK → ZAM → UI → ECONOMY
-const CHAIN = ['kit', 'groub', 'work', 'zam', 'ui', 'economy'];
-
-function autoStart(){
-  log('▶ AUTO-START · Kette beginnt', 'macht', 'gold');
-  CHAIN.forEach((id, idx) => {
-    setTimeout(() => {
-      const m = S.mods[id];
-      const mod = MODULES.find(x => x.id === id);
-      try {
-        if (m?.api?.init) m.api.init();
-        else if (m?.api?.start) m.api.start();
-        S.autoChain.push({ id, ok:true });
-        log(`  ↳ ${mod.name} → ${m.present ? 'geladen' : 'fallback'}`, 'auto', m.present ? 'ok' : 'warn');
-        renderMacht();
-      } catch(e){
-        S.autoChain.push({ id, ok:false });
-        log(`  ✗ ${mod.name} · ${e.message}`, 'auto', 'err');
-      }
-    }, idx * 180);
-  });
-  setTimeout(() => log('✅ AUTO-START abgeschlossen', 'macht', 'ok'), CHAIN.length * 180 + 200);
-}
-
-// ─── 11. MODULE-LINKS ────────────────────────────────────────
-function renderFolders(){
-  const box = document.getElementById('moduleList');
-  box.innerHTML = '';
-  FOLDERS.forEach(f => {
-    const a = document.createElement('a');
-    a.className = 'modul-card';
-    a.href = f.path;
-    a.innerHTML = `
-      <span class="icon">${f.icon}</span>
-      <div class="name">${f.name}</div>
-      <div class="desc">${f.desc}</div>
-    `;
-    box.appendChild(a);
-  });
-}
-
-// ─── 12. RENDER: 8 RICHTUNGEN ────────────────────────────────
-document.querySelectorAll('.dir-item').forEach(el => {
-  el.addEventListener('click', () => {
-    document.querySelectorAll('.dir-item').forEach(d => d.classList.remove('active'));
-    el.classList.add('active');
-    log(`🧭 Richtung: ${el.dataset.dir} aktiviert (Spinnwebe)`, 'dir', 'gold');
-    // Kleine Wirkung auf das Brett: Buchung in dieser Richtung togglen
-    applyDirection(el.dataset.dir);
-  });
-});
-
-function applyDirection(dir){
-  // Jede Richtung ist eine Achse im Schachbrett
-  // Bucht einen Streifen in dieser Richtung
-  const toBook = [];
-  switch(dir){
-    case 'S': // Sonne → alles buchen
-      for(let i=0;i<N*N;i++) S.booked[i] = true;
-      break;
-    case 'H': // Engine → mittlere Zeile
-      for(let c=0;c<N;c++) toBook.push(4*N + c);
-      break;
-    case 'B': // Matrix → mittlere Spalte
-      for(let r=0;r<N;r++) toBook.push(r*N + 4);
-      break;
-    case 'T': // Triangle → Diagonale
-      for(let i=0;i<N;i++) toBook.push(i*N + i);
-      break;
-    case 'O': // Orbit → Kreis um Zentrum
-      for(let r=2;r<7;r++) for(let c=2;c<7;c++) toBook.push(r*N + c);
-      break;
-    case 'D': // DS9 → 4 Ecken
-      toBook.push(0, N-1, (N-1)*N, N*N-1);
-      break;
-    case 't': // Helper → zufällige 10 Felder
-      for(let i=0;i<10;i++) toBook.push(Math.floor(Math.random()*N*N));
-      break;
-    case 'sys': // System → Kernfiguren (Seed)
-      for(let r=0;r<N;r++) for(let c=0;c<N;c++){
-        const p = S.seed[r][c];
-        if (p === 'Ω' || p === '◉' || p === '♚' || p === '♛') toBook.push(r*N + c);
-      }
-      break;
   }
-  if (dir === 'S'){
-    // S = alle
-    buildChess();
+  if (S.sparks.length > 600) S.sparks.splice(0, S.sparks.length - 600);
+}
+function updateSparks(dt){
+  for (let i = S.sparks.length - 1; i >= 0; i--){
+    const s = S.sparks[i];
+    s.x += s.vx * (dt*60) * (1 + S.soundEnergy * 2);
+    s.y += s.vy * (dt*60) * (1 + S.soundEnergy * 2);
+    s.vx *= 0.96; s.vy *= 0.96;
+    s.vy += 0.02;
+    s.life -= dt / (s.maxLife/60);
+    if (s.life <= 0) S.sparks.splice(i, 1);
+  }
+}
+function drawSparks(){
+  for (const s of S.sparks){
+    ctx.globalAlpha = Math.max(0, s.life);
+    ctx.fillStyle = s.color;
+    ctx.beginPath();
+    if (s.kind === 'star'){
+      const r = s.size * 2 * s.life;
+      for (let i = 0; i < 4; i++){
+        const a = i * Math.PI/2 + Math.atan2(s.vy, s.vx);
+        const x1 = s.x + Math.cos(a) * r;
+        const y1 = s.y + Math.sin(a) * r;
+        const a2 = a + Math.PI/4;
+        const x2 = s.x + Math.cos(a2) * r*0.3;
+        const y2 = s.y + Math.sin(a2) * r*0.3;
+        if (i===0) ctx.moveTo(x1, y1); else ctx.lineTo(x1, y1);
+        ctx.lineTo(x2, y2);
+      }
+      ctx.closePath(); ctx.fill();
+    } else {
+      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+
+// ─── KAMERA (Ken-Burns + Atem + Sound + Shake) ──────────
+function cameraOffset(localT){
+  const f = S.frame;
+  const moveAmp = 2 + S.move * 9 + S.soundEnergy * 6;
+  const breathAmp = 1 + (S.breathOn ? (S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2) * 3 : 0);
+  let ox = Math.sin(f*0.011) * moveAmp * 0.6 + Math.sin(f*0.003)*breathAmp*0.4;
+  let oy = Math.cos(f*0.014) * moveAmp * 0.4 + Math.sin(f*0.0065)*breathAmp*0.6;
+  // Ken-Burns: langsamer Zoom pro Bild
+  const kb = Math.sin(localT * Math.PI); // 0..1..0
+  const zoom = 1.02 + kb * 0.06 + S.soundPulse * 0.02 + Math.sin(f*0.004) * 0.006 * (0.4 + S.move*0.8);
+  if (S.shake > 0){
+    ox += (Math.random()-0.5) * S.shake;
+    oy += (Math.random()-0.5) * S.shake;
+    S.shake *= 0.88; if (S.shake < 0.05) S.shake = 0;
+  }
+  return {ox, oy, zoom};
+}
+
+// ─── ZEICHEN-HILFEN ────────────────────────────────────
+function rect(x, y, w, h, fill){ ctx.fillStyle = fill; ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+function text(txt, x, y, size=14, color='#d8f0e8', align='left', weight='400', font='"Courier New",monospace'){
+  ctx.font = `${weight} ${size}px ${font}`;
+  ctx.fillStyle = color;
+  ctx.textBaseline = 'top'; ctx.textAlign = align;
+  ctx.fillText(txt, Math.round(x), Math.round(y));
+}
+function clamp(n, a=0, b=1){ return Math.max(a, Math.min(b, n)); }
+function lerp(a, b, t){ return a + (b - a) * t; }
+function ease(t){ t = clamp(t); return t*t*(3-2*t); }
+function roundRect(x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+function wrapText(txt, maxChars){
+  const words = String(txt).split(/\s+/);
+  const lines = []; let line = '';
+  words.forEach(w => {
+    const nxt = line ? line + ' ' + w : w;
+    if (nxt.length > maxChars && line){ lines.push(line); line = w; }
+    else line = nxt;
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+function multiline(txt, x, y, mc, lh, size, color, maxLines=4){
+  const lines = wrapText(txt, mc).slice(0, maxLines);
+  lines.forEach((l, i) => text(l, x, y + i*lh, size, color));
+  return lines.length;
+}
+
+// ─── FILM GRAIN / SCANLINES / VIGNETTE ─────────────────
+function drawCRT(){
+  // Scanlines
+  ctx.save();
+  ctx.globalAlpha = 0.06;
+  for (let y = 0; y < H; y += 4) rect(0, y, W, 1, '#020810');
+  // Vignette
+  const v = ctx.createRadialGradient(W/2, H/2, 130, W/2, H/2, 620);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(1, 'rgba(0,0,0,.65)');
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  // Film-Grain (dichte skaliert mit Sound)
+  const grainDensity = 60 + S.soundEnergy * 120;
+  ctx.globalAlpha = 0.05 + S.soundEnergy * 0.08;
+  for (let i = 0; i < grainDensity; i++){
+    const x = Math.random() * W, y = Math.random() * H;
+    rect(x, y, 1, 1, Math.random() < 0.5 ? '#fff' : '#000');
+  }
+  // Staubkörner (immer)
+  ctx.globalAlpha = 0.15;
+  for (let i = 0; i < 26; i++){
+    const x = (Math.sin(i*93.7 + S.frame*0.06)*0.5+0.5) * W;
+    const y = (Math.sin(i*17.3 + S.frame*0.10)*0.5+0.5) * H;
+    rect(x, y, 1, 1, i%3 ? '#7df4c4' : '#ff6d9d');
+  }
+  ctx.restore();
+}
+
+// ─── ELEMENT-PARTIKEL (ATEM · ATOM · O2 · CO2 · H2O) ───
+function drawElementParticles(intensity=1){
+  const t = S.frame;
+  const cx = W/2, cy = H/2;
+  const sound = 0.4 + S.soundEnergy * 1.2;
+
+  // Atom-Kern
+  const atomR = 40 + S.atom * 30 + S.soundBass * 24;
+  ctx.save();
+  ctx.strokeStyle = `rgba(179,136,255,${(0.3 + S.atom*0.3) * intensity})`;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(cx, cy, atomR, 0, Math.PI*2); ctx.stroke();
+  for (let i = 0; i < 3; i++){
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(t * 0.005 + i * Math.PI/3);
+    ctx.strokeStyle = `rgba(179,136,255,${(0.15 + S.atom*0.15) * intensity})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, atomR + 15, atomR * 0.35, 0, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  // O2 (grün, steigen auf)
+  for (let i = 0; i < 10; i++){
+    const a = (i/10)*Math.PI*2 + t*0.008;
+    const r = 90 + S.o2 * 40 + sound * 40;
+    const x = cx + Math.cos(a)*r;
+    const y = cy + Math.sin(a)*r - 40;
+    ctx.save();
+    ctx.globalAlpha = (0.4 + S.o2 * 0.3) * intensity;
+    ctx.fillStyle = '#7ce0a8'; ctx.shadowColor = '#7ce0a8'; ctx.shadowBlur = 12;
+    ctx.beginPath(); ctx.arc(x, y, 3 + S.o2*2, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+  // CO2 (gold, sinken)
+  for (let i = 0; i < 10; i++){
+    const a = (i/10)*Math.PI*2 + Math.PI/8 + t*0.006;
+    const r = 100 + S.co2 * 40 + sound * 30;
+    const x = cx + Math.cos(a)*r;
+    const y = cy + Math.sin(a)*r + 40;
+    ctx.save();
+    ctx.globalAlpha = (0.4 + S.co2 * 0.3) * intensity;
+    ctx.fillStyle = '#ffcc44'; ctx.shadowColor = '#ffcc44'; ctx.shadowBlur = 10;
+    ctx.beginPath(); ctx.arc(x, y, 2.5 + S.co2*2, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+  // H2O (cyan, fließen)
+  for (let i = 0; i < 12; i++){
+    const a = (i/12)*Math.PI*2 + t*0.004;
+    const r = 130 + S.h2o * 30 + sound * 20;
+    const wobble = Math.sin(t*0.02 + i) * 10;
+    const x = cx + Math.cos(a)*(r + wobble);
+    const y = cy + Math.sin(a)*(r + wobble) * 0.9;
+    ctx.save();
+    ctx.globalAlpha = (0.3 + S.h2o * 0.3) * intensity;
+    ctx.fillStyle = '#5fc8ff'; ctx.shadowColor = '#5fc8ff'; ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 2 + S.h2o*1.5, 4 + S.h2o*2, a, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // MOVE-Bokeh (sound-verstärkt)
+  const bokehCount = Math.round(8 + S.move * 26 + S.soundEnergy * 20);
+  for (let i = 0; i < bokehCount; i++){
+    const a = i * 2.399963 + t * (0.006 + (i%5)*0.002);
+    const r = 60 + ((i*53) % 260) + Math.sin(t*0.01+i)*18;
+    const x = cx + Math.cos(a) * r * 1.4;
+    const y = cy + Math.sin(a) * r * 0.75;
+    if (x < -20 || x > W+20 || y < -20 || y > H+20) continue;
+    ctx.save();
+    ctx.globalAlpha = (0.12 + 0.22 * S.move) * intensity;
+    ctx.fillStyle = ['#68f6c0','#b388ff','#ffbd5c','#ff6d9d'][i%4];
+    ctx.beginPath(); ctx.arc(x, y, 1.2 + (i%3), 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ─── WUNDER-STRAHLEN (Bloom) ────────────────────────────
+function drawWonderBloom(intensity){
+  if (intensity <= 0) return;
+  const cx = W/2, cy = H/2;
+  const r = 180 + Math.sin(S.frame*0.02) * 20 + S.soundEnergy * 80;
+  const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+  g.addColorStop(0, `rgba(255, 210, 140, ${0.10 * intensity})`);
+  g.addColorStop(0.5, `rgba(179, 136, 255, ${0.06 * intensity})`);
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.save();
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+
+// ─── HAUPT-RENDERER: BILD + ATEM + ATOM ────────────────
+function renderChapter(chIdx, imgIdx, localT){
+  const ch = chapters[chIdx];
+  const img = getImage(chIdx, imgIdx);
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Hintergrund
+  rect(0, 0, W, H, '#04080e');
+
+  // Kamera
+  const cam = cameraOffset(localT);
+  ctx.save();
+  ctx.translate(W/2, H/2);
+  ctx.scale(cam.zoom, cam.zoom);
+  ctx.translate(-W/2 + cam.ox, -H/2 + cam.oy);
+
+  // Bild zeichnen (oder Platzhalter)
+  if (img instanceof Image){
+    // cover
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const scale = Math.max(W/iw, H/ih);
+    const dw = iw * scale, dh = ih * scale;
+    const dx = (W - dw)/2, dy = (H - dh)/2;
+    // Bild "atmet" mit Sound (ganz leicht)
+    const pulse = 1 + S.soundBass * 0.012;
+    ctx.save();
+    ctx.translate(W/2, H/2);
+    ctx.scale(pulse, pulse);
+    ctx.translate(-W/2, -H/2);
+    ctx.globalAlpha = 0.96;
+    ctx.drawImage(img, dx, dy, dw, dh);
+    ctx.restore();
+
+    // Farbstimmung pro Kapitel (Overlay)
+    const tint = chapterTint(ch.color);
+    ctx.save();
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = tint;
+    ctx.globalAlpha = 0.35;
+    ctx.fillRect(dx, dy, dw, dh);
+    ctx.restore();
   } else {
-    toBook.forEach(i => { S.booked[i] = true; });
-    buildChess();
+    // Platzhalter
+    rect(0, 0, W, H, '#060c14');
+    drawPlaceholder(chIdx, imgIdx, localT);
   }
-  measure();
+
+  // Wunder-Bloom
+  drawWonderBloom(0.4 + S.soundEnergy * 0.6);
+
+  // Atem-Partikel (Atom/O2/CO2/H2O)
+  drawElementParticles(0.9);
+
+  // Speed-Lines bei starkem Bass
+  if (S.soundPulse > 0.4){
+    drawSpeedLines(W/2, H/2, 20, 200, 520,
+      `rgba(255,189,92,${0.15 + S.soundPulse * 0.3})`);
+  }
+
+  // Partikel
+  drawSparks();
+
+  ctx.restore();
+
+  // CRT / Grain / Vignette
+  drawCRT();
 }
 
-// ─── 13. MASTER_KERNEL ────────────────────────────────────────
-const MASTER_KERNEL = {
-  init:  () => S.mods.kit?.api?.init?.(),
-  build: () => ({ matrix: S.booked.slice() }),
-  send:  (m) => { /* Broadcast der Matrix */ broadcast('mk:matrix', m); },
-  pipe:  () => { /* Pipeline */ },
-  orbit: () => S.mods.zam?.api?.orbit?.(),
-  ui:    () => S.mods.ui?.api?.init?.(),
-  eco:   () => { /* Eco connect */ },
-  work:  () => S.mods.work?.api?.start?.(),
-  groub: () => S.mods.groub?.api?.start?.(),
-  start(){
-    this.init();
-    const matrix = this.build();
-    this.send(matrix);
-    this.work();
-    this.groub();
-    this.ui();
-    this.eco();
-    this.orbit();
-    log('🧠 MASTER_KERNEL.start() · volle Kette ausgeführt', 'kernel', 'gold');
-    return matrix;
-  }
-};
-window.MASTER_KERNEL = MASTER_KERNEL;
-
-document.getElementById('btnMasterKernel').addEventListener('click', () => MASTER_KERNEL.start());
-document.getElementById('btnStartAll').addEventListener('click', () => {
-  CHAIN.forEach(id => { try { S.mods[id]?.api?.run?.() || S.mods[id]?.api?.start?.(); } catch(_){} });
-  log('▶ START ALL', 'macht', 'gold');
-});
-document.getElementById('btnStopAll').addEventListener('click', () => {
-  CHAIN.forEach(id => { try { S.mods[id]?.api?.stop?.(); } catch(_){} });
-  log('⏸ STOP ALL', 'macht', 'warn');
-});
-
-// ─── 14. BROADCAST ───────────────────────────────────────────
-let BC = null;
-try { BC = new BroadcastChannel('iki1uc-orbit'); } catch(_){}
-function broadcast(type, payload){
-  if (BC) { try { BC.postMessage({ type, from:'STAGE-TOOLATOR', payload, ts:Date.now() }); } catch(_){} }
-}
-
-// ─── 15. 9×9 RESPO Hintergrund ───────────────────────────────
-function initRespoBg(){
-  const bg = document.getElementById('respoBg');
-  for(let i=0;i<81;i++){
-    const c = document.createElement('div');
-    c.dataset.idx = i;
-    bg.appendChild(c);
+function chapterTint(color){
+  switch(color){
+    case 'amber': return '#ffd79b';
+    case 'violet': return '#a48cff';
+    case 'blue': return '#7ec8ff';
+    case 'pink': return '#ff9ec4';
+    case 'mint': return '#9effd5';
+    case 'gold': return '#ffe08a';
+    case 'red': return '#ffb0b0';
+    default: return '#ffffff';
   }
 }
-function animateRespoBg(){
-  const now = performance.now() * 0.001;
-  document.querySelectorAll('#respoBg div').forEach((cell,i) => {
-    const val = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(i * 0.2 + now * 0.3 + Math.sin(i * 0.05 + now * 0.2)));
-    const alpha = 0.02 + val * 0.08;
-    cell.style.background = `rgba(120, 220, 150, ${alpha})`;
-  });
-  requestAnimationFrame(animateRespoBg);
+
+function drawPlaceholder(chIdx, imgIdx, localT){
+  // Elegant: Nummer + Moment-Marker
+  const ch = chapters[chIdx];
+  const n = (chIdx+1) + "-" + String(imgIdx+1).padStart(2,"0");
+  text('MOMENT ' + n, W/2, H/2 - 30, 22, '#68f6c0', 'center', '700');
+  text(ch.title, W/2, H/2 + 6, 14, '#ffbd5c', 'center', '700');
+  text('BILD FEHLT · ' + ch.folder + "/" + ch.images[imgIdx], W/2, H/2 + 34, 10, '#4a6e72', 'center');
+
+  // Sanftes Rauschen
+  for (let i = 0; i < 300; i++){
+    const x = Math.random()*W, y = Math.random()*H;
+    rect(x, y, 1, 1, `rgba(104,246,192,${0.02 + Math.random()*0.05})`);
+  }
+  // Rahmen
+  ctx.strokeStyle = 'rgba(104,246,192,.35)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(40, 40, W-80, H-80);
 }
 
-// ─── 16. FL76 Monitor ────────────────────────────────────────
-function tickFl76(now){
-  S.frameCount++;
-  if (now - S.lastFpsT > 1000){
-    S.fps = S.frameCount;
-    S.frameCount = 0;
-    S.lastFpsT = now;
+function drawSpeedLines(cx, cy, count=24, innerR=180, outerR=520, color='rgba(255,189,92,.25)'){
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < count; i++){
+    const a = (i / count) * Math.PI * 2 + Math.random() * 0.1;
+    const r1 = innerR + Math.random() * 30;
+    const r2 = outerR + Math.random() * 60;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+    ctx.stroke();
   }
-  if (S.lastFrameT > 0){
-    S.flRaw = now - S.lastFrameT;
-    S.flSmooth = S.flSmooth * 0.88 + S.flRaw * 0.12;
-  }
-  S.lastFrameT = now;
-  const fl = Math.round(S.flSmooth);
-  const mon = document.getElementById('fl76mon');
-  document.getElementById('fl76num').textContent = fl;
-  if (fl >= 60 && fl <= 90) mon.className = '';
-  else if (fl < 40 || fl > 120) mon.className = 'outside';
-  else mon.className = 'edge';
-  requestAnimationFrame(tickFl76);
+  ctx.restore();
 }
 
-// ─── 17. LOG ──────────────────────────────────────────────────
-function log(msg, tag = 'stage', type = ''){
-  const box = document.getElementById('logBox');
-  const entry = document.createElement('div');
-  entry.className = 'entry';
-  const t = new Date().toLocaleTimeString('de-DE');
-  entry.innerHTML = `<span class="time">[${t}]</span><span class="tag">${tag}</span><span class="${type}">${msg}</span>`;
-  box.appendChild(entry);
-  box.scrollTop = box.scrollHeight;
-  while (box.children.length > 80) box.removeChild(box.firstChild);
+// ─── UI UPDATES ────────────────────────────────────────
+function fmt(sec, tenths=true){
+  sec = Math.max(0, sec);
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  const d = tenths ? '.' + Math.floor((sec%1)*10) : '';
+  return `${m}:${s}${d}`;
+}
+function chapterAt(time){
+  const t = Math.max(0, Math.min(time, MASTER_DURATION - 0.0001));
+  return chapters.findIndex(ch => t >= ch.start && t < ch.end);
+}
+function momentFor(chIdx){
+  const ch = chapters[chIdx];
+  const localInCh = clamp((S.time - ch.start) / ch.runtimeDuration);
+  const imgIdx = Math.min(ch.images.length - 1, Math.floor(localInCh * ch.images.length));
+  const imgLocal = (localInCh * ch.images.length) % 1;
+  return { imgIdx, imgLocal, localInCh };
 }
 
-// ─── 18. CLOCK ────────────────────────────────────────────────
-function clock(){
-  document.getElementById('hdrClock').textContent = '⏱️ ' + new Date().toLocaleTimeString('de-DE');
-}
-setInterval(clock, 1000); clock();
+function updateUI(){
+  const chIdx = chapterAt(S.time);
+  const ch = chapters[chIdx];
+  const { imgIdx, imgLocal, localInCh } = momentFor(chIdx);
 
-// ─── 19. KEYBOARD ─────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT') return;
-  // 1-8 für Richtungen
-  const dirMap = { '1':'S', '2':'H', '3':'B', '4':'T', '5':'O', '6':'D', '7':'t', '8':'sys' };
-  if (e.key in dirMap) {
-    const el = document.querySelector(`.dir-item[data-dir="${dirMap[e.key]}"]`);
-    if (el) el.click();
-  }
-  // M = Messen
-  if (e.key === 'm' || e.key === 'M') document.getElementById('btnMeasure').click();
-  // Leertaste = KlicK (eine zufällige Zelle togglen)
-  if (e.key === ' '){
-    e.preventDefault();
-    const i = Math.floor(Math.random() * N * N);
-    toggleCell(i);
-  }
-});
-
-// ─── 20. INIT ─────────────────────────────────────────────────
-function init(){
-  // Respo-Hintergrund
-  initRespoBg();
-  animateRespoBg();
-
-  // Schachbrett: Kernfiguren sind initial gebucht
-  for(let r=0;r<N;r++){
-    for(let c=0;c<N;c++){
-      const p = S.seed[r][c];
-      if (p === 'Ω' || p === '◉' || p === '♚' || p === '♛') {
-        S.booked[r*N+c] = true;
-      }
+  // Wechsel?
+  if (chIdx !== S.currentChapter || imgIdx !== S.currentImage){
+    S.currentChapter = chIdx; S.currentImage = imgIdx;
+    S.shake = 8;
+    for (let i = 0; i < 20; i++){
+      spawnSpark(W/2, H/2, ['#68f6c0','#b388ff','#ffbd5c','#ff6d9d'][i%4], 1, 'star');
     }
   }
-  buildChess();
-  measure();
-  startAutoMeasure();
 
-  // Module erkennen + rendern
-  detectModules();
-  renderMacht();
-  renderFolders();
+  // Text
+  document.getElementById('sceneCode').textContent = ch.id;
+  document.getElementById('sceneTitle').textContent = ch.title;
+  document.getElementById('sourceChip').textContent = ch.source;
+  document.getElementById('sceneProgress').style.width = `${localInCh*100}%`;
+  document.getElementById('sceneTime').textContent = String(imgIdx+1).padStart(2,'0') + " / 09";
+  document.getElementById('masterTime').textContent = fmt(S.time);
+  document.getElementById('timelineScene').textContent = ch.id;
+  document.getElementById('timelineTime').textContent = `${fmt(S.time)} / ${fmt(MASTER_DURATION, false)}`;
+  document.getElementById('beatTag').textContent = `${ch.id}-${String(imgIdx+1).padStart(2,'0')}`;
+  document.getElementById('promptHeading').textContent = (ch.prompt || 'STORY').toUpperCase();
 
-  // Auto-Start
-  autoStart();
+  const pr = document.getElementById('prompter');
+  pr.innerHTML = '';
+  const p1 = document.createElement('div');
+  p1.textContent = ch.prompt;
+  pr.appendChild(p1);
+  const p2 = document.createElement('div');
+  p2.className = 'quote'; p2.style.marginTop = '10px';
+  p2.textContent = ch.story;
+  pr.appendChild(p2);
 
-  // FL76
-  S.lastFpsT = performance.now();
-  requestAnimationFrame(tickFl76);
+  // Story-Overlay
+  const so = document.getElementById('storyOverlay');
+  so.innerHTML = `
+    <div class="ch">${ch.id} · ${ch.subtitle}</div>
+    <div class="title">${ch.title}</div>
+    <div class="line">${ch.story}</div>
+    <div class="track">♫ ${ch.track}</div>
+  `;
+  so.classList.add('show');
 
-  log('♟️ STAGE · SCHACHBRETT · TOOLATOR bereit', 'init', 'gold');
-  log('Buchen · Messen · Verstehen', 'init', 'ok');
-  log('MASTER_KERNEL · window.MASTER_KERNEL.start()', 'init', 'gold');
+  // Tabs
+  [...document.querySelectorAll('.scene-tab')].forEach((t, i) => {
+    t.classList.toggle('active', i === chIdx);
+  });
+
+  // Mini-Plot (81 Zellen)
+  const cells = document.querySelectorAll('.mini-plot .cell');
+  const chStart = chIdx * 9;
+  cells.forEach((c, i) => {
+    c.classList.toggle('active', i === chStart + imgIdx);
+    c.classList.toggle('done', i < chStart + imgIdx);
+  });
+
+  // Timeline
+  document.getElementById('timeline').value = S.time.toFixed(1);
+  document.getElementById('overlayLeft').textContent = `${ch.id} / ${ch.title}`;
+  document.getElementById('overlayRight').textContent = `${fmt(S.time)} / ${S.playing ? 'RUN' : 'HOLD'}`;
+  document.getElementById('canvasMode').textContent = S.playing ? 'LIVE / PLAYING' : 'LIVE / HOLD';
+  document.getElementById('runState').textContent = S.playing ? 'PLAYING' : 'IDLE';
+
+  // Render
+  renderChapter(chIdx, imgIdx, imgLocal);
 }
 
-if (document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+function updateControls(){
+  const btn = document.getElementById('startBtn');
+  btn.textContent = S.playing ? 'Ⅱ PAUSE STORY' : '▶ START STORY';
+  btn.classList.toggle('active', S.playing);
+  document.getElementById('autoBtn').textContent = `⟳ AUTO: ${S.autoOn ? 'ON' : 'OFF'}`;
+  document.getElementById('autoBtn').classList.toggle('active', S.autoOn);
+  document.getElementById('breathBtn').textContent = `◈ ATEM: ${S.breathOn ? 'AN' : 'AUS'}`;
+  document.getElementById('breathBtn').classList.toggle('active', S.breathOn);
+  document.querySelectorAll('[data-speed]').forEach(b =>
+    b.classList.toggle('active', Number(b.dataset.speed) === S.speed));
+  updateUI();
 }
+
+// ─── TABS + MARKER + MINI-PLOT ─────────────────────────
+function makeTabs(){
+  const el = document.getElementById('sceneTabs');
+  el.innerHTML = '';
+  chapters.forEach((ch, i) => {
+    const b = document.createElement('button');
+    b.className = 'scene-tab';
+    b.dataset.index = i;
+    b.dataset.color = ch.color;
+    b.innerHTML = `<strong>${ch.id}</strong> ${ch.title}<small>${ch.images.length}× MOMENT</small>`;
+    b.addEventListener('click', () => {
+      S.time = ch.start + (0.001 * ch.runtimeDuration); // erstes Bild
+      updateControls();
+    });
+    el.appendChild(b);
+  });
+}
+function makeMarkers(){
+  const el = document.getElementById('markers');
+  el.innerHTML = '';
+  chapters.forEach((ch, i) => {
+    const m = document.createElement('span');
+    m.className = 'marker';
+    m.style.left = `${(ch.start / MASTER_DURATION) * 100}%`;
+    m.title = `${ch.id} / ${ch.title}`;
+    m.innerHTML = i === 0 ? '' : `<em>${ch.id}</em>`;
+    el.appendChild(m);
+  });
+}
+function makeMiniPlot(){
+  const el = document.getElementById('miniPlot');
+  el.innerHTML = '';
+  for (let c = 0; c < 9; c++){
+    for (let i = 0; i < 9; i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.ch = c;
+      cell.dataset.img = i;
+      cell.title = `CH${c+1} · MOMENT ${i+1}`;
+      // Thumbnail als Hintergrund wenn vorhanden (imageCache nicht synchron verfügbar → lazy setzen)
+      const ch = chapters[c];
+      const key = c + ":" + i;
+      const img = S.imageCache[key];
+      if (img instanceof Image){
+        cell.style.backgroundImage = `url(${img.src})`;
+        cell.classList.add('thumb');
+      }
+      cell.addEventListener('click', () => {
+        const targetCh = chapters[c];
+        S.time = targetCh.start + (i / 9) * targetCh.runtimeDuration + 0.001;
+        updateControls();
+      });
+      el.appendChild(cell);
+    }
+  }
+}
+function refreshMiniPlotThumbs(){
+  const cells = document.querySelectorAll('.mini-plot .cell');
+  cells.forEach(cell => {
+    const c = Number(cell.dataset.ch);
+    const i = Number(cell.dataset.img);
+    const key = c + ":" + i;
+    const img = S.imageCache[key];
+    if (img instanceof Image && !cell.classList.contains('thumb')){
+      cell.style.backgroundImage = `url(${img.src})`;
+      cell.classList.add('thumb');
+    }
+  });
+}
+
+// ─── SOUNDTRACK-LISTE ──────────────────────────────────
+function makeTrackList(){
+  const el = document.getElementById('trackList');
+  el.innerHTML = '';
+  chapters.forEach((ch, i) => {
+    const li = document.createElement('li');
+    li.dataset.index = i;
+    li.innerHTML = `<b>${ch.id}</b><span>${ch.track}</span>`;
+    el.appendChild(li);
+  });
+}
+function updateTrackList(){
+  const chIdx = chapterAt(S.time);
+  const items = document.querySelectorAll('#trackList li');
+  items.forEach((li, i) => li.classList.toggle('active', i === chIdx));
+  // Track in audioEl laden, wenn URL vorhanden
+  const ch = chapters[chIdx];
+  if (ch.trackUrl && audioEl.src !== ch.trackUrl){
+    audioEl.src = ch.trackUrl;
+  }
+}
+
+// ─── EVENTS ────────────────────────────────────────────
+function bind(){
+  document.getElementById('startBtn').addEventListener('click', () => {
+    if (!S.playing){
+      if (S.time >= MASTER_DURATION - 0.1) S.time = 0;
+      S.playing = true;
+      S.lastFrame = performance.now();
+      // AudioContext initialisieren (User-Geste)
+      setupAudio();
+      if (S.audioCtx && S.audioCtx.state === 'suspended') S.audioCtx.resume();
+    } else {
+      S.playing = false;
+    }
+    updateControls();
+  });
+  document.getElementById('stepBack').addEventListener('click', () => {
+    S.playing = false;
+    S.time = Math.max(0, S.time - SEC_PER_IMAGE);
+    updateControls();
+  });
+  document.getElementById('stepForward').addEventListener('click', () => {
+    S.playing = false;
+    S.time = Math.min(MASTER_DURATION, S.time + SEC_PER_IMAGE);
+    updateControls();
+  });
+  document.getElementById('autoBtn').addEventListener('click', () => {
+    S.autoOn = !S.autoOn; updateControls();
+  });
+  document.getElementById('breathBtn').addEventListener('click', () => {
+    S.breathOn = !S.breathOn; updateControls();
+  });
+  document.querySelectorAll('[data-speed]').forEach(b =>
+    b.addEventListener('click', () => { S.speed = Number(b.dataset.speed); updateControls(); }));
+  document.getElementById('timeline').addEventListener('input', e => {
+    S.playing = false;
+    S.time = Number(e.target.value);
+    updateControls();
+  });
+  document.getElementById('fullscreenBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    S.time = 0; S.playing = false; S.currentChapter = -1; S.currentImage = -1;
+    updateControls();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input,button,audio')) return;
+    if (e.code === 'Space'){ e.preventDefault(); document.getElementById('startBtn').click(); }
+    if (e.key === 'ArrowLeft'){ S.playing = false; S.time = Math.max(0, S.time - SEC_PER_IMAGE); updateControls(); }
+    if (e.key === 'ArrowRight'){ S.playing = false; S.time = Math.min(MASTER_DURATION, S.time + SEC_PER_IMAGE); updateControls(); }
+    if (e.key.toLowerCase() === 'f') document.getElementById('fullscreenBtn').click();
+    if (e.key.toLowerCase() === 'b') document.getElementById('breathBtn').click();
+    if (e.key === 'Home'){ S.playing = false; S.time = 0; updateControls(); }
+    if (e.key === 'End'){ S.playing = false; S.time = MASTER_DURATION - 0.1; updateControls(); }
+  });
+
+  // Audio
+  audioEl.addEventListener('play', () => {
+    setupAudio();
+    if (S.audioCtx && S.audioCtx.state === 'suspended') S.audioCtx.resume();
+  });
+}
+
+// ─── MAIN LOOP ─────────────────────────────────────────
+function loop(now){
+  const dt = Math.min(0.08, (now - S.lastFrame) / 1000);
+  S.lastFrame = now;
+  S.frame++;
+
+  if (S.breathOn) updateElements(dt);
+  updateSparks(dt);
+  readSound(now);
+
+  // Auto-Partikel
+  if (Math.random() < 0.02 + S.move * 0.04 + S.soundEnergy * 0.08){
+    const colors = ['#ffcc66','#68f6c0','#b388ff','#6cc9ff','#ff6d9d'];
+    spawnSpark(
+      Math.random() * W, Math.random() * H * 0.8 + 40,
+      colors[Math.floor(Math.random() * colors.length)],
+      1, Math.random() < 0.4 ? 'star' : 'spark'
+    );
+  }
+
+  // Auto-Advance
+  if (S.playing && S.autoOn){
+    S.time += dt * S.speed;
+    if (S.time >= MASTER_DURATION){
+      S.time = MASTER_DURATION - 0.001;
+      S.playing = false;
+    }
+  }
+
+  // Aktuelles Kapitel / Bild
+  const chIdx = chapterAt(S.time);
+  const { imgIdx } = momentFor(chIdx);
+
+  // Vorladen nächstes Bild
+  if (chIdx >= 0){
+    const ch = chapters[chIdx];
+    // aktuelle + nächste 2 Bilder
+    for (let k = 0; k <= 2; k++){
+      const ni = imgIdx + k;
+      if (ni < ch.images.length) getImage(chIdx, ni);
+    }
+    // nächstes Kapitel vorladen
+    if (chIdx + 1 < chapters.length && k === 0){
+      // erste 2 Bilder des nächsten Kapitels
+      getImage(chIdx + 1, 0);
+      getImage(chIdx + 1, 1);
+    }
+  }
+
+  updateUI();
+  updateTrackList();
+  requestAnimationFrame(loop);
+}
+
+// ─── INIT ──────────────────────────────────────────────
+makeTabs();
+makeMarkers();
+makeMiniPlot();
+makeTrackList();
+bind();
+updateControls();
+preloadAll();
+// Mini-Plot-Thumbs nach und nach aktualisieren
+setInterval(refreshMiniPlotThumbs, 800);
+
+requestAnimationFrame(loop);
+
+})();
 </script>
 </body>
 </html>
