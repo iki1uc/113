@@ -1,732 +1,652 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌀 MASTER‑BRAIN · ORIGINAL · STAND‑DER‑DINGE</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #05070e;
-            color: #c0d0d0;
-            font-family: 'Segoe UI', 'Consolas', monospace;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💃 TANZ · SHUFFLE · DREH · 2 SPIELER</title>
 
-        #master {
-            display: flex;
-            flex: 1;
-            height: 100vh;
-            overflow: hidden;
-        }
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: #0a0a0f;
+  color: #c8d0d0;
+  font-family: 'Consolas', 'Courier New', monospace;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: radial-gradient(ellipse at 50% 50%, #0a0a1a, #000000);
+}
+.container {
+  max-width: 1000px;
+  width: 100%;
+  background: rgba(10,10,20,0.3);
+  border: 1px solid rgba(255,170,0,0.03);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 100px rgba(0,0,0,0.8);
+}
+.header {
+  text-align: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 26px;
+  background: linear-gradient(90deg, #ff4444, #ffaa00, #00ff88, #00ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 4px;
+}
+.header .sub {
+  color: #445555;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+.header .sub .p1 { color: #ff4444; }
+.header .sub .p2 { color: #00ccff; }
 
-        /* ─── NAV ─── */
-        #nav {
-            width: 260px;
-            min-width: 220px;
-            background: rgba(6, 8, 16, 0.92);
-            backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(120, 220, 150, 0.08);
-            padding: 14px 12px;
-            overflow-y: auto;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-        }
-        #nav .brand {
-            font-size: 16px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #7ee0a0, #d8f0c0, #b388ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(120, 220, 150, 0.06);
-            margin-bottom: 10px;
-        }
-        .nav-section {
-            margin-bottom: 10px;
-        }
-        .nav-section .head {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #4a6a5a;
-            padding-bottom: 4px;
-            border-bottom: 1px solid rgba(120, 220, 150, 0.04);
-            margin-bottom: 6px;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            color: #8aa8a0;
-            cursor: pointer;
-            border-left: 2px solid transparent;
-            transition: 0.2s;
-        }
-        .nav-item:hover {
-            background: rgba(120, 220, 150, 0.04);
-            color: #d0e8e0;
-            border-left-color: #7ee0a0;
-        }
-        .nav-item .icon {
-            font-size: 13px;
-            width: 18px;
-            text-align: center;
-        }
+.canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  background: rgba(0,0,0,0.4);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.02);
+  overflow: hidden;
+}
+#tanzCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
-        /* ─── STAGE (3D) ─── */
-        #stage {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            background: #05070e;
-        }
-        #stage canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
+.key-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+@media (max-width:600px){ .key-grid { grid-template-columns:1fr; } }
+.key-panel {
+  background: rgba(10,10,20,0.2);
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.key-panel .title {
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.key-panel .title.p1 { color: #ff4444; }
+.key-panel .title.p2 { color: #00ccff; }
+.key-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin: 2px 0;
+}
+.key-btn {
+  background: rgba(20,35,35,0.2);
+  color: #668888;
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  transition: all 0.15s;
+  min-width: 32px;
+  text-align: center;
+  position: relative;
+}
+.key-btn:hover { background: rgba(40,80,70,0.08); color: #aaeedd; }
+.key-btn.active-p1 {
+  background: #ff444455;
+  border-color: #ff4444aa;
+  color: #ff4444;
+  box-shadow: 0 0 30px rgba(255,68,68,0.15);
+  animation: pulseP1 0.3s ease;
+}
+.key-btn.active-p2 {
+  background: #00ccff55;
+  border-color: #00ccffaa;
+  color: #00ccff;
+  box-shadow: 0 0 30px rgba(0,204,255,0.15);
+  animation: pulseP2 0.3s ease;
+}
+@keyframes pulseP1 {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); background: #ff444477; }
+  100% { transform: scale(1); }
+}
+@keyframes pulseP2 {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); background: #00ccff77; }
+  100% { transform: scale(1); }
+}
+.key-btn.p1 { color: #ff4444; border-color: rgba(255,68,68,0.1); }
+.key-btn.p2 { color: #00ccff; border-color: rgba(0,204,255,0.1); }
 
-        /* ─── MASTER‑RESPO OVERLAY ─── */
-        #masterRespo {
-            position: absolute;
-            top: 14px;
-            left: 18px;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-size: 10px;
-            color: #8aa8a0;
-            border: 1px solid rgba(179, 136, 255, 0.15);
-            z-index: 15;
-            line-height: 1.6;
-            min-width: 180px;
-            pointer-events: none;
-        }
-        #masterRespo .gold {
-            color: #f0d080;
-        }
-        #masterRespo .val {
-            color: #a0e0b0;
-            font-weight: bold;
-        }
-        #masterRespo .title {
-            color: #b388ff;
-            font-weight: 600;
-            letter-spacing: 1px;
-            font-size: 11px;
-        }
-
-        /* ─── STATUS ─── */
-        #status {
-            position: absolute;
-            top: 14px;
-            right: 18px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-size: 10px;
-            color: #6a8a7a;
-            border: 1px solid rgba(120, 220, 150, 0.06);
-            pointer-events: none;
-            z-index: 15;
-            line-height: 1.6;
-            text-align: right;
-            min-width: 120px;
-        }
-        #status .val {
-            color: #a0e0b0;
-            font-weight: bold;
-        }
-        #status .gold {
-            color: #f0d080;
-        }
-
-        /* ─── KOMMANDOZEILE ─── */
-        #cmdBar {
-            position: absolute;
-            bottom: 16px;
-            left: 18px;
-            right: 18px;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(6px);
-            border-radius: 12px;
-            padding: 8px 16px;
-            font-size: 10.5px;
-            color: #5a7a6a;
-            border: 1px solid rgba(120, 220, 150, 0.05);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-            z-index: 20;
-            pointer-events: auto;
-        }
-        #cmdBar input {
-            flex: 1;
-            min-width: 120px;
-            background: rgba(20, 28, 20, 0.6);
-            border: 1px solid rgba(120, 220, 150, 0.12);
-            border-radius: 8px;
-            padding: 4px 12px;
-            color: #d0e8e0;
-            font-family: inherit;
-            font-size: 10.5px;
-        }
-        #cmdBar button {
-            background: rgba(20, 28, 20, 0.6);
-            border: 1px solid rgba(120, 220, 150, 0.15);
-            border-radius: 8px;
-            padding: 4px 14px;
-            color: #c0d8c8;
-            font-family: inherit;
-            font-size: 10.5px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        #cmdBar button:hover {
-            border-color: #7ee0a0;
-            color: #fff;
-        }
-        #cmdOut {
-            color: #8cf0d0;
-            font-weight: 500;
-        }
-
-        /* ─── PLUGIN‑LEISTE (rechts) ─── */
-        #pluginPanel {
-            width: 220px;
-            min-width: 180px;
-            background: rgba(6, 8, 16, 0.92);
-            backdrop-filter: blur(12px);
-            border-left: 1px solid rgba(120, 220, 150, 0.08);
-            padding: 12px 10px;
-            overflow-y: auto;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-        }
-        #pluginPanel .head {
-            font-size: 11px;
-            font-weight: 600;
-            color: #f0d080;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.06);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #pluginPanel .head small {
-            font-size: 9px;
-            color: #5a7a6a;
-            font-weight: 400;
-        }
-        .plugin-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 3px 6px;
-            border-radius: 6px;
-            margin-bottom: 2px;
-            background: rgba(0, 0, 0, 0.2);
-            border-left: 2px solid rgba(120, 220, 150, 0.05);
-            transition: 0.2s;
-            cursor: pointer;
-            font-size: 10px;
-        }
-        .plugin-item:hover {
-            background: rgba(120, 220, 150, 0.04);
-        }
-        .plugin-item .status {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            background: #2a3a3a;
-            transition: 0.3s;
-        }
-        .plugin-item .status.on {
-            background: #8cf0d0;
-            box-shadow: 0 0 8px #8cf0d0;
-        }
-        .plugin-item .name {
-            color: #b0c8c0;
-            flex: 1;
-        }
-        .plugin-item .toggle {
-            font-size: 8px;
-            background: rgba(20, 28, 20, 0.4);
-            border: 1px solid rgba(120, 220, 150, 0.1);
-            border-radius: 8px;
-            padding: 0 6px;
-            color: #8aa8a0;
-            cursor: pointer;
-        }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            #nav {
-                width: 0;
-                min-width: 0;
-                padding: 0;
-                overflow: hidden;
-                border: none;
-            }
-            #pluginPanel {
-                width: 0;
-                min-width: 0;
-                padding: 0;
-                overflow: hidden;
-                border: none;
-            }
-            #masterRespo {
-                top: 14px;
-                left: 14px;
-                font-size: 9px;
-                padding: 6px 12px;
-                min-width: 140px;
-            }
-            #status {
-                right: 14px;
-                font-size: 9px;
-                padding: 6px 12px;
-            }
-        }
-    </style>
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.info-card {
+  background: rgba(10,10,20,0.2);
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 8px;
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 9px;
+}
+.info-card .value {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: monospace;
+}
+.info-card .label {
+  color: #445555;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+.controls button {
+  background: rgba(20,35,35,0.2);
+  color: #668888;
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 5px 16px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 9px;
+  transition: all 0.3s;
+}
+.controls button:hover { background: rgba(40,80,70,0.08); color: #aaeedd; }
+.controls button.active { background: rgba(40,80,70,0.06); color: #00ff88; }
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  margin-top: 8px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  font-size: 8px;
+  color: #445555;
+  border: 1px solid rgba(255,255,255,0.01);
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.footer {
+  text-align: center;
+  margin-top: 8px;
+  color: #222;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+.footer span { color: #ffaa00; }
+</style>
 </head>
 <body>
 
-    <div id="master">
-        <!-- NAV -->
-        <div id="nav">
-            <div class="brand">🌀 BRAIN</div>
-            <div class="nav-section">
-                <div class="head">📦 MODULE</div>
-                <div class="nav-item" data-target="boerse"><span class="icon">📈</span> BOERSE</div>
-                <div class="nav-item" data-target="dom"><span class="icon">🏛</span> DOM</div>
-                <div class="nav-item" data-target="eos"><span class="icon">🌌</span> EOS</div>
-                <div class="nav-item" data-target="evo"><span class="icon">🔮</span> EVO</div>
-                <div class="nav-item" data-target="markt"><span class="icon">🏪</span> MARKT</div>
-                <div class="nav-item" data-target="respo"><span class="icon">🌀</span> RESPO</div>
-                <div class="nav-item" data-target="tool48"><span class="icon">🛠</span> TOOL48</div>
-                <div class="nav-item" data-target="holo"><span class="icon">🔺</span> HOLO</div>
-                <div class="nav-item" data-target="rawator"><span class="icon">⚙</span> RAWATOR</div>
-            </div>
-            <div class="nav-section" style="margin-top:auto;border-top:1px solid rgba(120,220,150,0.04);padding-top:10px;">
-                <div class="nav-item" id="navReset"><span class="icon">⟲</span> RESET</div>
-            </div>
-        </div>
+<div class="container">
 
-        <!-- STAGE -->
-        <div id="stage">
-            <canvas id="canvas"></canvas>
+<div class="header">
+  <h1>💃 SHUFFLE · DREH · 2 SPIELER</h1>
+  <div class="sub"><span class="p1">🔴 SPIELER 1 · 1-9</span> vs <span class="p2">🔵 SPIELER 2 · QWEAZDYXC</span></div>
+</div>
 
-            <!-- MASTER-RESPO -->
-            <div id="masterRespo">
-                <div class="title">⚡ MASTER‑RESPO · STAND</div>
-                <div>🧠 Module: <span class="val" id="mrModules">0</span></div>
-                <div>🌀 Respo: <span class="val" id="mrRespo">0%</span></div>
-                <div>⏱ Zeit: <span class="gold" id="mrTime">0.0s</span></div>
-                <div>⚙️ Gear: <span class="gold" id="mrGear">0</span></div>
-                <div>🔷 Kraft: <span class="val" id="mrKraft">0</span></div>
-                <div>📐 Raum: <span class="val" id="mrSpace">0</span></div>
-            </div>
+<div class="canvas-wrap">
+  <canvas id="tanzCanvas"></canvas>
+</div>
 
-            <!-- STATUS -->
-            <div id="status">
-                <div>🌀 MODUL <span class="val" id="stModul">ROOT</span></div>
-                <div>⚡ RESPO <span class="val" id="stRespo">–</span></div>
-                <div>⏱ TICK <span class="gold" id="stTick">0</span></div>
-            </div>
+<div class="key-grid">
+  <div class="key-panel">
+    <div class="title p1">🔴 SPIELER 1 · 1-9</div>
+    <div class="key-row"><span class="key-btn p1" data-key="1">1</span><span class="key-btn p1" data-key="2">2</span><span class="key-btn p1" data-key="3">3</span></div>
+    <div class="key-row"><span class="key-btn p1" data-key="4">4</span><span class="key-btn p1" data-key="5">5</span><span class="key-btn p1" data-key="6">6</span></div>
+    <div class="key-row"><span class="key-btn p1" data-key="7">7</span><span class="key-btn p1" data-key="8">8</span><span class="key-btn p1" data-key="9">9</span></div>
+  </div>
+  <div class="key-panel">
+    <div class="title p2">🔵 SPIELER 2 · QWEAZDYXC</div>
+    <div class="key-row"><span class="key-btn p2" data-key="q">Q</span><span class="key-btn p2" data-key="w">W</span><span class="key-btn p2" data-key="e">E</span></div>
+    <div class="key-row"><span class="key-btn p2" data-key="a">A</span><span class="key-btn p2" data-key="z">Z</span><span class="key-btn p2" data-key="d">D</span></div>
+    <div class="key-row"><span class="key-btn p2" data-key="y">Y</span><span class="key-btn p2" data-key="x">X</span><span class="key-btn p2" data-key="c">C</span></div>
+  </div>
+</div>
 
-            <!-- KOMMANDOZEILE -->
-            <div id="cmdBar">
-                <span style="color:#6a8a7a;">⚙️ HDF‑RESOLVE:</span>
-                <input id="cmdInput" placeholder="#SLIDE / #HDFRESPO / #ID" value="#SLIDE" />
-                <button id="cmdBtn">RESOLVE</button>
-                <span id="cmdOut"></span>
-            </div>
-        </div>
+<div class="info-grid">
+  <div class="info-card"><div class="value" id="p1Score" style="color:#ff4444;">0</div><div class="label">🔴 SPIELER 1</div></div>
+  <div class="info-card"><div class="value" id="moveDisplay" style="color:#ffaa00;">—</div><div class="label">🎯 MOVE</div></div>
+  <div class="info-card"><div class="value" id="p2Score" style="color:#00ccff;">0</div><div class="label">🔵 SPIELER 2</div></div>
+</div>
 
-        <!-- PLUGIN‑PANEL -->
-        <div id="pluginPanel">
-            <div class="head">🧩 PLUGINS <small id="pluginCount">0</small></div>
-            <div id="pluginList"></div>
-        </div>
+<div class="controls">
+  <button class="active" id="btnStart">▶ START</button>
+  <button id="btnMove">🎯 MOVE</button>
+  <button id="btnShuffle">🔀 SHUFFLE</button>
+  <button id="btnSpin">🔄 DREH</button>
+  <button id="btnProof">🔮 PROOF</button>
+  <button id="btnReset">⟲ RESET</button>
+</div>
+
+<div class="status-bar">
+  <span>💃 STATUS: <span id="statusText">tanzt</span></span>
+  <span>🎯 MOVE: <span id="moveStatus">—</span></span>
+  <span>🔄 DREH: <span id="spinStatus">0°</span></span>
+</div>
+
+<div class="footer">
+  <span>💃</span> SHUFFLE · DREH · 2 SPIELER · <span>wieimmer4u</span>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// SHUFFLE · DREH · 2 SPIELER · 9 TASTEN – KORRIGIERT
+// ============================================================
+
+const canvas = document.getElementById('tanzCanvas');
+const ctx = canvas.getContext('2d');
+let running = true;
+let time = 0;
+let p1Score = 0, p2Score = 0;
+let currentMove = '—';
+let frame = 0;
+let spinAngle = 0;
+let shuffleMode = false;
+let spinSpeed = 0;
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width || 700;
+  canvas.height = rect.height || (rect.width * 9/16) || 390;
+}
+window.addEventListener('resize', resizeCanvas);
+
+// ===== POSEN – KORRIGIERT & ERWEITERT =====
+const POSES = {
+  '1': { armL: -0.6, armR: -0.4, legL: -0.3, legR: -0.1, body: 0, head: 0, label: 'Step L' },
+  '2': { armL: -0.4, armR: -0.6, legL: -0.1, legR: -0.3, body: 0.05, head: 0.05, label: 'Step R' },
+  '3': { armL: -0.8, armR: 0.3, legL: -0.4, legR: 0.1, body: 0.1, head: 0.1, label: 'Arm L' },
+  '4': { armL: 0.3, armR: -0.8, legL: 0.1, legR: -0.4, body: 0.15, head: 0.15, label: 'Arm R' },
+  '5': { armL: 0.6, armR: 0.6, legL: 0, legR: 0, body: 0.2, head: 0.2, label: 'Jump' },
+  '6': { armL: -0.9, armR: 0.9, legL: -0.3, legR: 0.3, body: 0.25, head: 0.25, label: 'Spread' },
+  '7': { armL: 0, armR: 0, legL: -0.6, legR: 0.6, body: 0.3, head: 0.3, label: 'Split' },
+  '8': { armL: 0.5, armR: -0.5, legL: -0.3, legR: -0.3, body: 0.35, head: 0.35, label: 'Twist' },
+  '9': { armL: -0.3, armR: 0.3, legL: 0.3, legR: -0.3, body: 0.4, head: 0.4, label: 'Spin' },
+  'q': { armL: -0.5, armR: -0.5, legL: -0.2, legR: -0.2, body: 0.02, head: 0.02, label: 'Sway L' },
+  'w': { armL: 0.5, armR: 0.5, legL: 0.2, legR: 0.2, body: 0.08, head: 0.08, label: 'Sway R' },
+  'e': { armL: -0.7, armR: 0.15, legL: -0.35, legR: 0.05, body: 0.12, head: 0.12, label: 'Wave L' },
+  'a': { armL: 0.15, armR: -0.7, legL: 0.05, legR: -0.35, body: 0.18, head: 0.18, label: 'Wave R' },
+  'z': { armL: 0.7, armR: -0.3, legL: 0.15, legR: -0.15, body: 0.22, head: 0.22, label: 'Power' },
+  'd': { armL: -0.3, armR: 0.7, legL: -0.15, legR: 0.15, body: 0.28, head: 0.28, label: 'Grace' },
+  'y': { armL: 0.3, armR: 0.3, legL: -0.4, legR: 0.4, body: 0.32, head: 0.32, label: 'Float' },
+  'x': { armL: -0.6, armR: -0.6, legL: 0.4, legR: -0.4, body: 0.38, head: 0.38, label: 'Cross' },
+  'c': { armL: 0, armR: 0, legL: 0, legR: 0, body: 0, head: 0, label: 'Center' }
+};
+
+// ===== TÄNZER =====
+let p1 = { x: 0.28, y: 0.55, pose: '5', color: '#ff4444', label: 'P1', rot: 0 };
+let p2 = { x: 0.72, y: 0.55, pose: 'c', color: '#00ccff', label: 'P2', rot: 0 };
+
+// ===== DRAW STICKMAN – KORRIGIERT =====
+function drawStickman(ctx, x, y, pose, color, label, scale, alpha, rot) {
+  const p = POSES[pose] || POSES['5'];
+  const s = scale * 1.8;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rot + p.body * 0.2);
+  ctx.globalAlpha = alpha || 1;
+
+  // Glow
+  ctx.shadowColor = color + '55';
+  ctx.shadowBlur = 25;
+
+  // Kopf
+  ctx.shadowBlur = 15;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.arc(0, -s * 1.1 + p.head * 0.3 * s, s * 0.2, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Körper
+  ctx.shadowBlur = 10;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.85 + p.body * 0.3 * s);
+  ctx.lineTo(0, s * 0.25 + p.body * 0.3 * s);
+  ctx.stroke();
+
+  // Arme
+  ctx.lineWidth = 4.5;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.65 + p.body * 0.3 * s);
+  ctx.lineTo(-s * 0.45 + p.armL * 0.5 * s, -s * 0.15 + p.body * 0.3 * s);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.65 + p.body * 0.3 * s);
+  ctx.lineTo(s * 0.45 + p.armR * 0.5 * s, -s * 0.15 + p.body * 0.3 * s);
+  ctx.stroke();
+
+  // Beine
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.25 + p.body * 0.3 * s);
+  ctx.lineTo(-s * 0.3 + p.legL * 0.6 * s, s * 0.7 + p.legL * 0.6 * s);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.25 + p.body * 0.3 * s);
+  ctx.lineTo(s * 0.3 + p.legR * 0.6 * s, s * 0.7 + p.legR * 0.6 * s);
+  ctx.stroke();
+
+  // Label
+  ctx.shadowBlur = 0;
+  ctx.globalAlpha = 0.6;
+  ctx.fillStyle = color;
+  ctx.font = '10px monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(label, 0, -s * 1.5);
+
+  // Pose-Name
+  ctx.globalAlpha = 0.3;
+  ctx.font = '7px monospace';
+  ctx.textBaseline = 'top';
+  ctx.fillText(p.label || pose, 0, s * 1.0);
+
+  ctx.restore();
+}
+
+// ===== RENDER =====
+function render() {
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  // Hintergrund
+  const grad = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, w/2);
+  grad.addColorStop(0, '#0a0a1a');
+  grad.addColorStop(0.5, '#050510');
+  grad.addColorStop(1, '#000000');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Tanzfläche
+  ctx.strokeStyle = 'rgba(255,255,255,0.02)';
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(0, h * 0.8);
+  ctx.lineTo(w, h * 0.8);
+  ctx.stroke();
+
+  // Shuffle-Lichter
+  if (shuffleMode) {
+    for (let i = 0; i < 30; i++) {
+      const x = (i / 30) * w;
+      const y = h * 0.8 + Math.sin(i * 0.5 + time / 500) * 6;
+      const alpha = 0.02 + Math.sin(i * 0.3 + time / 700) * 0.015;
+      ctx.fillStyle = `rgba(255,170,0,${alpha})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 2 + Math.sin(time / 400 + i) * 1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Move
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#ffaa0044';
+  ctx.font = '14px monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`🎯 MOVE: ${currentMove}`, w/2, h * 0.82);
+
+  // Score
+  ctx.fillStyle = '#ff444466';
+  ctx.font = '14px monospace';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`🔴 ${p1Score}`, 12, 10);
+  ctx.fillStyle = '#00ccff66';
+  ctx.textAlign = 'right';
+  ctx.fillText(`🔵 ${p2Score}`, w - 12, 10);
+
+  // Dreh
+  ctx.fillStyle = '#445555';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(`🔄 ${Math.round(spinAngle)}°`, w/2, 4);
+
+  // Schatten
+  const scale = Math.min(w, h) * 0.075;
+  const p1x = w * p1.x, p1y = h * 0.7;
+  const p2x = w * p2.x, p2y = h * 0.7;
+
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
+  ctx.beginPath();
+  ctx.ellipse(p1x, h * 0.82, scale * 0.45, scale * 0.12, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(p2x, h * 0.82, scale * 0.45, scale * 0.12, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Tänzer zeichnen
+  drawStickman(ctx, p1x, p1y, p1.pose, p1.color, 'P1', scale, 1, p1.rot + spinAngle * 0.02);
+  drawStickman(ctx, p2x, p2y, p2.pose, p2.color, 'P2', scale, 1, p2.rot + spinAngle * 0.02);
+
+  // Verbindung
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+  ctx.lineWidth = 0.5;
+  ctx.setLineDash([4, 8]);
+  ctx.beginPath();
+  ctx.moveTo(p1x, p1y - scale * 1.2);
+  ctx.lineTo(p2x, p2y - scale * 1.2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (shuffleMode) {
+    ctx.fillStyle = '#ffaa0044';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('🔀 SHUFFLE', w/2, h * 0.78);
+  }
+}
+
+// ===== UPDATE – KORRIGIERT =====
+function update() {
+  if (!running) return;
+  time += 16;
+  frame++;
+
+  // Move rotieren
+  const moveKeys = Object.keys(POSES);
+  if (frame % 120 === 0) {
+    const randomKey = moveKeys[Math.floor(Math.random() * moveKeys.length)];
+    currentMove = POSES[randomKey]?.label || '—';
+    document.getElementById('moveDisplay').textContent = currentMove;
+    document.getElementById('moveStatus').textContent = currentMove;
+  }
+
+  // Spieler 1 – automatische Bewegung
+  if (frame % 8 === 0) {
+    const keys = shuffleMode ? ['5','6','7','8','9','1','2','3','4'] : ['1','2','3','4','5','6','7','8','9'];
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    p1.pose = key;
+    if (p1.pose === currentMove || Math.random() < 0.15) p1Score++;
+    document.getElementById('p1Score').textContent = p1Score;
+    // Tastatur-Highlight
+    document.querySelectorAll('.key-btn.p1').forEach(b => {
+      b.classList.toggle('active-p1', b.dataset.key === key);
+    });
+    if (shuffleMode) p1.rot += (Math.random() - 0.5) * 0.05;
+  }
+
+  // Spieler 2 – automatische Bewegung
+  if (frame % 8 === 0) {
+    const keys = shuffleMode ? ['y','x','c','q','w','e','a','z','d'] : ['q','w','e','a','z','d','y','x','c'];
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    p2.pose = key;
+    if (p2.pose === currentMove || Math.random() < 0.15) p2Score++;
+    document.getElementById('p2Score').textContent = p2Score;
+    document.querySelectorAll('.key-btn.p2').forEach(b => {
+      b.classList.toggle('active-p2', b.dataset.key === key);
+    });
+    if (shuffleMode) p2.rot += (Math.random() - 0.5) * 0.05;
+  }
+
+  // Dreh
+  if (spinSpeed !== 0) {
+    spinAngle += spinSpeed * 8;
+    document.getElementById('spinStatus').textContent = `${Math.round(spinAngle)}°`;
+  }
+
+  // Status
+  const status = p1Score > p2Score ? '🔴 P1 führt' : p2Score > p1Score ? '🔵 P2 führt' : '⚖️ Gleichstand';
+  document.getElementById('statusText').textContent = status;
+
+  render();
+  requestAnimationFrame(update);
+}
+
+// ===== TASTATUR – KORRIGIERT =====
+document.addEventListener('keydown', (e) => {
+  const key = e.key.toLowerCase();
+
+  // Spieler 1: 1-9
+  if (key >= '1' && key <= '9') {
+    e.preventDefault();
+    p1.pose = key;
+    document.querySelectorAll('.key-btn.p1').forEach(b => {
+      b.classList.toggle('active-p1', b.dataset.key === key);
+    });
+    if (key === currentMove || Math.random() < 0.2) {
+      p1Score++;
+      document.getElementById('p1Score').textContent = p1Score;
+    }
+    if (shuffleMode) p1.rot += 0.1;
+    return;
+  }
+
+  // Spieler 2: q,w,e,a,z,d,y,x,c
+  if (['q','w','e','a','z','d','y','x','c'].includes(key)) {
+    e.preventDefault();
+    p2.pose = key;
+    document.querySelectorAll('.key-btn.p2').forEach(b => {
+      b.classList.toggle('active-p2', b.dataset.key === key);
+    });
+    if (key === currentMove || Math.random() < 0.2) {
+      p2Score++;
+      document.getElementById('p2Score').textContent = p2Score;
+    }
+    if (shuffleMode) p2.rot += 0.1;
+    return;
+  }
+});
+
+// ===== BUTTONS =====
+document.getElementById('btnStart').addEventListener('click', () => {
+  running = !running;
+  document.getElementById('btnStart').classList.toggle('active');
+  document.getElementById('btnStart').textContent = running ? '▶ START' : '⏸ PAUSE';
+  if (running) update();
+});
+
+document.getElementById('btnMove').addEventListener('click', () => {
+  const keys = Object.keys(POSES);
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  currentMove = POSES[randomKey]?.label || '—';
+  document.getElementById('moveDisplay').textContent = currentMove;
+  document.getElementById('moveStatus').textContent = currentMove;
+});
+
+document.getElementById('btnShuffle').addEventListener('click', () => {
+  shuffleMode = !shuffleMode;
+  document.getElementById('btnShuffle').classList.toggle('active');
+  document.getElementById('btnShuffle').textContent = shuffleMode ? '🔀 SHUFFLE·ON' : '🔀 SHUFFLE';
+});
+
+document.getElementById('btnSpin').addEventListener('click', () => {
+  spinSpeed = spinSpeed === 0 ? 0.02 : spinSpeed === 0.02 ? 0.05 : 0;
+  document.getElementById('btnSpin').classList.toggle('active');
+  document.getElementById('btnSpin').textContent = spinSpeed ? `🔄 DREH ${Math.round(spinSpeed*100)}%` : '🔄 DREH';
+});
+
+document.getElementById('btnProof').addEventListener('click', () => {
+  const proof = document.createElement('div');
+  proof.style.cssText = `
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; backdrop-filter: blur(20px);
+    font-family: 'Consolas', monospace;
+  `;
+  proof.innerHTML = `
+    <div style="text-align:center; padding:40px; border:1px solid rgba(255,170,0,0.1); border-radius:20px; background:rgba(10,10,20,0.6); max-width:450px;">
+      <div style="font-size:48px;">💃</div>
+      <div style="color:#ffaa00; font-size:20px; margin:12px 0; letter-spacing:4px;">SHUFFLE · DREH</div>
+      <div style="color:#88ddbb; font-size:13px; line-height:1.8;">
+        🔴 P1: ${p1Score} · 🔵 P2: ${p2Score}<br>
+        🎯 MOVE: ${currentMove}<br>
+        🔄 DREH: ${Math.round(spinAngle)}°<br>
+        🔀 SHUFFLE: ${shuffleMode ? 'AN' : 'AUS'}
+      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        margin-top:14px; background:rgba(20,35,35,0.2); color:#668888;
+        border:1px solid rgba(255,255,255,0.02); padding:6px 20px;
+        border-radius:18px; cursor:pointer; font-family:inherit; font-size:9px;
+      ">⏎ SCHLIESSEN</button>
     </div>
+  `;
+  document.body.appendChild(proof);
+});
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
+document.getElementById('btnReset').addEventListener('click', () => {
+  p1Score = 0; p2Score = 0; currentMove = '—';
+  p1.pose = '5'; p2.pose = 'c';
+  p1.rot = 0; p2.rot = 0;
+  spinAngle = 0; shuffleMode = false; spinSpeed = 0;
+  document.getElementById('p1Score').textContent = '0';
+  document.getElementById('p2Score').textContent = '0';
+  document.getElementById('moveDisplay').textContent = '—';
+  document.getElementById('moveStatus').textContent = '—';
+  document.getElementById('spinStatus').textContent = '0°';
+  document.getElementById('btnShuffle').textContent = '🔀 SHUFFLE';
+  document.getElementById('btnShuffle').classList.remove('active');
+  document.getElementById('btnSpin').textContent = '🔄 DREH';
+  document.getElementById('btnSpin').classList.remove('active');
+  document.querySelectorAll('.key-btn').forEach(b => b.className = 'key-btn');
+  document.getElementById('statusText').textContent = 'reset';
+});
 
-    <script type="module">
-        // ================================================================
-        //  MASTER-BRAIN · ORIGINAL · STAND-DER-DINGE
-        //  Vereint: Adaptive Navigation + Hologramm + Plugin-Manager +
-        //  Master-Respo + 13 BRAIN-Dateien als aktive Module
-        // ================================================================
+// ===== INIT =====
+resizeCanvas();
+setTimeout(resizeCanvas, 200);
+update();
 
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-        // ─── DOM REFS ──────────────────────────────────────────────────
-        const canvas = document.getElementById('canvas');
-        const stModul = document.getElementById('stModul');
-        const stRespo = document.getElementById('stRespo');
-        const stTick = document.getElementById('stTick');
-        const cmdOut = document.getElementById('cmdOut');
-
-        const mrModules = document.getElementById('mrModules');
-        const mrRespo = document.getElementById('mrRespo');
-        const mrTime = document.getElementById('mrTime');
-        const mrGear = document.getElementById('mrGear');
-        const mrKraft = document.getElementById('mrKraft');
-        const mrSpace = document.getElementById('mrSpace');
-
-        // ─── THREE.JS SETUP ──────────────────────────────────────────
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
-
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x05070e);
-        scene.fog = new THREE.Fog(0x05070e, 8, 18);
-
-        const camera = new THREE.PerspectiveCamera(38, canvas.clientWidth / canvas.clientHeight, 0.1, 30);
-        camera.position.set(5, 3.5, 7);
-
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.06;
-        controls.target.set(0, 0.3, 0);
-        controls.minDistance = 3;
-        controls.maxDistance = 16;
-        controls.update();
-
-        // ─── LIGHTS ──────────────────────────────────────────────────
-        scene.add(new THREE.AmbientLight(0x222244, 0.6));
-        const dLight = new THREE.DirectionalLight(0xffeedd, 2.2);
-        dLight.position.set(6, 10, 8);
-        dLight.castShadow = true;
-        scene.add(dLight);
-        scene.add(new THREE.DirectionalLight(0x4488ff, 0.5).position.set(-4, 2, -4));
-        scene.add(new THREE.DirectionalLight(0x88ddff, 0.3).position.set(0, -2, 5));
-
-        // ─── BODEN / GITTER ──────────────────────────────────────────
-        const gridHelper = new THREE.GridHelper(5.5, 11, 0x44aa77, 0x226644);
-        gridHelper.position.y = -0.65;
-        scene.add(gridHelper);
-
-        // ─── RESPO‑MESH (9×9) ──────────────────────────────────────
-        const RESPO_SIZE = 9;
-        const TOTAL = 81;
-        const respoMeshes = [];
-        const respoValues = new Float32Array(TOTAL);
-
-        for (let r = 0; r < RESPO_SIZE; r++) {
-            for (let c = 0; c < RESPO_SIZE; c++) {
-                const idx = r * RESPO_SIZE + c;
-                const x = (c / (RESPO_SIZE - 1) - 0.5) * 4.2;
-                const z = (r / (RESPO_SIZE - 1) - 0.5) * 4.2;
-                respoValues[idx] = 0.5 + 0.4 * Math.sin(idx * 0.15);
-                const geo = new THREE.SphereGeometry(0.12, 8, 8);
-                const mat = new THREE.MeshStandardMaterial({
-                    color: 0x44aa77,
-                    emissive: 0x226644,
-                    emissiveIntensity: 0.3,
-                    roughness: 0.2,
-                    metalness: 0.6,
-                });
-                const mesh = new THREE.Mesh(geo, mat);
-                mesh.position.set(x, -0.3 + respoValues[idx] * 0.5, z);
-                mesh.castShadow = true;
-                scene.add(mesh);
-                respoMeshes.push({ mesh, idx, x, z, value: respoValues[idx], target: respoValues[idx] });
-            }
-        }
-
-        // ─── DREIECK‑SCREENS (120°-Symmetrie) ──────────────────────
-        const mirrorGroup = new THREE.Group();
-        scene.add(mirrorGroup);
-
-        function createMirror(color, label, angleDeg) {
-            const group = new THREE.Group();
-            const geo = new THREE.PlaneGeometry(1.6, 2.2);
-            const mat = new THREE.MeshStandardMaterial({
-                color,
-                emissive: color,
-                emissiveIntensity: 0.06,
-                side: THREE.DoubleSide,
-                transparent: true,
-                opacity: 0.3,
-                roughness: 0.1,
-                metalness: 0.85,
-            });
-            const mesh = new THREE.Mesh(geo, mat);
-            mesh.castShadow = true;
-            group.add(mesh);
-
-            const edges = new THREE.EdgesGeometry(geo);
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x88ddbb, transparent: true, opacity: 0.25 });
-            const line = new THREE.LineSegments(edges, lineMat);
-            group.add(line);
-
-            const angleRad = angleDeg * Math.PI / 180;
-            group.position.set(Math.sin(angleRad) * 1.4, 0, Math.cos(angleRad) * 1.4);
-            group.rotation.y = -angleRad;
-            group.rotation.x = 0.05;
-
-            // Label als Sprite
-            const c = document.createElement('canvas');
-            c.width = 128;
-            c.height = 48;
-            const ctx = c.getContext('2d');
-            ctx.fillStyle = 'rgba(0,0,0,0)';
-            ctx.fillRect(0, 0, 128, 48);
-            ctx.font = 'bold 18px Consolas';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = '#88ddbb';
-            ctx.fillText(label, 64, 24);
-            const tex = new THREE.CanvasTexture(c);
-            const spriteMat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false });
-            const sprite = new THREE.Sprite(spriteMat);
-            sprite.scale.set(0.5, 0.18, 1);
-            sprite.position.z = 0.01;
-            group.add(sprite);
-
-            mirrorGroup.add(group);
-            return group;
-        }
-
-        const screenConfigs = [
-            { color: 0x0088ff, label: 'BOERSE', angle: 0 },
-            { color: 0xff44aa, label: 'DOM', angle: 120 },
-            { color: 0x88ddff, label: 'EVO', angle: 240 },
-        ];
-        screenConfigs.forEach(cfg => createMirror(cfg.color, cfg.label, cfg.angle));
-
-        // ─── PLUGIN‑DEFINITION (die 13 BRAIN-Dateien) ──────────────
-        const PLUGIN_NAMES = [
-            'NC_figur.js', 'NC_kraft.js', 'NC_space.js', 'NC_time.js',
-            'OS_CORE.js', 'axiom.map.js', 'coord.js', 'dreieck.js',
-            'resolver.js', 'respo.js', 'router.js', 'vec.js', 'index.html'
-        ];
-
-        const plugins = PLUGIN_NAMES.map(name => ({
-            id: name,
-            name: name.replace('.js', ''),
-            active: false
-        }));
-
-        // ─── PLUGIN‑MANAGER UI ──────────────────────────────────────
-        const pluginList = document.getElementById('pluginList');
-        const pluginCount = document.getElementById('pluginCount');
-
-        function renderPlugins() {
-            pluginList.innerHTML = '';
-            let activeCount = 0;
-            plugins.forEach(p => {
-                if (p.active) activeCount++;
-                const div = document.createElement('div');
-                div.className = 'plugin-item';
-                div.innerHTML = `
-                    <span class="status ${p.active ? 'on' : 'off'}"></span>
-                    <span class="name">${p.name}</span>
-                    <span class="toggle">${p.active ? '✕' : '+'}</span>
-                `;
-                div.querySelector('.toggle').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    p.active = !p.active;
-                    renderPlugins();
-                    updateSceneForPlugins();
-                });
-                pluginList.appendChild(div);
-            });
-            pluginCount.textContent = `${activeCount}/${plugins.length}`;
-            mrModules.textContent = activeCount;
-        }
-        renderPlugins();
-
-        // ─── PLUGIN‑EFFEKTE AUF DIE SZENE ──────────────────────────
-        function updateSceneForPlugins() {
-            const active = plugins.filter(p => p.active).length;
-            const factor = 1 + (active / plugins.length) * 0.6;
-
-            // Spiegel-Glow
-            mirrorGroup.children.forEach(group => {
-                const mesh = group.children[0];
-                if (mesh && mesh.isMesh) {
-                    mesh.material.emissiveIntensity = 0.06 + (active / plugins.length) * 0.35;
-                }
-            });
-
-            // Respo-Targets
-            respoMeshes.forEach(entry => {
-                const base = 0.5 + 0.4 * Math.sin(entry.idx * 0.15);
-                entry.target = Math.min(1, base * factor);
-            });
-
-            // Master-Respo Update
-            const avg = respoMeshes.reduce((s, e) => s + e.value, 0) / TOTAL;
-            mrRespo.textContent = Math.round(avg * 100) + '%';
-        }
-
-        // ─── MASTER‑RESPO LOOP ──────────────────────────────────────
-        let tick = 0;
-        let elapsed = 0;
-        let kraftVal = 50;
-        let spaceVal = 0;
-
-        function updateMasterRespo() {
-            const avg = respoMeshes.reduce((s, e) => s + e.value, 0) / TOTAL;
-            mrRespo.textContent = Math.round(avg * 100) + '%';
-            mrTime.textContent = (elapsed / 1000).toFixed(1) + 's';
-            mrGear.textContent = tick % 12;
-            mrKraft.textContent = Math.round(kraftVal);
-            mrSpace.textContent = (spaceVal % 360).toFixed(0) + '°';
-        }
-
-        // ─── NAVIGATION ──────────────────────────────────────────────
-        const moduleMap = {
-            boerse: 'BOERSE',
-            dom: 'DOM',
-            eos: 'EOS',
-            evo: 'EVO',
-            markt: 'MARKT',
-            respo: 'RESPO',
-            tool48: 'TOOL48',
-            holo: 'HOLO',
-            rawator: 'RAWATOR'
-        };
-
-        document.querySelectorAll('.nav-item[data-target]').forEach(item => {
-            item.addEventListener('click', () => {
-                const target = item.dataset.target;
-                stModul.textContent = moduleMap[target] || target.toUpperCase();
-                cmdOut.textContent = `📂 Modul: ${moduleMap[target] || target.toUpperCase()}`;
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
-
-        document.getElementById('navReset').addEventListener('click', () => {
-            plugins.forEach(p => p.active = false);
-            renderPlugins();
-            updateSceneForPlugins();
-            stModul.textContent = 'ROOT';
-            cmdOut.textContent = '⟲ Reset';
-        });
-
-        // ─── HDF‑RESOLVER ────────────────────────────────────────────
-        const HDF = {
-            roms: { d: 'D-Basis', e: 'E-Basis', i: 'I-Basis', n: 'N-Basis', o: 'O-Basis', r: 'R-Basis',
-                s: 'S-Basis', u: 'U-Basis', w: 'W-Basis' },
-            resolve(cmd) {
-                const key = cmd.trim().toLowerCase().replace('#', '');
-                if (this.roms[key]) return { rom: key, value: this.roms[key] };
-                if (cmd === '#SLIDE') return { rom: 'SLIDE', value: 'SLIDE.hdf' };
-                if (cmd === '#HDFRESPO') return { rom: 'HDFRESPO', value: 'HDFRESPO.hdf' };
-                if (cmd === '#ID') return { rom: 'ID', value: 'ID.hdf' };
-                return null;
-            }
-        };
-        document.getElementById('cmdBtn').addEventListener('click', () => {
-            const input = document.getElementById('cmdInput').value.trim();
-            const result = HDF.resolve(input);
-            if (result) {
-                cmdOut.textContent = `✅ ${result.rom} → ${result.value}`;
-            } else {
-                cmdOut.textContent = `❌ "${input}" nicht gefunden`;
-            }
-        });
-
-        // ─── ANIMATION LOOP ──────────────────────────────────────────
-        function animate() {
-            requestAnimationFrame(animate);
-            tick++;
-            elapsed += 16;
-            stTick.textContent = tick;
-
-            // Kraft & Raum simulieren
-            kraftVal = 30 + 20 * Math.sin(tick * 0.02);
-            spaceVal = tick * 0.3;
-
-            // Respo-Update
-            let sum = 0;
-            for (const entry of respoMeshes) {
-                entry.value += (entry.target - entry.value) * 0.05;
-                const score = Math.max(0, 1 - Math.abs(entry.value - 0.5) * 2);
-                sum += score;
-                const y = -0.3 + entry.value * 0.6;
-                entry.mesh.position.set(entry.x, y, entry.z);
-                const r = 0.2 + 0.6 * score;
-                const g = 0.5 + 0.4 * score;
-                const b = 0.8 - 0.5 * score;
-                entry.mesh.material.color.setRGB(r, g, b);
-                entry.mesh.scale.setScalar(0.5 + score);
-            }
-            const avg = sum / TOTAL;
-            stRespo.textContent = Math.round(avg * 100) + '%';
-            mrRespo.textContent = Math.round(avg * 100) + '%';
-
-            // Master-Respo aktualisieren
-            updateMasterRespo();
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        // ─── RESIZE ──────────────────────────────────────────────────
-        function resize() {
-            const w = canvas.parentElement.clientWidth;
-            const h = canvas.parentElement.clientHeight;
-            renderer.setSize(w, h, false);
-            camera.aspect = w / h;
-            camera.updateProjectionMatrix();
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        // ─── INIT ──────────────────────────────────────────────────
-        updateSceneForPlugins();
-        cmdOut.textContent = '🌀 MASTER-BRAIN · ORIGINAL · STAND-DER-DINGE';
-        animate();
-
-        // ─── TASTATUR ──────────────────────────────────────────────
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'r' || e.key === 'R') {
-                document.getElementById('navReset').click();
-            }
-            if (e.key === 's' || e.key === 'S') {
-                document.getElementById('cmdBtn').click();
-            }
-        });
-
-        console.log('🌀 MASTER-BRAIN · ORIGINAL · STAND-DER-DINGE geladen');
-        console.log('📦 13 BRAIN-Dateien als Plugins · Master-Respo live');
-    </script>
+console.log('💃 SHUFFLE · DREH · 2 SPIELER – KORRIGIERT');
+console.log('🔴 P1: 1-9 · 🔵 P2: QWEAZDYXC');
+console.log('🔀 SHUFFLE · 🔄 DREH');
+</script>
 
 </body>
 </html>
