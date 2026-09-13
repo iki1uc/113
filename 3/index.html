@@ -3,133 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>◈ NOAH · SURVIVAL RUNTIME · ATEM · ATOM · WONDER · iki1uc</title>
+<title>◈ ANIME RUNTIME · ATEM · ATOM · WONDER</title>
 <style>
   :root{
     --ink:#04060c; --deep:#080d18; --panel:#0c1622;
-    --line:#1e3a4a; --line2:#122230;
-    --text:#d8f0e8; --muted:#6a8e94;
+    --line:#1e3a4a; --text:#d8f0e8; --muted:#6a8e94;
     --mint:#68f6c0; --amber:#ffbd5c; --pink:#ff6d9d;
     --blue:#6cc9ff; --violet:#b388ff; --gold:#ffcc66;
-    --red:#ff5577; --orange:#ff8844;
     --o2:#7ce0a8; --co2:#ffcc44; --h2o:#5fc8ff; --atom:#b388ff;
     --mana:#ff66c8; --aura:#ffd93d; --zen:#8cf0d0;
-    --noah:#ff8844; --ark:#ffd93d; --survive:#68f6c0;
-    --shadow:0 0 0 1px rgba(104,246,192,.14),0 14px 48px rgba(0,0,0,.55);
+    --shadow:0 0 0 1px rgba(104,246,192,.14),0 12px 44px rgba(0,0,0,.5);
   }
   *{box-sizing:border-box;}
   html,body{height:100%;}
   body{
     margin:0;color:var(--text);
     background:
-      radial-gradient(circle at 25% 10%,rgba(255,136,68,.05),transparent 30rem),
-      radial-gradient(circle at 78% 85%,rgba(179,136,255,.05),transparent 34rem),
+      radial-gradient(circle at 25% 15%,rgba(104,246,192,.06),transparent 30rem),
+      radial-gradient(circle at 78% 80%,rgba(179,136,255,.05),transparent 34rem),
       linear-gradient(145deg,#04060c,#080f1a 54%,#04080e);
     font-family:"Courier New",monospace;
     letter-spacing:.03em;
     overflow-x:hidden;
   }
-  button,input,select{font:inherit;}
+  button,input{font:inherit;}
   button{
     color:var(--text);background:#0d202a;
     border:1px solid #2c5560;padding:.55rem .85rem;
     cursor:pointer;text-transform:uppercase;
     letter-spacing:.08em;transition:.15s;font-size:11px;
-    font-family:inherit;
   }
   button:hover,button:focus-visible{
     color:#04110f;background:var(--mint);border-color:var(--mint);outline:none;
   }
   button.active{color:#04110f;background:var(--mint);border-color:var(--mint);}
-  button.noah-btn{border-color:rgba(255,136,68,.5);color:var(--noah);}
-  button.noah-btn:hover{background:var(--noah);color:#04110f;border-color:var(--noah);}
-  button.ark-btn{border-color:rgba(255,217,61,.5);color:var(--ark);}
-  button.ark-btn:hover{background:var(--ark);color:#04110f;border-color:var(--ark);}
-  button.survive-btn{border-color:rgba(104,246,192,.6);color:var(--survive);}
-  button.survive-btn:hover{background:var(--survive);color:#04110f;border-color:var(--survive);}
-  button.red-btn{border-color:rgba(255,85,119,.5);color:var(--red);}
-  button.red-btn:hover{background:var(--red);color:#fff;border-color:var(--red);}
 
   .app-shell{min-height:100%;padding:14px;}
   .topbar{
-    max-width:1660px;margin:0 auto 10px;
+    max-width:1560px;margin:0 auto 10px;
     display:flex;gap:16px;align-items:center;justify-content:space-between;
-    padding:11px 18px;border:1px solid var(--line);
-    background:rgba(6,14,22,.95);box-shadow:var(--shadow);
+    padding:11px 16px;border:1px solid var(--line);
+    background:rgba(6,14,22,.94);box-shadow:var(--shadow);
     flex-wrap:wrap;
   }
   .brand{display:flex;align-items:center;gap:12px;min-width:0;}
   .brand-mark{
-    width:42px;height:42px;flex:0 0 auto;
+    width:38px;height:38px;flex:0 0 auto;
     display:grid;place-items:center;
-    color:#04110f;background:var(--noah);
-    font-weight:900;font-size:14px;
-    box-shadow:4px 4px 0 #7a3a10;
+    color:#04110f;background:var(--mint);
+    font-weight:900;font-size:13px;
+    box-shadow:4px 4px 0 #1f5750;
     animation:markPulse 3s ease-in-out infinite;
-    font-family:"Yu Mincho",serif;
   }
   @keyframes markPulse{
-    0%,100%{box-shadow:4px 4px 0 #7a3a10;}
-    50%{box-shadow:4px 4px 0 #7a3a10,0 0 26px rgba(255,136,68,.7);}
+    0%,100%{box-shadow:4px 4px 0 #1f5750;}
+    50%{box-shadow:4px 4px 0 #1f5750,0 0 22px rgba(104,246,192,.6);}
   }
   .brand h1{margin:0;font-size:clamp(13px,1.7vw,19px);line-height:1.15;
-    background:linear-gradient(90deg,var(--noah),var(--ark),var(--mint),var(--violet));
+    background:linear-gradient(90deg,var(--mint),var(--violet),var(--gold));
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    letter-spacing:.12em;
   }
   .brand p{margin:4px 0 0;color:var(--muted);font-size:10px;}
-  .top-status{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;font-size:10px;color:var(--muted);align-items:center;}
+  .top-status{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;font-size:10px;color:var(--muted);}
   .led{display:inline-flex;align-items:center;gap:6px;}
   .led::before{content:"";width:7px;height:7px;background:var(--pink);border-radius:50%;box-shadow:0 0 9px var(--pink);}
   .led.online::before{background:var(--mint);box-shadow:0 0 9px var(--mint);animation:ledBreath 4s ease-in-out infinite;}
-  .led.noah::before{background:var(--noah);box-shadow:0 0 9px var(--noah);animation:ledBreath 3s ease-in-out infinite;}
-  .led.ark::before{background:var(--ark);box-shadow:0 0 9px var(--ark);animation:ledBreath 3.5s ease-in-out infinite;}
-  @keyframes ledBreath{0%,100%{transform:scale(.85);}50%{transform:scale(1.35);}}
-  .status-chip{
-    padding:3px 8px;border:1px solid var(--line);
-    background:rgba(2,8,12,.6);border-radius:3px;
-    letter-spacing:.1em;
-  }
+  @keyframes ledBreath{0%,100%{transform:scale(.85);}50%{transform:scale(1.3);}}
 
-  /* MODULE STATUS BAR */
-  .module-strip{
-    max-width:1660px;margin:0 auto 10px;
-    display:grid;grid-template-columns:repeat(9,1fr);gap:5px;
-    padding:8px 10px;background:rgba(6,14,22,.92);
-    border:1px solid var(--line);box-shadow:var(--shadow);
-  }
-  @media(max-width:1200px){.module-strip{grid-template-columns:repeat(5,1fr);}}
-  @media(max-width:700px){.module-strip{grid-template-columns:repeat(3,1fr);}}
-  .mod-chip{
-    padding:5px 8px;background:rgba(2,8,12,.65);
-    border:1px solid var(--line);border-left:3px solid var(--line);
-    border-radius:3px;font-size:9.5px;
-    display:flex;justify-content:space-between;align-items:center;
-    transition:.3s;
-  }
-  .mod-chip.on{border-left-color:var(--mint);}
-  .mod-chip.on .mod-status{color:var(--mint);}
-  .mod-chip.off{border-left-color:var(--red);opacity:.6;}
-  .mod-chip.off .mod-status{color:var(--red);}
-  .mod-chip.noah{border-left-color:var(--noah);}
-  .mod-chip.noah .mod-status{color:var(--noah);}
-  .mod-chip .mod-name{color:var(--muted);letter-spacing:1px;font-weight:bold;font-size:9px;}
-  .mod-chip .mod-status{font-weight:bold;font-size:10px;}
-
-  /* ATEM STRIP */
+  /* ATEM · ATOM · H2O · CO2 · O2 STRIP */
   .elem-strip{
-    max-width:1660px;margin:0 auto 10px;
-    display:grid;grid-template-columns:repeat(7,1fr);gap:5px;
-    padding:8px 10px;background:rgba(6,14,22,.92);
+    max-width:1560px;margin:0 auto 10px;
+    display:grid;grid-template-columns:repeat(7,1fr);gap:6px;
+    padding:8px 10px;background:rgba(6,14,22,.9);
     border:1px solid var(--line);box-shadow:var(--shadow);
   }
   @media(max-width:1000px){.elem-strip{grid-template-columns:repeat(4,1fr);}}
   @media(max-width:600px){.elem-strip{grid-template-columns:repeat(3,1fr);}}
   .elem-chip{
-    padding:5px 8px;background:rgba(2,8,12,.65);
-    border:1px solid var(--line);border-left:3px solid #2a3644;
-    border-radius:3px;font-size:10px;
+    padding:6px 8px;background:rgba(2,8,12,.6);
+    border:1px solid var(--line);border-left:3px solid var(--dim2,#2a3644);
+    border-radius:4px;font-size:10px;
     display:flex;justify-content:space-between;align-items:center;
+    transition:.3s;
   }
   .elem-chip.o2{border-left-color:var(--o2);}
   .elem-chip.co2{border-left-color:var(--co2);}
@@ -139,7 +94,7 @@
   .elem-chip.aura{border-left-color:var(--aura);}
   .elem-chip.zen{border-left-color:var(--zen);}
   .elem-chip .k{color:var(--muted);letter-spacing:1.5px;font-size:9px;font-weight:bold;}
-  .elem-chip .v{font-weight:bold;font-size:12px;}
+  .elem-chip .v{font-weight:bold;font-size:12px;font-family:var(--mono);}
   .elem-chip.o2 .v{color:var(--o2);}
   .elem-chip.co2 .v{color:var(--co2);}
   .elem-chip.h2o .v{color:var(--h2o);}
@@ -148,38 +103,25 @@
   .elem-chip.aura .v{color:var(--aura);}
   .elem-chip.zen .v{color:var(--zen);}
 
-  /* MAIN LAYOUT */
   .workspace{
-    max-width:1660px;margin:0 auto;
-    display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.5fr);
+    max-width:1560px;margin:0 auto;
+    display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.5fr);
     gap:10px;
   }
-  @media(max-width:1100px){
+  @media(max-width:1040px){
     .workspace{grid-template-columns:1fr;}
     .side-stack{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .side-panel:first-child{grid-column:1/-1;}
   }
-  @media(max-width:700px){
+  @media(max-width:690px){
     .app-shell{padding:8px;}
     .side-stack{grid-template-columns:1fr;}
+    .side-panel:first-child{grid-column:auto;}
   }
-
   .panel{
     border:1px solid var(--line);
     background:rgba(8,18,26,.92);
     box-shadow:var(--shadow);
-    margin-bottom:10px;
-  }
-  .panel.noah-panel{
-    border-color:rgba(255,136,68,.3);
-    background:linear-gradient(135deg,rgba(30,12,4,.9),rgba(8,18,26,.92));
-    box-shadow:0 0 0 1px rgba(255,136,68,.2),0 0 30px rgba(255,136,68,.12),0 14px 48px rgba(0,0,0,.55);
-  }
-  .panel.noah-panel.active{
-    animation:noahGlow 2.5s ease-in-out infinite;
-  }
-  @keyframes noahGlow{
-    0%,100%{box-shadow:0 0 0 1px rgba(255,136,68,.3),0 0 30px rgba(255,136,68,.15);}
-    50%{box-shadow:0 0 0 1px rgba(255,217,61,.5),0 0 50px rgba(255,217,61,.3);}
   }
   .panel-title{
     display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -187,7 +129,6 @@
     color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.12em;
   }
   .panel-title strong{color:var(--mint);font-weight:700;}
-  .panel.noah-panel .panel-title strong{color:var(--noah);}
 
   .monitor-wrap{position:relative;padding:10px;background:#040b12;}
   canvas{
@@ -203,195 +144,92 @@
   }
   .monitor-overlay span:last-child{text-align:right;}
 
-  /* NOAH ARK PANEL */
-  .ark-wrap{
-    padding:14px;
-    display:grid;grid-template-columns:1fr 1fr;gap:14px;
-    align-items:center;
+  .scene-tabs{
+    display:grid;grid-template-columns:repeat(6,minmax(90px,1fr));
+    gap:5px;padding:10px 10px 0;background:rgba(4,12,20,.7);
   }
-  @media(max-width:700px){.ark-wrap{grid-template-columns:1fr;}}
-  #arkCanvas{
-    width:100%;aspect-ratio:1;
-    background:#02060a;
-    border:1px solid rgba(255,136,68,.3);
-    border-radius:6px;
-    display:block;
-    box-shadow:inset 0 0 30px rgba(255,136,68,.08);
+  .scene-tab{
+    min-height:58px;text-align:left;padding:8px;
+    border-color:#1f4150;background:#0a1a22;
+    color:var(--muted);font-size:10px;
   }
-  .ark-info{display:flex;flex-direction:column;gap:8px;}
-  .ark-title{
-    font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
-    font-size:24px;color:var(--noah);
-    letter-spacing:4px;font-weight:bold;
-    text-shadow:0 0 16px rgba(255,136,68,.5);
-    display:flex;align-items:center;gap:10px;
-  }
-  .ark-title .glyph{
-    font-size:34px;
-    animation:arkGlyph 4s ease-in-out infinite;
-  }
-  @keyframes arkGlyph{
-    0%,100%{transform:rotate(0deg);}
-    50%{transform:rotate(15deg) scale(1.08);}
-  }
-  .ark-subtitle{
-    color:var(--muted);font-size:10px;letter-spacing:2px;
-    text-transform:uppercase;
-  }
-  .ark-desc{
-    color:#a8c0b0;font-size:10.5px;line-height:1.55;
-    padding:8px 10px;background:rgba(0,0,0,.35);
-    border-left:3px solid var(--noah);border-radius:3px;
-  }
-  .ark-stats{
-    display:grid;grid-template-columns:1fr 1fr;gap:5px;
-  }
-  .ark-stat{
-    padding:6px 9px;background:rgba(0,0,0,.35);
-    border-radius:3px;border-left:2px solid var(--line);
-    font-size:9.5px;
-    display:flex;justify-content:space-between;align-items:center;
-  }
-  .ark-stat.survive{border-left-color:var(--survive);}
-  .ark-stat.ark{border-left-color:var(--ark);}
-  .ark-stat.noah{border-left-color:var(--noah);}
-  .ark-stat .k{color:var(--muted);letter-spacing:1px;}
-  .ark-stat .v{font-weight:bold;}
-  .ark-stat.survive .v{color:var(--survive);}
-  .ark-stat.ark .v{color:var(--ark);}
-  .ark-stat.noah .v{color:var(--noah);}
+  .scene-tab small{display:block;margin-top:4px;color:#4f7a80;font-size:9px;}
+  .scene-tab.active{color:#04110f;background:var(--mint);border-color:var(--mint);}
+  .scene-tab.active small{color:#155a48;}
+  .scene-tab[data-color="amber"].active{background:var(--amber);border-color:var(--amber);}
+  .scene-tab[data-color="pink"].active{background:var(--pink);border-color:var(--pink);}
+  .scene-tab[data-color="blue"].active{background:var(--blue);border-color:var(--blue);}
+  .scene-tab[data-color="violet"].active{background:var(--violet);border-color:var(--violet);}
+  .scene-tab[data-color="mint"].active{background:var(--mint);border-color:var(--mint);}
+  .scene-tab[data-color="gold"].active{background:var(--gold);border-color:var(--gold);}
 
-  .ark-actions{
-    display:flex;gap:5px;flex-wrap:wrap;
+  .transport{
+    display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+    padding:10px;border-top:1px solid var(--line);
+    background:#08161e;
   }
-  .ark-actions button{flex:1;min-width:80px;}
+  .transport .primary{
+    min-width:150px;color:#04110f;background:var(--mint);
+    border-color:var(--mint);font-weight:700;
+  }
+  .transport .primary:hover{background:#a0ffdd;}
+  .transport .grow{flex:1;}
+  .transport label{color:var(--muted);font-size:10px;}
+  .speed-group{display:flex;gap:4px;}
+  .speed-group button{padding:.45rem .55rem;font-size:10px;}
 
-  /* SURVIVAL LOG */
-  .survive-log{
-    padding:8px 12px;
-    font-family:var(--serif);
-    font-style:italic;
-    font-size:11px;line-height:1.55;
-    color:#b8d8c8;
-    max-height:180px;overflow-y:auto;
-    background:#02060a;
-    border-top:1px solid var(--line);
+  .timeline{padding:10px 12px 12px;border-top:1px solid #1a3a44;background:#06121a;}
+  .timeline-head{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:10px;margin-bottom:7px;}
+  .timeline-head strong{color:var(--amber);}
+  .range-wrap{position:relative;}
+  input[type=range]{
+    width:100%;height:18px;margin:0;appearance:none;background:transparent;cursor:pointer;
   }
-  .survive-log::-webkit-scrollbar{width:5px;}
-  .survive-log::-webkit-scrollbar-thumb{background:var(--line);}
-  .survive-log .sl{
-    padding:3px 0;display:flex;gap:8px;
-    animation:logIn .3s ease-out;
+  input[type=range]::-webkit-slider-runnable-track{height:5px;background:#1e3a44;border:1px solid #2e5866;}
+  input[type=range]::-moz-range-track{height:5px;background:#1e3a44;border:1px solid #2e5866;}
+  input[type=range]::-webkit-slider-thumb{
+    appearance:none;width:14px;height:18px;margin-top:-7px;
+    background:var(--mint);border:1px solid #d7ffed;box-shadow:0 0 10px var(--mint);
   }
-  @keyframes logIn{from{opacity:0;transform:translateX(-6px);}to{opacity:1;transform:none;}}
-  .survive-log .ts{color:var(--line2);font-family:var(--mono);font-style:normal;font-size:9px;flex-shrink:0;padding-top:2px;}
-  .survive-log .msg{flex:1;}
-  .survive-log .msg.noah{color:var(--noah);}
-  .survive-log .msg.survive{color:var(--survive);}
-  .survive-log .msg.ark{color:var(--ark);}
-  .survive-log .msg.warn{color:var(--amber);}
-  .survive-log .msg.err{color:var(--red);}
+  input[type=range]::-moz-range-thumb{width:14px;height:18px;border-radius:0;background:var(--mint);border:1px solid #d7ffed;box-shadow:0 0 10px var(--mint);}
+  .markers{position:absolute;inset:0 0 auto;height:18px;pointer-events:none;}
+  .marker{position:absolute;top:4px;width:1px;height:11px;background:var(--amber);opacity:.85;}
+  .marker em{position:absolute;top:13px;left:3px;white-space:nowrap;color:#5e898d;font-style:normal;font-size:8px;}
 
-  /* SIDE COL */
-  .side-stack{display:grid;align-content:start;}
+  .side-stack{display:grid;align-content:start;gap:10px;}
+  .side-panel{min-width:0;}
   .side-content{padding:11px;}
 
-  .readout{min-height:60px;color:#a9d9ca;font-size:11px;line-height:1.55;white-space:pre-wrap;}
-  .readout-title{margin:0 0 6px;color:var(--mint);font-size:10px;letter-spacing:.1em;}
+  .cue-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .scene-big{color:var(--amber);font-size:20px;font-weight:700;line-height:1;}
+  .scene-big span{display:block;margin-top:5px;color:var(--text);font-size:11px;}
+  .source-chip{padding:4px 7px;border:1px solid #2c5666;color:var(--muted);font-size:9px;white-space:nowrap;letter-spacing:.1em;}
+  .progress-meter{height:5px;margin:12px 0 10px;background:#0f2b34;overflow:hidden;}
+  .progress-meter > i{display:block;height:100%;width:0%;background:var(--mint);box-shadow:0 0 12px rgba(104,246,192,.6);transition:width .3s;}
+  .time-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;}
+  .time-box{padding:7px;border:1px solid #1e3a44;background:#06141d;}
+  .time-box small{display:block;color:var(--muted);font-size:8px;margin-bottom:3px;}
+  .time-box strong{color:var(--text);font-size:13px;}
 
-  /* AXIS BARS */
-  .axis-row{
-    display:grid;grid-template-columns:64px 1fr 46px;
-    gap:6px;align-items:center;padding:3px 0;
-    border-bottom:1px dashed rgba(104,246,192,.06);
-    font-size:10px;
-  }
-  .axis-row:last-child{border-bottom:none;}
-  .axis-row .k{color:var(--muted);font-size:9px;letter-spacing:1px;font-weight:bold;}
-  .axis-row .bar{height:6px;background:#0a1c24;border-radius:2px;overflow:hidden;}
-  .axis-row .bar .f{height:100%;transition:width .35s;}
-  .axis-row .v{text-align:right;font-weight:bold;font-size:10px;}
+  .readout{min-height:76px;color:#a9d9ca;font-size:11px;line-height:1.55;white-space:pre-wrap;}
+  .readout .quote{color:var(--amber);}
+  .readout .muted{color:var(--muted);}
+  .readout-title{margin:0 0 6px;color:var(--mint);font-size:10px;}
 
-  /* LOG */
-  #log{
-    flex:1;padding:6px 12px;overflow-y:auto;
-    font-size:10px;line-height:1.5;color:#6a7a8a;
-    font-family:var(--mono);
-    max-height:160px;
-  }
-  #log::-webkit-scrollbar{width:5px;}
-  #log::-webkit-scrollbar-thumb{background:var(--line);}
-  #log .ln{white-space:pre-wrap;word-break:break-all;animation:logIn .3s ease-out;}
-  #log .ts{color:#3a4a5a;margin-right:6px;}
-  #log .ok{color:var(--mint);}
-  #log .warn{color:var(--amber);}
-  #log .err{color:var(--red);}
-  #log .info{color:var(--blue);}
-  #log .noah{color:var(--noah);font-weight:bold;}
-  #log .survive{color:var(--survive);font-weight:bold;}
-  #log .ark{color:var(--ark);font-weight:bold;}
+  .cue-list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:5px;}
+  .cue-list li{display:grid;grid-template-columns:48px 1fr;gap:8px;color:#5a8488;font-size:9px;line-height:1.35;position:relative;padding-left:6px;}
+  .cue-list li b{color:var(--amber);font-weight:400;}
+  .cue-list li.active{color:var(--text);}
+  .cue-list li.active b{color:var(--mint);}
+  .cue-list li.active::before{content:"▶";position:absolute;left:-6px;color:var(--pink);font-size:8px;}
 
-  /* BOOT */
-  #boot{
-    position:fixed;inset:0;background:#000;
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    gap:14px;z-index:9999;font-size:12px;
-    color:var(--noah);letter-spacing:2px;
-    transition:opacity .7s;
-  }
-  #boot.done{opacity:0;pointer-events:none;}
-  #boot .logo{
-    font-size:52px;color:var(--noah);letter-spacing:14px;
-    font-weight:bold;
-    text-shadow:0 0 40px rgba(255,136,68,.8),0 0 80px rgba(255,217,61,.5);
-    animation:logoBreathe 4s ease-in-out infinite;
-    font-family:"Yu Mincho",serif;
-  }
-  @keyframes logoBreathe{
-    0%,100%{transform:scale(1);filter:brightness(1);}
-    50%{transform:scale(1.04);filter:brightness(1.4);}
-  }
-  #boot .sub{color:var(--ark);font-size:12px;letter-spacing:8px;font-family:"Yu Mincho",serif;}
-  #boot .lines{
-    width:600px;max-width:84%;font-size:11px;line-height:1.7;
-    text-align:left;color:var(--mint);letter-spacing:0.5px;
-    font-family:var(--mono);
-  }
-  #boot .lines b{color:var(--noah);}
-  #boot .lines .dim{color:#3a4a5a;}
-  #boot .lines .ark{color:var(--ark);}
-  #boot .lines .cy{color:var(--blue);}
-  #boot .progress{
-    width:600px;max-width:84%;height:3px;
-    background:#0a1420;border-radius:2px;overflow:hidden;
-  }
-  #boot .progress .bar{
-    height:100%;width:0;
-    background:linear-gradient(90deg,var(--noah),var(--ark),var(--mint));
-    transition:width .3s;
-  }
-
-  /* CLI */
-  .cli-bar{
-    max-width:1660px;margin:10px auto 0;
-    display:flex;align-items:center;gap:8px;
-    padding:6px 12px;
-    background:rgba(6,14,22,.95);
-    border:1px solid var(--line);
-    box-shadow:var(--shadow);
-    font-size:11px;
-  }
-  .cli-bar .prompt{color:var(--noah);font-weight:bold;letter-spacing:1px;}
-  .cli-bar input{
-    flex:1;background:transparent;border:none;
-    color:var(--text);font-family:var(--mono);
-    font-size:11px;outline:none;letter-spacing:.05em;
-  }
-  .cli-bar input::placeholder{color:#3a4a5a;}
+  .sfx-log{display:flex;flex-direction:column;gap:5px;font-size:9px;color:#79a1a4;min-height:80px;}
+  .sfx-line{display:flex;gap:8px;border-bottom:1px dashed #1e3a44;padding-bottom:4px;}
+  .sfx-line b{color:var(--pink);font-weight:400;}
+  .sfx-line span{color:#8cb7ae;}
 
   .footer-strip{
-    max-width:1660px;margin:10px auto 0;
+    max-width:1560px;margin:10px auto 0;
     display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;
     color:#4a6e72;font-size:9px;letter-spacing:.08em;
   }
@@ -400,41 +238,24 @@
 </style>
 </head>
 <body>
-
-<!-- BOOT -->
-<div id="boot">
-  <div class="logo">◈ NOAH</div>
-  <div class="sub">SURVIVAL · ARK · ATEM · WONDER</div>
-  <div class="lines" id="bootLines"></div>
-  <div class="progress"><div class="bar" id="bootBar"></div></div>
-</div>
-
 <div class="app-shell">
 
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark">舟</div>
+      <div class="brand-mark">幻</div>
       <div>
-        <h1>NOAH · SURVIVAL RUNTIME</h1>
-        <p>ARK · ATEM · ATOM · WONDER · iki1uc · DAS WUNDER IST UNTER UNS</p>
+        <h1>ANIME RUNTIME · ATEM · ATOM · WONDER</h1>
+        <p>1960-FAN × ERZÄHLER × COMMUNICATOR · DAS WUNDER IST UNTER UNS</p>
       </div>
     </div>
     <div class="top-status">
-      <span class="led online">RUNTIME</span>
-      <span class="led noah">NOAH</span>
-      <span class="led ark">ARK</span>
-      <span class="status-chip" id="sModules">MODULE 0/9</span>
-      <span class="status-chip" id="sSurvive">SURVIVE —</span>
-      <span class="status-chip" id="sUptime">UPTIME 0s</span>
+      <span class="led online">RUNTIME ATMET</span>
+      <span>CANVAS 2D · ANIME RENDER</span>
+      <span>OFFLINE · SINGLE HTML</span>
     </div>
   </header>
 
-  <!-- MODULE STATUS -->
-  <div class="module-strip" id="moduleStrip"></div>
-
-  <!-- ELEMENT STRIP -->
-  <div class="elem-strip">
+  <div class="elem-strip" aria-label="Element-Zyklus">
     <div class="elem-chip atom"><span class="k">◈ ATOM</span><span class="v" id="chipAtom">—</span></div>
     <div class="elem-chip o2"><span class="k">O₂</span><span class="v" id="chipO2">—</span></div>
     <div class="elem-chip co2"><span class="k">CO₂</span><span class="v" id="chipCO2">—</span></div>
@@ -445,700 +266,255 @@
   </div>
 
   <main class="workspace">
-
-    <!-- LEFT: CANVAS + NOAH ARK -->
-    <section>
-      <div class="panel">
-        <div class="panel-title">
-          <span>◈ ANIME CANVAS / <strong>LIVE RENDER</strong></span>
-          <span id="canvasMode">WAITING</span>
-        </div>
-        <div class="monitor-wrap">
-          <canvas id="stage" width="960" height="540"></canvas>
-          <div class="monitor-overlay">
-            <span id="overlayLeft">NOAH / STANDBY</span>
-            <span id="overlayRight">00:00.0 / HOLD</span>
-          </div>
+    <section class="panel monitor-panel">
+      <div class="panel-title">
+        <span>◈ PREVIEW / <strong>LIVE ANIME CANVAS</strong></span>
+        <span id="canvasMode">WAITING</span>
+      </div>
+      <div class="monitor-wrap">
+        <canvas id="stage" width="960" height="540"></canvas>
+        <div class="monitor-overlay">
+          <span id="overlayLeft">SC1 / BEGEGNUNG</span>
+          <span id="overlayRight">00:00.0 / HOLD</span>
         </div>
       </div>
-
-      <!-- NOAH ARK PANEL — DIE SURVIVAL OPTION -->
-      <div class="panel noah-panel" id="noahPanel">
-        <div class="panel-title">
-          <span><strong>◈ NOAH</strong> — IDENTITÄTS-MODUL · SURVIVAL-OPTION</span>
-          <span id="noahBadge">STANDBY</span>
+      <nav id="sceneTabs" class="scene-tabs" aria-label="Szenen-Navigation"></nav>
+      <div class="transport">
+        <button id="startBtn" class="primary">▶ START RUNTIME</button>
+        <button id="stepBack">− 5 S</button>
+        <button id="stepForward">+ 5 S</button>
+        <span class="grow"></span>
+        <label>TEMPO</label>
+        <div class="speed-group">
+          <button data-speed="0.5">0.5×</button>
+          <button data-speed="1" class="active">1.0×</button>
+          <button data-speed="2">2.0×</button>
         </div>
-        <div class="ark-wrap">
-          <canvas id="arkCanvas" width="400" height="400"></canvas>
-          <div class="ark-info">
-            <div class="ark-title">
-              <span class="glyph">舟</span>
-              <span>NOAH</span>
-            </div>
-            <div class="ark-subtitle">ARK · RESCUE · CONTINUUM</div>
-            <div class="ark-desc" id="arkDesc">
-              NOAH ist die Überlebens-Option. Wenn das System kippt,
-              wenn Atem und Atom ins Ungleichgewicht fallen,
-              wenn die Module ausfallen —
-              dann wird NOAH aktiv. Ein Arche-System, das den Kern trägt,
-              bis die Module sich selbst reparieren.
-            </div>
-            <div class="ark-stats">
-              <div class="ark-stat survive"><span class="k">SURVIVE</span><span class="v" id="arkSurvive">100%</span></div>
-              <div class="ark-stat ark"><span class="k">ARK</span><span class="v" id="arkArk">0%</span></div>
-              <div class="ark-stat noah"><span class="k">NOAH</span><span class="v" id="arkNoah">READY</span></div>
-              <div class="ark-stat"><span class="k">LOAD</span><span class="v" id="arkLoad">0%</span></div>
-            </div>
-            <div class="ark-actions">
-              <button class="noah-btn" id="btnNoahOn">⚡ NOAH AKTIVIEREN</button>
-              <button class="ark-btn" id="btnArkLaunch">▲ ARK STARTEN</button>
-            </div>
-            <div class="ark-actions">
-              <button class="survive-btn" id="btnSurvive">◈ SURVIVAL</button>
-              <button class="red-btn" id="btnNoahReset">⟲ RESET</button>
-            </div>
-          </div>
+        <button id="cueBtn" class="active">CUE-BEEPS: ON</button>
+        <button id="breathBtn" class="active">◈ ATEM: AN</button>
+        <button id="fullscreenBtn">⛶ FULLSCREEN</button>
+      </div>
+      <div class="timeline">
+        <div class="timeline-head">
+          <span>MASTER TIMELINE / <strong id="timelineScene">SC1</strong></span>
+          <span id="timelineTime">00:00.0 / 02:41</span>
         </div>
-        <div class="survive-log" id="surviveLog">
-          <div class="sl"><span class="ts">[init]</span><span class="msg noah">◈ NOAH bereit — Überlebens-Option verfügbar.</span></div>
+        <div class="range-wrap">
+          <div id="markers" class="markers"></div>
+          <input id="timeline" type="range" min="0" max="161" step="0.1" value="0">
+        </div>
+        <div style="margin-top:8px;color:#4a6e72;font-size:9px;line-height:1.5;">
+          ATEM-GETRIEBENE RUNTIME · DAS WUNDER IST UNTER UNS · WAS SICH BEWEGT, IST
         </div>
       </div>
     </section>
 
-    <!-- RIGHT: SIDE PANELS -->
     <aside class="side-stack">
 
-      <div class="panel">
-        <div class="panel-title"><span>◈ ATEM · MOVE · SEIN · MAIN</span><span id="beatTag">IDLE</span></div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ DIRECTOR STATE</span><span id="runState">IDLE</span></div>
+        <div class="side-content">
+          <div class="cue-row">
+            <div class="scene-big"><span id="sceneCode">SC1</span><span id="sceneTitle">BEGEGNUNG</span></div>
+            <span id="sourceChip" class="source-chip">STORY</span>
+          </div>
+          <div class="progress-meter"><i id="sceneProgress"></i></div>
+          <div class="time-grid">
+            <div class="time-box"><small>SZENE</small><strong id="sceneTime">00:00.0</strong></div>
+            <div class="time-box"><small>MASTER</small><strong id="masterTime">00:00.0</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ ATEM · MOVE · SEIN · MAIN</span><span id="beatTag">SC1-01</span></div>
         <div class="side-content">
           <div id="axisBars"></div>
         </div>
-      </div>
+      </section>
 
-      <div class="panel">
-        <div class="panel-title"><span>◈ MODULE · SURVIVAL-MAP</span><span id="modMapBadge">9 MODULE</span></div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ LIVE PROMPTER</span><span>CUE</span></div>
         <div class="side-content">
-          <div id="modMap" style="display:flex;flex-direction:column;gap:4px;"></div>
+          <h2 class="readout-title" id="promptHeading">TEXT / STORY-BEAT</h2>
+          <div id="prompter" class="readout"></div>
         </div>
-      </div>
+      </section>
 
-      <div class="panel">
-        <div class="panel-title"><span>◈ NOAH · LOG</span><span>STREAM</span></div>
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ REGIEANWEISUNG</span><span>CAM</span></div>
         <div class="side-content">
-          <div id="log"></div>
+          <div id="directorText" class="readout"></div>
+          <ul id="cueList" class="cue-list"></ul>
         </div>
-      </div>
+      </section>
+
+      <section class="panel side-panel">
+        <div class="panel-title"><span>◈ SFX-LOG</span><span>4-CH</span></div>
+        <div class="side-content"><div id="sfxLog" class="sfx-log"></div></div>
+      </section>
 
     </aside>
-
   </main>
 
-  <!-- CLI -->
-  <div class="cli-bar">
-    <span class="prompt">noah&gt;</span>
-    <input id="cmdInput" placeholder="befehl: noah · ark · survive · modules · atem · status · help" autocomplete="off">
-  </div>
-
   <footer class="footer-strip">
-    <span><strong>NOAH:</strong> ARK · SURVIVE · CONTINUUM</span>
-    <span><strong>CONTROL:</strong> <span class="key">N</span> NOAH <span class="key">A</span> ARK <span class="key">S</span> SURVIVE <span class="key">Space</span> PULS <span class="key">R</span> RESET</span>
-    <span><strong>BUILD:</strong> SINGLE-FILE · OFFLINE-READY · iki1uc</span>
+    <span><strong>STORY:</strong> 1960-FAN × ERZÄHLER × COMMUNICATOR</span>
+    <span><strong>CONTROL:</strong> <span class="key">SPACE</span> PLAY <span class="key">← →</span> SCRUB <span class="key">F</span> FULL <span class="key">B</span> ATEM</span>
+    <span><strong>BUILD:</strong> ANIME RUNTIME / OFFLINE</span>
   </footer>
 
 </div>
 
 <script>
+(() => {
 "use strict";
 // ═══════════════════════════════════════════════════════════════════
-// ◈ NOAH · SURVIVAL RUNTIME
-// Ein einziger Ort, an dem alles zusammen startet.
-// window.RUNTIME + Loop + Event-Engine + UI-Engine + Bridge
-// + NOAH + SLI + brücke + continuum-bridge + vector.energie
+// ◈ ANIME RUNTIME · ATEM · ATOM · WONDER
+// Szenen werden ANIME gerendert. Atem, Atom, O2, CO2, H2O leben mit.
+// MOVE = echte Bewegung. SEIN = echte Zustände. MAIN = echter Loop.
 // ═══════════════════════════════════════════════════════════════════
 
-// ═══════════════════════════════════════════════════════════════════
-// MODUL-LOADER: lädt externe Module ODER nutzt eingebettete Fallbacks
-// ═══════════════════════════════════════════════════════════════════
-const MODULES = [
-  { id:'runtime',   file:'window.RUNTIME.js',    global:'RUNTIME',   loaded:false },
-  { id:'loop',      file:'Loop.js',              global:'LOOP',      loaded:false },
-  { id:'events',    file:'Event-Engine.js',      global:'EVENTS',    loaded:false },
-  { id:'ui',        file:'UI-Engine.js',         global:'UI',        loaded:false },
-  { id:'bridge',    file:'Bridge.js',            global:'BRIDGE',    loaded:false },
-  { id:'noah',      file:'NOAH.js',              global:'NOAH',      loaded:false },
-  { id:'sli',       file:'SLI.js',               global:'SLI',       loaded:false },
-  { id:'bruecke',   file:'brücke.js',            global:'BRUECKE',   loaded:false },
-  { id:'continuum', file:'continuum-bridge.js',  global:'CONTINUUM', loaded:false },
-  { id:'vector',    file:'vector.energie.js',    global:'VECTOR',    loaded:false },
+const W = 960, H = 540, MASTER_DURATION = 161;
+
+// ─── SZENEN ─────────────────────────────────────────────
+const scenes = [
+  {
+    id:"SC1", title:"BEGEGNUNG", tabDuration:29, color:"amber", source:"STORY",
+    director:"Totale → halbnahe Zweieraufnahme. Später Nachmittag auf offenem Stadtplatz. Der 1960-Fan wartet rechts am Baum; der Erzähler tritt von links auf.",
+    prompt:"Der Fan denkt in Kategorien von Tricorder und Enterprise. Der Erzähler zieht das moderne, generische Communicator-Artefakt hervor.",
+    dialogue:"„Schau dir das an. Das hier ist mein persönlicher Communicator. Er ist kleiner als eurer, braucht keinen Klappmechanismus und funktioniert überall auf der Welt. Ich kann jeden Menschen sofort erreichen, ohne Subraum, ohne Relaisstation, ohne Schiff.“",
+    sfx:["WIND","SCHRITTE","PAPER FLIP","ARTIFACT HUM"],
+    cues:[["SC1-01","Totale / offener Stadtplatz"],["SC1-02","Halbnahe Zweieraufnahme / Warten am Baum"],["SC1-03","Artefakt kommt ins Bild"],["SC1-04","Nahaufnahme / Communicator"],["SC1-05","Reaktion / sprachloses Starren"]],
+  },
+  {
+    id:"SC2", title:"TRICHTER & KAMERA", tabDuration:37, color:"blue", source:"STRUKTUR",
+    director:"Der Blick wird in einen visuellen Trichter gezogen. Die Kamera-Funktion wird isoliert; Fokus und Raster wandern über das Artefakt.",
+    prompt:"VISUELLER CUE: Der Blick der alten Zukunftserwartung trifft auf die Kamera des Communicators.",
+    dialogue:"[STRUKTUR-CUE] TRICHTER → KAMERA",
+    sfx:["FOCUS TICK","LENS CLICK","LOW SWEEP","CUE BEEP"],
+    cues:[["SC2-01","Trichter öffnet den Blick"],["SC2-02","Kamera-Raster / Fokus"],["SC2-03","Objekt im Zentrum halten"]],
+  },
+  {
+    id:"SC3", title:"NAVIGATION & WISSEN", tabDuration:35, color:"violet", source:"STRUKTUR",
+    director:"Die statische Stadtfläche verwandelt sich in eine leuchtende Karte. Route, Kompass und Wissensfenster erscheinen als Overlay.",
+    prompt:"VISUELLER CUE: Navigation und Wissen erscheinen als digitale Antwort auf die analoge Fantasie des Fans.",
+    dialogue:"[STRUKTUR-CUE] NAVIGATION / WISSEN",
+    sfx:["MAP PING","ROUTE DRAW","DATA TICKS","SOFT HUM"],
+    cues:[["SC3-01","Kartengitter / Orientierung"],["SC3-02","Route zeichnet sich ein"],["SC3-03","Wissensfenster / Halt"]],
+  },
+  {
+    id:"SC4", title:"SPRACHSTEUERUNG", tabDuration:37, color:"pink", source:"STRUKTUR",
+    director:"Die Kamera bleibt nah am Artefakt. Eine Sprachwelle übernimmt den Bildraum; der Prompter reagiert rhythmisch.",
+    prompt:"VISUELLER CUE: Der Communicator reagiert auf Sprache. Der Dialog wird als akustischer und grafischer Impuls geführt.",
+    dialogue:"[STRUKTUR-CUE] SPRACHE → ANTWORT",
+    sfx:["VOICE GATE","WAVEFORM","RESPONSE PIP","CUE BEEP"],
+    cues:[["SC4-01","Mikrofon / Eingang"],["SC4-02","Sprachwelle / Verstehen"],["SC4-03","Antwortsignal"]],
+  },
+  {
+    id:"SC5", title:"DAS ARTEFAKT", tabDuration:38, color:"gold", source:"STORY",
+    director:"Langsame seitliche Begleitung in die Nahaufnahme. Das Smartphone als Artefakt zwischen zwei Zeitebenen.",
+    prompt:"Das Notizbuch des Fans und der Communicator des Erzählers bilden den Kontrast: analoges Warten gegen unmittelbare Verbindung.",
+    dialogue:"ARTEFAKT IM ZENTRUM / REAKTION DES FANS: SPRACHLOSES STARREN",
+    sfx:["RISING HUM","STATIC DUST","HELD BREATH","LOW TONE"],
+    cues:[["SC5-01","Notizbuch / analoge Erwartung"],["SC5-02","Communicator / Nahaufnahme"],["SC5-03","Blick des Fans / Überforderung"]],
+  },
+  {
+    id:"SC6", title:"DIE POINTE", tabDuration:18, color:"mint", source:"STRUKTUR",
+    director:"Das Bild fällt aus der Demonstration in einen kontrollierten Demoscene-Hold. Die Pointe wird als End-Cue gesetzt.",
+    prompt:"FINALER CUE: DIE POINTE. Der Story-Auszug benennt den Schlussbeat.",
+    dialogue:"[FINAL CUE] DIE POINTE / HOLD",
+    sfx:["DROP","GLITCH BURST","FINAL BEEP","SILENCE"],
+    cues:[["SC6-01","Pointe / Hold"],["SC6-02","Signal bricht in Pixel"],["SC6-03","Runtime-Ende"]],
+  },
 ];
 
-// ─── EMBEDDED FALLBACK-MODULE ──────────────────────────
-// Diese werden genutzt, falls die externen .js-Dateien fehlen.
-const FALLBACK = {
-  // window.RUNTIME
-  RUNTIME: {
-    version:'1.0.0',
-    state:{
-      tick:0, breath:0, breathPhase:0, breathCycleMs:4000,
-      atom:0.72, o2:0.84, co2:0.68, h2o:0.76,
-      mana:0.66, aura:0.74, zen:0.88,
-      move:0, moveValues:{rot:0.4,orb:0.6,wav:0.3,lin:0.5,spr:0.4},
-      sein:'ruhe', main:{tick:0,cycle:0,beat:0},
-      klick:0, zack:0,
-      verify:16, verifyPass:16,
-      scenario:'NOAH-STANDBY',
-    },
-    init(){ return {ok:true, version:this.version}; },
-    pulse(){ this.state.breath++; return this.state.breath; },
-    state_get(){ return { ...this.state }; },
-  },
-  // Loop
-  LOOP: {
-    running:false, interval:null, tickCount:0,
-    start(fn){
-      this.running = true;
-      const loop = () => {
-        this.tickCount++;
-        if (fn) fn(this.tickCount);
-        this.raf = requestAnimationFrame(loop);
-      };
-      this.raf = requestAnimationFrame(loop);
-      return true;
-    },
-    stop(){
-      this.running = false;
-      if (this.raf) cancelAnimationFrame(this.raf);
-    },
-  },
-  // Event-Engine
-  EVENTS: {
-    listeners:{},
-    on(evt, fn){ (this.listeners[evt] = this.listeners[evt] || []).push(fn); },
-    emit(evt, data){
-      (this.listeners[evt] || []).forEach(fn => { try{ fn(data); }catch(_){} });
-    },
-    bind(){ return true; },
-  },
-  // UI-Engine
-  UI: {
-    version:'1.0.0',
-    init(){ return true; },
-    update(){ return true; },
-  },
-  // Bridge
-  BRIDGE: {
-    version:'1.0.0',
-    connected:false,
-    init(){
-      this.connected = true;
-      return { ok:true, connected:true };
-    },
-    send(target, msg){ return { target, msg, ts:Date.now() }; },
-    receive(msg){ return { received:msg, ts:Date.now() }; },
-  },
-  // NOAH
-  NOAH: {
-    version:'1.0.0',
-    active:false,
-    survive:1.0,     // Survive-Level
-    arkLevel:0,      // Ark-Level
-    load:0,          // System-Last
-    mode:'standby',  // standby | active | ark | survive | rescue
-    init(){ return { ok:true, mode:this.mode }; },
-    activate(){
-      this.active = true;
-      this.mode = 'active';
-      return { mode:this.mode, survive:this.survive };
-    },
-    ark(){
-      this.arkLevel = 1.0;
-      this.mode = 'ark';
-      return { mode:this.mode, ark:this.arkLevel };
-    },
-    surviveMode(){
-      this.mode = 'survive';
-      this.survive = Math.min(1.0, this.survive + 0.2);
-      return { mode:this.mode, survive:this.survive };
-    },
-    reset(){
-      this.active = false;
-      this.survive = 1.0;
-      this.arkLevel = 0;
-      this.load = 0;
-      this.mode = 'standby';
-      return { mode:this.mode };
-    },
-    state(){ return { mode:this.mode, active:this.active, survive:this.survive, ark:this.arkLevel, load:this.load }; },
-  },
-  // SLI
-  SLI: {
-    version:'1.0.0',
-    mode:'SLI',
-    logic:{}, 
-    init(){ return { ok:true, mode:this.mode }; },
-    compute(n){ return n * 1.618; }, // Goldener Schnitt als Default
-  },
-  // brücke
-  BRUECKE: {
-    version:'1.0.0',
-    links:[],
-    init(){ return { ok:true, links:this.links.length }; },
-    link(a, b){ this.links.push({a, b, ts:Date.now()}); return true; },
-  },
-  // continuum-bridge
-  CONTINUUM: {
-    version:'1.0.0',
-    t:0,
-    init(){ return { ok:true }; },
-    tick(dt){ this.t += dt; return this.t; },
-  },
-  // vector.energie
-  VECTOR: {
-    version:'1.0.0',
-    atem:{ o2:0.84, co2:0.68, h2o:0.76, atom:0.72, mana:0.66, aura:0.74, zen:0.88 },
-    init(){ return { ok:true }; },
-    cycle(dt){
-      // Atem-Zyklus: ein → halten → aus → halten
-      const phase = ((performance.now() % 4000) / 4000);
-      let intensity;
-      if (phase < 0.4) intensity = phase / 0.4;
-      else if (phase < 0.5) intensity = 1;
-      else if (phase < 0.9) intensity = 1 - (phase - 0.5) / 0.4;
-      else intensity = 0;
-      if (phase < 0.4){
-        this.atem.o2 = Math.min(1, this.atem.o2 + 0.0035);
-        this.atem.co2 = Math.max(0, this.atem.co2 - 0.0025);
-      } else if (phase >= 0.5 && phase < 0.9){
-        this.atem.co2 = Math.min(1, this.atem.co2 + 0.0030);
-        this.atem.o2 = Math.max(0, this.atem.o2 - 0.0020);
-      }
-      this.atem.h2o = Math.min(1, this.atem.h2o + 0.0015);
-      this.atem.mana = Math.max(0, Math.min(1, this.atem.mana + (intensity-0.5)*0.004));
-      this.atem.aura = Math.max(0, Math.min(1, this.atem.aura + (intensity-0.5)*0.003));
-      this.atem.zen  = Math.max(0, Math.min(1, this.atem.zen + (0.5-Math.abs(intensity-0.5))*0.002));
-      return { ...this.atem, phase, intensity };
-    },
-  },
-};
+// Zeit-Skalierung
+const cueSum = scenes.reduce((s, sc) => s + sc.tabDuration, 0);
+const cueScale = MASTER_DURATION / cueSum;
+let cursor = 0;
+scenes.forEach(sc => {
+  sc.runtimeDuration = sc.tabDuration * cueScale;
+  sc.start = cursor;
+  sc.end = cursor + sc.runtimeDuration;
+  cursor = sc.end;
+});
+scenes[scenes.length - 1].end = MASTER_DURATION;
 
-// ─── MODUL-LOADER mit Fallback ─────────────────────────
-function loadModuleScript(file){
-  return new Promise((resolve) => {
-    const script = document.createElement('script');
-    script.src = file;
-    script.async = false;
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.head.appendChild(script);
-    setTimeout(() => resolve(false), 1200); // timeout
-  });
-}
+// ─── CANVAS ─────────────────────────────────────────────
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
 
-async function loadAllModules(){
-  const results = [];
-  for (const m of MODULES){
-    // Prüfe ob global existiert
-    if (window[m.global]){
-      m.loaded = true;
-      results.push({ id:m.id, loaded:true, source:'external' });
-      continue;
-    }
-    // Versuche zu laden
-    const ok = await loadModuleScript(m.file);
-    if (ok && window[m.global]){
-      m.loaded = true;
-      results.push({ id:m.id, loaded:true, source:'external' });
-    } else {
-      // Fallback
-      window[m.global] = FALLBACK[m.global];
-      m.loaded = true;
-      results.push({ id:m.id, loaded:true, source:'fallback' });
-    }
-  }
-  return results;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════════════
+// ─── STATE ──────────────────────────────────────────────
 const S = {
-  tick:0, booted:false, uptime:0,
-  breathCount:0, breathPhase:0,
-  atom:0.72, o2:0.84, co2:0.68, h2o:0.76,
-  mana:0.66, aura:0.74, zen:0.88,
-  move:0, moveValues:{rot:0.4,orb:0.6,wav:0.3,lin:0.5,spr:0.4},
-  sein:'ruhe', main:{tick:0,cycle:0,beat:0},
-  klick:0, zack:0,
-  sparks:[], frame:0,
-  noah:{ active:false, survive:1.0, ark:0, load:0, mode:'standby' },
-  moduleResults:[],
-  modCheckTimer:0,
+  time: 0, playing: false, booting: false, bootTime: 0,
+  speed: 1, cueBeeps: true, breathOn: true,
+  lastFrame: performance.now(), frame: 0,
+  audio: null,
+  // Atem
+  breathPhase: 0, breathCount: 0, breathCycleMs: 4000,
+  // Elemente
+  atom: 0.72, o2: 0.84, co2: 0.68, h2o: 0.76,
+  mana: 0.66, aura: 0.74, zen: 0.88,
+  // MOVE · SEIN · MAIN
+  move: 0, moveValues: { rot:0.4, orb:0.6, wav:0.3, lin:0.5, spr:0.4 },
+  sein: 'ruhe',
+  main: { tick:0, cycle:0, beat:0 },
+  // Anime-System
+  sparks: [],       // Partikel für Anime-Effekte
+  speedLines: 0,    // Speed-Lines-Intensität
+  emotion: null,    // Aktuelles Emotions-Symbol
+  emotionTimer: 0,
+  shake: 0,         // Kamera-Erschütterung bei Szenenwechsel, klingt ab
 };
 
-// ═══════════════════════════════════════════════════════════════════
-// LOG
-// ═══════════════════════════════════════════════════════════════════
-const logEl = document.getElementById('log');
-function log(msg, cls=''){
-  const t = new Date().toLocaleTimeString('de-DE');
-  const div = document.createElement('div');
-  div.className = 'ln';
-  div.innerHTML = `<span class="ts">[${t}]</span><span class="${cls}">${msg}</span>`;
-  logEl.appendChild(div);
-  logEl.scrollTop = logEl.scrollHeight;
-  while (logEl.children.length > 80) logEl.removeChild(logEl.firstChild);
-}
-
-const surviveLogEl = document.getElementById('surviveLog');
-function surviveLog(msg, cls='noah'){
-  const t = new Date().toLocaleTimeString('de-DE');
-  const div = document.createElement('div');
-  div.className = 'sl';
-  div.innerHTML = `<span class="ts">[${t}]</span><span class="msg ${cls}">${msg}</span>`;
-  surviveLogEl.appendChild(div);
-  surviveLogEl.scrollTop = surviveLogEl.scrollHeight;
-  while (surviveLogEl.children.length > 40) surviveLogEl.removeChild(surviveLogEl.firstChild);
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// CANVAS
-// ═══════════════════════════════════════════════════════════════════
-const cv = document.getElementById('stage');
-const ctx = cv.getContext('2d');
-const W = 960, H = 540;
-
-// ─── ARK CANVAS (NOAH-Symbol) ──────────────────────────
-const arkCv = document.getElementById('arkCanvas');
-const arkCtx = arkCv.getContext('2d');
-
-function drawArk(){
-  const w = arkCv.width, h = arkCv.height;
-  const cx = w/2, cy = h/2;
-  arkCtx.clearRect(0, 0, w, h);
-
-  // Hintergrund
-  const g = arkCtx.createRadialGradient(cx, cy, 20, cx, cy, w*0.7);
-  g.addColorStop(0, 'rgba(255,136,68,.15)');
-  g.addColorStop(0.5, 'rgba(255,217,61,.05)');
-  g.addColorStop(1, 'rgba(0,0,0,0)');
-  arkCtx.fillStyle = g;
-  arkCtx.fillRect(0, 0, w, h);
-
-  // Äußere Ringe
-  for (let i = 0; i < 3; i++){
-    const r = w*0.35 - i*22;
-    arkCtx.strokeStyle = `rgba(255,136,68,${0.3 - i*0.08})`;
-    arkCtx.lineWidth = 1.5;
-    arkCtx.beginPath();
-    arkCtx.arc(cx, cy, r + Math.sin(S.frame*0.03 + i)*4, 0, Math.PI*2);
-    arkCtx.stroke();
-  }
-
-  // Arche-Silhouette (stilisiert)
-  arkCtx.save();
-  arkCtx.translate(cx, cy);
-
-  // Wasser-Wellen unten
-  for (let i = 0; i < 4; i++){
-    arkCtx.beginPath();
-    arkCtx.strokeStyle = `rgba(95,200,255,${0.4 - i*0.08})`;
-    arkCtx.lineWidth = 1.5;
-    const y = 50 + i*10;
-    arkCtx.moveTo(-w*0.35, y);
-    for (let x = -w*0.35; x < w*0.35; x += 8){
-      const yy = y + Math.sin((x + S.frame*2 + i*40) * 0.05) * 3;
-      arkCtx.lineTo(x, yy);
-    }
-    arkCtx.stroke();
-  }
-
-  // Arche-Körper
-  arkCtx.beginPath();
-  arkCtx.moveTo(-70, 40);
-  arkCtx.lineTo(-50, -10);
-  arkCtx.lineTo(50, -10);
-  arkCtx.lineTo(70, 40);
-  arkCtx.closePath();
-  arkCtx.fillStyle = 'rgba(255,136,68,.25)';
-  arkCtx.fill();
-  arkCtx.strokeStyle = '#ff8844';
-  arkCtx.lineWidth = 2;
-  arkCtx.stroke();
-
-  // Mast
-  arkCtx.beginPath();
-  arkCtx.moveTo(0, -10);
-  arkCtx.lineTo(0, -60);
-  arkCtx.strokeStyle = '#ffd93d';
-  arkCtx.lineWidth = 2;
-  arkCtx.stroke();
-
-  // Segel
-  const sailWobble = Math.sin(S.frame*0.05) * 3;
-  arkCtx.beginPath();
-  arkCtx.moveTo(0, -55);
-  arkCtx.quadraticCurveTo(30 + sailWobble, -35, 0, -15);
-  arkCtx.closePath();
-  arkCtx.fillStyle = 'rgba(255,217,61,.4)';
-  arkCtx.fill();
-  arkCtx.strokeStyle = '#ffd93d';
-  arkCtx.lineWidth = 1.5;
-  arkCtx.stroke();
-
-  // Kanji 舟 in der Mitte
-  arkCtx.font = 'bold 44px "Yu Mincho", serif';
-  arkCtx.fillStyle = 'rgba(255,136,68,.9)';
-  arkCtx.textAlign = 'center';
-  arkCtx.textBaseline = 'middle';
-  arkCtx.shadowColor = '#ff8844';
-  arkCtx.shadowBlur = 18;
-  arkCtx.fillText('舟', 0, -35);
-  arkCtx.shadowBlur = 0;
-
-  // Sterne/Partikel
-  for (let i = 0; i < 20; i++){
-    const a = i*0.7 + S.frame*0.01;
-    const r = w*0.32;
-    const x = Math.cos(a) * r;
-    const y = Math.sin(a) * r;
-    arkCtx.fillStyle = i % 3 === 0 ? '#ff8844' : '#ffd93d';
-    arkCtx.globalAlpha = 0.5 + 0.5 * Math.sin(S.frame*0.05 + i);
-    arkCtx.beginPath();
-    arkCtx.arc(x, y, 2, 0, Math.PI*2);
-    arkCtx.fill();
-  }
-  arkCtx.globalAlpha = 1;
-
-  arkCtx.restore();
-
-  // Titel
-  arkCtx.font = '10px Consolas, monospace';
-  arkCtx.fillStyle = 'rgba(255,217,61,.6)';
-  arkCtx.textAlign = 'center';
-  arkCtx.textBaseline = 'bottom';
-  arkCtx.fillText('ARK · SURVIVAL · CONTINUUM', cx, h - 12);
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// ANIME CANVAS RENDER
-// ═══════════════════════════════════════════════════════════════════
-function drawAnimeCanvas(){
-  const t = S.frame;
-  ctx.fillStyle = '#04060c';
-  ctx.fillRect(0, 0, W, H);
-
-  // Himmel
-  const sky = ctx.createLinearGradient(0, 0, 0, H*0.8);
-  sky.addColorStop(0, '#1a0c28');
-  sky.addColorStop(0.4, '#5a1c50');
-  sky.addColorStop(0.75, '#c04a3a');
-  sky.addColorStop(1, '#ffb874');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H*0.8);
-
-  // Sonne
-  ctx.save();
-  ctx.shadowColor = '#ffec9c';
-  ctx.shadowBlur = 60;
-  ctx.fillStyle = '#fff4c8';
-  ctx.beginPath();
-  ctx.arc(W*0.75, H*0.28, 44 + Math.sin(t*0.02)*4, 0, Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  // Sonnenstrahlen
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,236,156,.25)';
-  ctx.lineWidth = 1.5;
-  for (let i = 0; i < 16; i++){
-    const a = (i/16)*Math.PI*2 + t*0.002;
-    const r1 = 54, r2 = 82 + Math.sin(t*0.05 + i)*10;
-    ctx.beginPath();
-    ctx.moveTo(W*0.75 + Math.cos(a)*r1, H*0.28 + Math.sin(a)*r1);
-    ctx.lineTo(W*0.75 + Math.cos(a)*r2, H*0.28 + Math.sin(a)*r2);
-    ctx.stroke();
-  }
-  ctx.restore();
-
-  // Wasser
-  ctx.fillStyle = '#1a4a5a';
-  ctx.fillRect(0, H*0.8, W, H*0.2);
-
-  // Wasser-Wellen
-  for (let i = 0; i < 3; i++){
-    ctx.beginPath();
-    ctx.strokeStyle = `rgba(95,200,255,${0.4 - i*0.1})`;
-    ctx.lineWidth = 1.5;
-    const y = H*0.82 + i*12;
-    ctx.moveTo(0, y);
-    for (let x = 0; x < W; x += 8){
-      const yy = y + Math.sin((x + t*2 + i*40) * 0.03) * 4;
-      ctx.lineTo(x, yy);
-    }
-    ctx.stroke();
-  }
-
-  // Arche in der Mitte
-  const cx = W/2, cy = H*0.72;
-  ctx.save();
-  ctx.translate(cx, cy + Math.sin(t*0.02) * 3);
-
-  // Arche-Körper (größer)
-  ctx.beginPath();
-  ctx.moveTo(-100, 20);
-  ctx.lineTo(-70, -30);
-  ctx.lineTo(70, -30);
-  ctx.lineTo(100, 20);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(255,136,68,.3)';
-  ctx.fill();
-  ctx.strokeStyle = '#ff8844';
-  ctx.lineWidth = 2.5;
-  ctx.shadowColor = '#ff8844';
-  ctx.shadowBlur = 12;
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // Mast
-  ctx.beginPath();
-  ctx.moveTo(0, -30);
-  ctx.lineTo(0, -110);
-  ctx.strokeStyle = '#ffd93d';
-  ctx.lineWidth = 2.5;
-  ctx.stroke();
-
-  // Segel (weht im Wind)
-  const wobble = Math.sin(t * 0.05) * 6;
-  ctx.beginPath();
-  ctx.moveTo(0, -105);
-  ctx.quadraticCurveTo(60 + wobble, -70, 0, -35);
-  ctx.closePath();
-  ctx.fillStyle = 'rgba(255,217,61,.5)';
-  ctx.fill();
-  ctx.strokeStyle = '#ffd93d';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Kanji
-  ctx.font = 'bold 32px "Yu Mincho", serif';
-  ctx.fillStyle = '#ffd93d';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.shadowColor = '#ff8844';
-  ctx.shadowBlur = 15;
-  ctx.fillText('舟', 0, -70);
-  ctx.shadowBlur = 0;
-  ctx.restore();
-
-  // NOAH-Status im Bild
-  ctx.font = 'bold 13px Consolas, monospace';
-  ctx.fillStyle = S.noah.active ? '#68f6c0' : '#ff8844';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  ctx.shadowColor = ctx.fillStyle;
-  ctx.shadowBlur = 10;
-  ctx.fillText('◈ NOAH · ' + S.noah.mode.toUpperCase(), 26, 26);
-  ctx.shadowBlur = 0;
-
-  ctx.font = '10px Consolas, monospace';
-  ctx.fillStyle = 'rgba(255,217,61,.7)';
-  ctx.fillText('SURVIVE ' + (S.noah.survive*100).toFixed(0) + '%', 26, 50);
-  ctx.fillText('ARK ' + (S.noah.ark*100).toFixed(0) + '%', 26, 66);
-
-  // Atem-Info
-  ctx.textAlign = 'right';
-  ctx.fillStyle = 'rgba(104,246,192,.6)';
-  ctx.fillText('ATEM · ' + (S.breathPhase*100).toFixed(0) + '%', W-26, 26);
-  ctx.fillText('O₂ ' + (S.o2*100).toFixed(0) + '% · CO₂ ' + (S.co2*100).toFixed(0) + '% · H₂O ' + (S.h2o*100).toFixed(0) + '%', W-26, 42);
-
-  // Sparks
-  ctx.save();
-  for (let i = S.sparks.length - 1; i >= 0; i--){
-    const sp = S.sparks[i];
-    sp.x += sp.vx;
-    sp.y += sp.vy;
-    sp.vy += 0.04;
-    sp.life -= 0.015;
-    if (sp.life <= 0){ S.sparks.splice(i, 1); continue; }
-    ctx.globalAlpha = sp.life;
-    ctx.fillStyle = sp.color;
-    ctx.shadowColor = sp.color;
-    ctx.shadowBlur = 10;
-    ctx.beginPath();
-    ctx.arc(sp.x, sp.y, sp.size * sp.life, 0, Math.PI*2);
-    ctx.fill();
-  }
-  ctx.restore();
-
-  // CRT-Effekt
-  ctx.save();
-  ctx.globalAlpha = 0.06;
-  for (let y = 0; y < H; y += 4) {
-    ctx.fillStyle = '#020810';
-    ctx.fillRect(0, y, W, 1);
-  }
-  ctx.restore();
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// UPDATE
-// ═══════════════════════════════════════════════════════════════════
+// ─── ELEMENTE-ZYKLUS ──────────────────────────────────
 function updateElements(dt){
-  // Atem-Zyklus 4s
-  const phase = ((performance.now() % 4000) / 4000);
-  S.breathPhase = phase;
+  // Atem-Phase (4s)
+  S.breathPhase = ((performance.now() % S.breathCycleMs) / S.breathCycleMs);
+  const ph = S.breathPhase;
+  // Atem-Intensität: ein → halt → aus → halt
+  let intensity;
+  if (ph < 0.4) intensity = ph / 0.4;
+  else if (ph < 0.5) intensity = 1.0;
+  else if (ph < 0.9) intensity = 1 - (ph - 0.5) / 0.4;
+  else intensity = 0.0;
 
-  // VECTOR.energie nutzen wenn vorhanden
-  if (window.VECTOR && window.VECTOR.cycle){
-    const r = window.VECTOR.cycle(dt);
-    S.o2 = r.o2;
-    S.co2 = r.co2;
-    S.h2o = r.h2o;
-    S.atom = r.atom;
-    S.mana = r.mana;
-    S.aura = r.aura;
-    S.zen = r.zen;
+  // O2 steigt bei Einatmen, CO2 bei Ausatmen
+  if (ph < 0.4){
+    S.o2 = Math.min(1, S.o2 + 0.0035);
+    S.co2 = Math.max(0, S.co2 - 0.0025);
+    S.h2o = Math.min(1, S.h2o + 0.0012);
+  } else if (ph >= 0.5 && ph < 0.9){
+    S.co2 = Math.min(1, S.co2 + 0.0030);
+    S.o2 = Math.max(0, S.o2 - 0.0020);
+    S.h2o = Math.min(1, S.h2o + 0.0020);
   }
+  S.atom = Math.max(0, Math.min(1, S.atom + (Math.random()-0.5) * 0.003));
 
-  // Breath-Count
-  if (phase < 0.05) S.breathCount++;
+  // Mana/Aura/Zen folgen dem Atem
+  S.mana = Math.max(0, Math.min(1, S.mana + (intensity - 0.5) * 0.004 + (Math.random()-0.5)*0.002));
+  S.aura = Math.max(0, Math.min(1, S.aura + (intensity - 0.5) * 0.003));
+  S.zen  = Math.max(0, Math.min(1, S.zen  + (0.5 - Math.abs(intensity - 0.5)) * 0.002));
 
-  // MAIN
-  S.main.beat = (phase < 0.4 ? phase/0.4 : phase < 0.9 ? 1-(phase-0.5)/0.4 : 0) * 100;
-  if (S.frame % 60 === 0) S.main.tick++;
-  if (S.main.tick % 60 === 0) S.main.cycle++;
+  // MAIN tickt mit dem Atem
+  S.main.beat = intensity * 100;
+  S.main.tick += 1;
+  if (S.main.tick % 240 === 0) S.main.cycle++;
 
   // MOVE atmet
   Object.keys(S.moveValues).forEach(k => {
     S.moveValues[k] = Math.max(0, Math.min(1, S.moveValues[k] + (Math.random()-0.5)*0.02));
   });
-  S.move = Object.values(S.moveValues).reduce((a,b) => a+b, 0) / 5;
+  S.move = (S.moveValues.rot + S.moveValues.orb + S.moveValues.wav + S.moveValues.lin + S.moveValues.spr) / 5;
 
-  // NOAH-Survival: wenn Atem oder Chemie kippt
-  const chemBalance = (S.o2 + (1 - Math.abs(S.co2 - 0.68)) + S.h2o) / 3;
-  const systemLoad = 1 - chemBalance;
-  S.noah.load = systemLoad;
+  // SEIN aus Atem-Phase
+  if (ph < 0.4) S.sein = 'atmet';
+  else if (ph < 0.5) S.sein = 'pulst';
+  else if (ph < 0.9) S.sein = 'lauft';
+  else S.sein = 'wacht';
 
-  // Auto-Survival: wenn Load > 0.5 und NOAH nicht aktiv
-  if (S.noah.load > 0.5 && !S.noah.active && S.frame % 60 === 0){
-    noahActivate('auto');
-  }
-
-  // Survive-Level: regeneriert wenn NOAH aktiv
-  if (S.noah.active){
-    S.noah.survive = Math.min(1, S.noah.survive + 0.005);
-  } else {
-    S.noah.survive = Math.max(0.5, S.noah.survive - 0.001);
-  }
-
-  // Module-Check alle 2s
-  S.modCheckTimer += dt;
-  if (S.modCheckTimer > 2){
-    S.modCheckTimer = 0;
-    checkModules();
-  }
-
-  // Chips
+  // Element-Chips
   setChip('chipAtom', (S.atom*100).toFixed(0)+'%');
   setChip('chipO2', (S.o2*100).toFixed(0)+'%');
   setChip('chipCO2', (S.co2*100).toFixed(0)+'%');
@@ -1147,298 +523,1393 @@ function updateElements(dt){
   setChip('chipAura', (S.aura*100).toFixed(0)+'%');
   setChip('chipZen', (S.zen*100).toFixed(0)+'%');
 
-  // Ark-Stats
-  setChip('arkSurvive', (S.noah.survive*100).toFixed(0)+'%');
-  setChip('arkArk', (S.noah.ark*100).toFixed(0)+'%');
-  setChip('arkNoah', S.noah.active ? 'AKTIV' : 'READY');
-  setChip('arkLoad', (S.noah.load*100).toFixed(0)+'%');
-
-  // Topbar
-  const loadedMods = S.moduleResults.filter(m => m.loaded).length;
-  setChip('sModules', `MODULE ${loadedMods}/${MODULES.length}`);
-  setChip('sSurvive', `SURVIVE ${(S.noah.survive*100).toFixed(0)}%`);
-  setChip('sUptime', `UPTIME ${Math.floor(S.uptime)}s`);
-  setChip('noahBadge', S.noah.mode.toUpperCase());
-
+  // Axis-Bars
   renderAxisBars();
 }
-
-function setChip(id, v){
-  const el = document.getElementById(id);
-  if (el) el.textContent = v;
-}
-
+function setChip(id, v){ const el = document.getElementById(id); if (el) el.textContent = v; }
 function renderAxisBars(){
   const el = document.getElementById('axisBars');
   if (!el) return;
   const rows = [
-    { k:'◈ NOAH',  v: S.noah.active ? 1 : 0.3,      c:'var(--noah)' },
-    { k:'SURVIVE', v: S.noah.survive,                c:'var(--survive)' },
-    { k:'ARK',     v: S.noah.ark,                    c:'var(--ark)' },
-    { k:'ATEM',    v: S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2, c:'var(--mint)' },
-    { k:'MOVE',    v: S.move,                        c:'var(--amber)' },
-    { k:'MAIN',    v: S.main.beat/100,               c:'var(--blue)' },
-    { k:'LEBEN',   v: (S.mana + S.aura + S.zen)/3,   c:'var(--pink)' },
+    { k:'MOVE',  v:S.move,       color:'var(--amber)' },
+    { k:'SEIN',  v: 0.5 + 0.5*Math.sin(S.breathPhase*Math.PI*2), color:'var(--violet)' },
+    { k:'MAIN',  v: S.main.beat/100, color:'var(--blue)' },
+    { k:'ATEM',  v: S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2, color:'var(--mint)' },
+    { k:'LEBEN', v: (S.mana+S.aura+S.zen)/3, color:'var(--pink)' },
   ];
   el.innerHTML = rows.map(r => `
-    <div class="axis-row">
-      <span class="k">${r.k}</span>
-      <div class="bar"><div class="f" style="width:${(r.v*100).toFixed(0)}%;background:${r.c};box-shadow:0 0 8px ${r.c};"></div></div>
-      <span class="v" style="color:${r.c};">${(r.v*100).toFixed(0)}%</span>
+    <div style="display:grid;grid-template-columns:56px 1fr 42px;gap:6px;align-items:center;
+                padding:3px 0;border-bottom:1px dashed rgba(104,246,192,.06);font-size:10px;">
+      <span style="color:var(--muted);font-size:9px;letter-spacing:1px;font-weight:bold;">${r.k}</span>
+      <div style="height:6px;background:#0a1c24;border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${(r.v*100).toFixed(0)}%;background:${r.color};transition:width .35s;"></div>
+      </div>
+      <span style="text-align:right;color:${r.color};font-weight:bold;font-size:10px;">${(r.v*100).toFixed(0)}%</span>
     </div>
   `).join('');
 }
 
-function checkModules(){
-  const strip = document.getElementById('moduleStrip');
-  strip.innerHTML = S.moduleResults.map(m => {
-    const mod = MODULES.find(x => x.id === m.id);
-    const cls = m.source === 'fallback' ? (m.id === 'noah' ? 'noah' : 'on') : 'on';
-    const st = m.source === 'fallback' ? '◈' : '●';
-    return `<div class="mod-chip ${cls}">
-      <span class="mod-name">${mod.global}</span>
-      <span class="mod-status">${st}</span>
-    </div>`;
-  }).join('');
+// ─── ANIME-PARTIKEL-SYSTEM ─────────────────────────────
+function spawnSpark(x, y, color, count=1, kind='spark'){
+  for (let i = 0; i < count; i++){
+    const a = Math.random() * Math.PI * 2;
+    const sp = 1 + Math.random() * 3;
+    S.sparks.push({
+      x, y, vx: Math.cos(a)*sp, vy: Math.sin(a)*sp,
+      life: 1, maxLife: 30 + Math.random()*40,
+      color, size: 1 + Math.random()*2,
+      kind,
+    });
+  }
 }
-
-// ═══════════════════════════════════════════════════════════════════
-// NOAH ACTIONS
-// ═══════════════════════════════════════════════════════════════════
-function noahActivate(reason){
-  if (S.noah.active) return;
-  S.noah.active = true;
-  S.noah.mode = 'active';
-  if (window.NOAH && window.NOAH.activate) window.NOAH.activate();
-  document.getElementById('noahPanel').classList.add('active');
-  surviveLog(`◈ NOAH AKTIVIERT · ${reason} · Survival-Modus läuft`, 'noah');
-  log(`◈ NOAH aktiviert · ${reason}`, 'noah');
-  // Sparks
-  for (let i = 0; i < 40; i++){
-    spawnSpark(480, 270, i%3 === 0 ? '#ff8844' : i%3 === 1 ? '#ffd93d' : '#68f6c0');
+function updateSparks(dt){
+  for (let i = S.sparks.length - 1; i >= 0; i--){
+    const s = S.sparks[i];
+    s.x += s.vx * (dt*60);
+    s.y += s.vy * (dt*60);
+    s.vx *= 0.96;
+    s.vy *= 0.96;
+    s.vy += 0.02; // leichte Gravitation
+    s.life -= dt / (s.maxLife/60);
+    if (s.life <= 0) S.sparks.splice(i, 1);
+  }
+}
+function drawSparks(){
+  for (const s of S.sparks){
+    ctx.globalAlpha = Math.max(0, s.life);
+    ctx.fillStyle = s.color;
+    ctx.beginPath();
+    if (s.kind === 'star'){
+      // 4-Zack-Stern (Anime)
+      const r = s.size * 2 * s.life;
+      for (let i = 0; i < 4; i++){
+        const a = i * Math.PI/2 + Math.atan2(s.vy, s.vx);
+        const x1 = s.x + Math.cos(a) * r;
+        const y1 = s.y + Math.sin(a) * r;
+        const a2 = a + Math.PI/4;
+        const x2 = s.x + Math.cos(a2) * r*0.3;
+        const y2 = s.y + Math.sin(a2) * r*0.3;
+        if (i===0) ctx.moveTo(x1, y1); else ctx.lineTo(x1, y1);
+        ctx.lineTo(x2, y2);
+      }
+      ctx.closePath(); ctx.fill();
+    } else {
+      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
   }
 }
 
-function arkLaunch(){
-  S.noah.ark = 1.0;
-  S.noah.mode = 'ark';
-  if (window.NOAH && window.NOAH.ark) window.NOAH.ark();
-  document.getElementById('noahPanel').classList.add('active');
-  surviveLog(`▲ ARK GESTARTET · Arche voll beladen · alle Systeme an Bord`, 'ark');
-  log('▲ ARK gestartet · 舟', 'ark');
+// ─── SPEED-LINES (Anime-Bewegung) ─────────────────────
+function drawSpeedLines(cx, cy, count=24, innerR=180, outerR=520, color='rgba(255,189,92,.25)'){
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < count; i++){
+    const a = (i / count) * Math.PI * 2 + Math.random() * 0.1;
+    const r1 = innerR + Math.random() * 30;
+    const r2 = outerR + Math.random() * 60;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+    ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// ─── EMOTION-SYMBOL (Anime) ────────────────────────────
+function drawEmotion(sym, x, y, alpha, size=52){
+  if (alpha <= 0) return;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = '#ff6d9d';
+  ctx.font = `bold ${size}px "Yu Mincho","Hiragino Mincho ProN",serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = '#ff6d9d';
+  ctx.shadowBlur = 20;
+  ctx.fillText(sym, x, y);
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+
+// ─── FIGUREN (Anime-Stil, jetzt mit echter Eigenbewegung) ──
+// walk: 0..1 Gehphase (0 = steht still). breathe: true/false → Brust hebt/senkt sich mit ATEM.
+function drawPerson(x, ground, opts){
+  opts = opts || {};
+  const jacket = opts.jacket || '#356d72';
+  const skin = opts.skin || '#d99a73';
+  const hair = opts.hair || '#1a1218';
+  const facing = opts.facing || 1;
+  const fan = opts.fan;
+  const walk = clamp(opts.walk || 0);
+  const breatheOn = opts.breathe !== false;
+
+  // Eigenbewegung, die nie ganz still steht: Schrittzyklus, Atem-Heben, Blinzeln, Haar-/Armschwung.
+  const walkCycle = Math.sin(S.frame * 0.22) * walk;
+  const idleSway = Math.sin(S.frame * 0.02 + x*0.01) * (1 - walk) * 1.4;
+  const breathe = breatheOn ? (S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2) : 0;
+  const chestLift = breathe * 1.6;
+  const hairSway = Math.sin(S.frame * 0.03 + x*0.02) * (1.5 + S.move*2);
+  const armSwing = walkCycle * 10;
+  // Blinzeln: kurze, unregelmäßige Momente statt Dauer-Loop
+  const blinkCycle = (S.frame + Math.floor(x)) % 210;
+  const blinking = blinkCycle > 200;
+
+  ctx.save();
+  ctx.translate(x + idleSway, ground);
+  ctx.scale(facing, 1);
+
+  // Schatten (leicht atmend mit)
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.beginPath();
+  ctx.ellipse(0, 3, 34 - Math.abs(walkCycle)*3, 7, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Beine (Schrittbewegung)
+  ctx.fillStyle = '#0a1015';
+  ctx.fillRect(-16 - walkCycle*4, -16, 12, 38);
+  ctx.fillRect(4 + walkCycle*4, -16, 12, 38);
+
+  // Körper (hebt/senkt sich beim Atmen)
+  ctx.fillStyle = jacket;
+  ctx.beginPath();
+  ctx.moveTo(-22, -70 - chestLift); ctx.lineTo(-25, -16); ctx.lineTo(25, -16); ctx.lineTo(22, -70 - chestLift); ctx.closePath();
+  ctx.fill();
+
+  // Hals
+  ctx.fillStyle = skin;
+  ctx.fillRect(-6, -80 - chestLift, 12, 12);
+
+  // Kopf (Anime-Verhältnis, folgt dem Atem minimal)
+  ctx.fillStyle = skin;
+  ctx.beginPath();
+  ctx.ellipse(0, -100 - chestLift, 17, 21, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Haar (Anime-Stil, schwingt leicht)
+  ctx.save();
+  ctx.translate(0, -100 - chestLift);
+  ctx.rotate(hairSway * 0.01);
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.moveTo(-19, 0);
+  ctx.quadraticCurveTo(-22 + hairSway*0.3, -25, 0, -26);
+  ctx.quadraticCurveTo(22 + hairSway*0.3, -25, 19, 0);
+  ctx.lineTo(15, -8);
+  ctx.lineTo(8, 0);
+  ctx.lineTo(-8, -4);
+  ctx.lineTo(-15, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // Auge (Anime-groß, blinzelt gelegentlich)
+  if (blinking){
+    ctx.strokeStyle = '#0a2030';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(1, -99 - chestLift); ctx.lineTo(10, -99 - chestLift);
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.ellipse(5, -99 - chestLift, 5, 6, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#0a2030';
+    ctx.beginPath();
+    ctx.arc(6, -99 - chestLift, 2.5, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(7, -100 - chestLift, 1, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Mund
+  ctx.strokeStyle = '#7a4530';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  if (fan && opts.surprised){
+    ctx.arc(2, -92 - chestLift, 3, 0, Math.PI*2); // O-Mund
+  } else if (fan) {
+    ctx.moveTo(-1, -92 - chestLift); ctx.lineTo(4, -92 - chestLift);
+  } else {
+    ctx.moveTo(0, -92 - chestLift); ctx.lineTo(3, -92 - chestLift);
+  }
+  ctx.stroke();
+
+  // Arme (schwingen beim Gehen, sonst leichtes Eigenleben)
+  ctx.strokeStyle = jacket;
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.moveTo(-18, -66 - chestLift); ctx.lineTo(-28 - armSwing, -36 + Math.abs(armSwing)*0.3);
+  ctx.moveTo(18, -66 - chestLift); ctx.lineTo(28 + armSwing, -40 + Math.abs(armSwing)*0.3);
+  ctx.stroke();
+  // Hände
+  ctx.fillStyle = skin;
+  ctx.beginPath(); ctx.arc(-28 - armSwing, -36 + Math.abs(armSwing)*0.3, 4, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(28 + armSwing, -40 + Math.abs(armSwing)*0.3, 4, 0, Math.PI*2); ctx.fill();
+
+  // Fan: Notizbuch (wippt minimal mit)
+  if (fan){
+    ctx.save();
+    ctx.translate(30, -38 - chestLift*0.5);
+    ctx.rotate(-0.2 + Math.sin(S.frame*0.05)*0.02);
+    ctx.fillStyle = '#d4bc80';
+    ctx.fillRect(0, 0, 28, 40);
+    ctx.strokeStyle = '#715d43';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, 28, 40);
+    ctx.strokeStyle = '#856f51';
+    for (let i = 1; i < 4; i++){
+      ctx.beginPath();
+      ctx.moveTo(4, i*9); ctx.lineTo(24, i*9);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+// ─── SMARTPHONE (Anime-Stil) ───────────────────────────
+function drawPhone(x, y, scale=1, glow=false, screen='phone'){
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(scale, scale);
+  if (glow){
+    const breathe = S.breathOn ? (S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2) : 0.5;
+    ctx.shadowColor = '#68f6c0';
+    ctx.shadowBlur = 20 + breathe * 16;
+  }
+  // Körper
+  ctx.fillStyle = '#0a1018';
+  roundRect(-27, -50, 54, 100, 9);
+  ctx.fill();
+  ctx.strokeStyle = '#68f6c0';
+  ctx.lineWidth = 1.5;
+  roundRect(-27, -50, 54, 100, 9);
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Screen
+  ctx.fillStyle = screen === 'camera' ? '#1a0a2a' :
+                  screen === 'map' ? '#0a1a2a' :
+                  '#0d2530';
+  roundRect(-22, -43, 44, 80, 4);
+  ctx.fill();
+
+  if (screen === 'phone'){
+    ctx.fillStyle = '#7ce0a8';
+    ctx.fillRect(-14, -34, 28, 3);
+    ctx.fillStyle = '#5ce2c0';
+    ctx.fillRect(-14, -24, 22, 2);
+    ctx.fillRect(-14, -16, 26, 2);
+    ctx.fillStyle = '#ffbd5c';
+    ctx.fillRect(-14, 4, 28, 2);
+    ctx.fillRect(-14, 12, 18, 2);
+    ctx.fillRect(-14, 20, 24, 2);
+  } else if (screen === 'camera'){
+    ctx.strokeStyle = '#b388ff';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(-16, -36, 32, 32);
+    ctx.strokeRect(-18, -38, 36, 36);
+    ctx.beginPath();
+    ctx.arc(0, -20, 10, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-4, -20); ctx.lineTo(4, -20);
+    ctx.moveTo(0, -24); ctx.lineTo(0, -16);
+    ctx.stroke();
+  } else if (screen === 'map'){
+    for (let i = 0; i < 4; i++){
+      ctx.strokeStyle = 'rgba(104,246,192,.4)';
+      ctx.beginPath();
+      ctx.moveTo(-20, -40 + i*18);
+      ctx.lineTo(20, -40 + i*18);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = '#ffbd5c';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-14, 20);
+    ctx.lineTo(-4, 0);
+    ctx.lineTo(8, -6);
+    ctx.lineTo(16, -30);
+    ctx.stroke();
+    ctx.fillStyle = '#ff6d9d';
+    ctx.beginPath();
+    ctx.arc(16, -30, 3, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Home-Button
+  ctx.fillStyle = '#b9f3df';
+  ctx.beginPath();
+  ctx.arc(0, 43, 4, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+}
+function roundRect(x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+// ─── HILFSFUNKTIONEN ───────────────────────────────────
+function rect(x, y, w, h, fill){ ctx.fillStyle = fill; ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+function text(txt, x, y, size=14, color='#d8f0e8', align='left', weight='400'){
+  ctx.font = `${weight} ${size}px "Courier New",monospace`;
+  ctx.fillStyle = color;
+  ctx.textBaseline = 'top';
+  ctx.textAlign = align;
+  ctx.fillText(txt, Math.round(x), Math.round(y));
+}
+function clamp(n, a=0, b=1){ return Math.max(a, Math.min(b, n)); }
+function lerp(a, b, t){ return a + (b - a) * t; }
+function ease(t){ t = clamp(t); return t*t*(3-2*t); }
+function wrapText(txt, maxChars){
+  const words = String(txt).split(/\s+/);
+  const lines = []; let line = '';
+  words.forEach(w => {
+    const nxt = line ? line + ' ' + w : w;
+    if (nxt.length > maxChars && line){ lines.push(line); line = w; }
+    else line = nxt;
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+function multiline(txt, x, y, mc, lh, size, color, maxLines=4){
+  const lines = wrapText(txt, mc).slice(0, maxLines);
+  lines.forEach((l, i) => text(l, x, y + i*lh, size, color));
+  return lines.length;
+}
+
+// ─── SCENE-RENDERER ────────────────────────────────────
+function drawCRT(){
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  for (let y = 28; y < H; y += 4) rect(0, y, W, 1, '#020810');
+  const v = ctx.createRadialGradient(W/2, H/2, 130, W/2, H/2, 580);
+  v.addColorStop(0, 'rgba(0,0,0,0)');
+  v.addColorStop(1, 'rgba(0,0,0,.6)');
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  // Staubkörner
+  ctx.globalAlpha = 0.18;
+  for (let i = 0; i < 26; i++){
+    const x = (Math.sin(i*93.7 + S.frame*0.06)*0.5+0.5) * W;
+    const y = 28 + (Math.sin(i*17.3 + S.frame*0.10)*0.5+0.5) * (H-28);
+    rect(x, y, 1, 1, i%3 ? '#7df4c4' : '#ff6d9d');
+  }
+  ctx.restore();
+}
+
+// ─── HINTERGRUND: HIMMEL + STADT (Anime) ───────────────
+function drawAnimeSky(t){
+  const sky = ctx.createLinearGradient(0, 25, 0, 420);
+  sky.addColorStop(0, '#2a1245');
+  sky.addColorStop(0.35, '#7a3260');
+  sky.addColorStop(0.7, '#e0644a');
+  sky.addColorStop(1, '#ffb874');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 25, W, 400);
+
+  // Sonne (Anime groß, strahlend)
+  const sunPulse = 1 + Math.sin(t * 0.002 + S.breathPhase * 4) * 0.05;
+  ctx.save();
+  ctx.shadowColor = '#ffec9c';
+  ctx.shadowBlur = 60;
+  ctx.fillStyle = '#fff4c8';
+  ctx.beginPath();
+  ctx.arc(760, 140, 52 * sunPulse, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Sonnen-Strahlen (Anime Lens Flare)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,236,156,.35)';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 12; i++){
+    const a = (i/12)*Math.PI*2 + t*0.0003;
+    const r1 = 62, r2 = 90 + Math.sin(t*0.002+i)*10;
+    ctx.beginPath();
+    ctx.moveTo(760 + Math.cos(a)*r1, 140 + Math.sin(a)*r1);
+    ctx.lineTo(760 + Math.cos(a)*r2, 140 + Math.sin(a)*r2);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Anime-Wolken
+  for (let i = 0; i < 5; i++){
+    const cx = (i * 220 + t * 0.008) % (W + 200) - 100;
+    const cy = 80 + i*22;
+    ctx.fillStyle = 'rgba(255,220,240,0.28)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, 62, 14, 0, 0, Math.PI*2);
+    ctx.ellipse(cx+40, cy-6, 44, 12, 0, 0, Math.PI*2);
+    ctx.ellipse(cx-38, cy+3, 38, 10, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function drawAnimeCity(){
+  // Skyline (leichtes Parallax-Driften, angetrieben von MOVE)
+  const drift = Math.sin(S.frame * 0.0015) * S.move * 6;
+  const colors = ['#1a1f38', '#232845', '#181c30'];
+  const heights = [90, 130, 70, 160, 100, 120, 80, 145, 95, 110, 140, 75, 105];
+  for (let i = 0; i < heights.length; i++){
+    const x = i * 78 - 30 + drift;
+    const h = heights[i];
+    rect(x, 400 - h, 68, h, colors[i%3]);
+    // Fenster
+    for (let wy = 400 - h + 12; wy < 395; wy += 16){
+      for (let wx = x + 10; wx < x + 58; wx += 14){
+        const lit = Math.sin(wy*3 + wx + S.frame*0.05) > -0.3;
+        if (lit) rect(wx, wy, 5, 6, i%2 ? '#ffd966' : '#ffb374');
+      }
+    }
+  }
+  // Straße
+  rect(0, 400, W, 140, '#2a3540');
+  ctx.strokeStyle = '#556370';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, 420); ctx.lineTo(W, 420);
+  ctx.stroke();
+  // Gehweg-Muster
+  for (let x = 0; x < W; x += 60){
+    rect(x, 480, 40, 3, '#3a4650');
+  }
+}
+
+// ─── SC1: BEGEGNUNG (Anime) ────────────────────────────
+function drawSC1(t){
+  drawAnimeSky(t);
+  drawAnimeCity();
+
+  // Baum rechts (Anime groß)
+  ctx.fillStyle = '#2a1a22';
+  ctx.beginPath();
+  ctx.moveTo(800, 400);
+  ctx.lineTo(790, 240);
+  ctx.lineWidth = 20;
+  ctx.strokeStyle = '#2a1a22';
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(792, 300); ctx.lineTo(720, 220);
+  ctx.moveTo(795, 320); ctx.lineTo(860, 230);
+  ctx.lineWidth = 12;
+  ctx.stroke();
+  // Blätter (Anime-Volumen)
+  const leafColors = ['#1e4a3c', '#2a6350', '#153529'];
+  const leaves = [
+    [720, 200, 70, 0], [855, 220, 80, 1], [790, 175, 75, 2], [680, 245, 58, 0], [880, 265, 55, 1],
+  ];
+  leaves.forEach(([lx, ly, r, c], i) => {
+    ctx.fillStyle = leafColors[c];
+    ctx.beginPath();
+    ctx.arc(lx, ly, r, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // Figuren
+  const entry = ease(clamp(t / 0.22));
+  const reveal = ease(clamp((t - 0.34) / 0.25));
+  const react = ease(clamp((t - 0.92) / 0.08));
+  const narratorX = lerp(-90, 290, entry);
+  const fanSurprised = t > 0.92;
+
+  drawPerson(narratorX, 415, { jacket:'#356d72', skin:'#d99a73', hair:'#1a1218', facing:1, walk: t < 0.24 ? 1 : 0 });
+  drawPerson(690, 415, { jacket:'#6d4d71', skin:'#e5a178', hair:'#5a2a3a', facing:-1, fan:true, surprised:fanSurprised });
+
+  // Fallende Blätter (leben unabhängig von der Story mit)
+  for (let i = 0; i < 6; i++){
+    const fx = ((i * 173 + S.frame * (1.1 + i*0.13)) % (W + 60)) - 30;
+    const fy = 60 + ((i * 240 + S.frame * (0.6 + i*0.1)) % 340);
+    const sway = Math.sin(S.frame*0.05 + i) * 10;
+    ctx.save();
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = i%2 ? '#2a6350' : '#ffbd5c';
+    ctx.translate(fx + sway, fy);
+    ctx.rotate(S.frame*0.03 + i);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 4, 2, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Wunder-Effekt: der Communicator
+  if (reveal > 0){
+    const px = narratorX + 65;
+    const py = 350;
+    drawPhone(px, py, 0.55 + reveal * 0.4, true, 'phone');
+
+    // Strahlen um das Gerät (Anime-Wunder)
+    ctx.save();
+    ctx.strokeStyle = `rgba(104,246,192,${0.5 * reveal})`;
+    ctx.lineWidth = 1.5;
+    for (let i = 0; i < 16; i++){
+      const a = (i/16)*Math.PI*2 + S.frame*0.02;
+      const r1 = 34;
+      const r2 = 55 + Math.sin(S.frame*0.1+i)*8;
+      ctx.beginPath();
+      ctx.moveTo(px + Math.cos(a)*r1, py + Math.sin(a)*r1);
+      ctx.lineTo(px + Math.cos(a)*r2, py + Math.sin(a)*r2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    text('COMMUNICATOR', px + 40, py - 76, 9, '#68f6c0', 'left', '700');
+    ctx.strokeStyle = '#68f6c0';
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.moveTo(px + 30, py - 60);
+    ctx.lineTo(px + 8, py - 46);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Fan's Tricorder-Bubble (Anime-Denkblase)
+  if (t > 0.14 && t < 0.48){
+    ctx.save();
+    ctx.globalAlpha = clamp((t - 0.14) / 0.1) * clamp((0.48 - t) / 0.1);
+    // Wolkenblase
+    ctx.fillStyle = 'rgba(10,25,31,.9)';
+    ctx.strokeStyle = '#ffbd5c';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(690, 195, 105, 42, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    // Bläschen zur Figur
+    ctx.beginPath();
+    ctx.arc(660, 240, 6, 0, Math.PI*2);
+    ctx.arc(650, 255, 4, 0, Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    text('TRICORDER?', 690, 180, 13, '#ffbd5c', 'center', '700');
+    text('ENTERPRISE?', 690, 200, 11, '#d8b0b0', 'center');
+    ctx.restore();
+  }
+
+  // Dialog-Box
+  if (t > 0.48 && t < 0.92){
+    const a = clamp((t - 0.48)/0.08) * clamp((0.92 - t)/0.08);
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = 'rgba(6,16,22,.92)';
+    ctx.strokeStyle = '#68f6c0';
+    ctx.lineWidth = 2;
+    roundRect(42, 270, 480, 105, 8);
+    ctx.fill();
+    ctx.stroke();
+    text('ERZÄHLER', 60, 282, 10, '#68f6c0', 'left', '700');
+    ctx.beginPath();
+    ctx.arc(46, 287, 2, 0, Math.PI*2);
+    ctx.fillStyle = '#68f6c0';
+    ctx.fill();
+    multiline('Schau dir das an. Das hier ist mein persönlicher Communicator.', 60, 305, 60, 15, 11, '#d8f0e8', 3);
+    text('// NO SUBSPACE / NO RELAY / NO SHIP', 60, 350, 9, '#ffbd5c');
+    ctx.restore();
+  }
+
+  // Reaktion (Surprise)
+  if (react > 0){
+    ctx.save();
+    ctx.globalAlpha = react;
+    rect(0, 390, W, 60, 'rgba(4,10,13,.75)');
+    text('REAKTION: SPRACHLOSES STARREN', W/2, 405, 15, '#ff6d9d', 'center', '700');
+    // Anime-Ausrufezeichen und Sterne
+    for (let i = 0; i < 5; i++){
+      const sx = 560 + i*26;
+      const sy = 375 - (i%2)*8;
+      drawEmotion('!', sx, sy, react * 0.9, 26);
+    }
+    ctx.restore();
+  }
+
+  // Speed-Lines wenn Erzähler kommt
+  if (t < 0.25){
+    drawSpeedLines(narratorX, 380, 20, 100, 260, 'rgba(255,189,92,.2)');
+  }
+
+  // Wunder-Partikel (Atem & Atom)
+  drawElementParticles();
+
+  text('SC1 / BEGEGNUNG', 24, 486, 12, '#68f6c0', 'left', '700');
+  text('1960 FAN  ↔  ERZÄHLER', W - 24, 488, 10, '#ffbd5c', 'right');
+}
+
+// ─── PARTIKEL-SYSTEM (ATEM/ATOM/O2/H2O/CO2) ───────────
+function drawElementParticles(){
+  const t = S.frame;
+  const cx = W/2, cy = H/2;
+
+  // Atom-Kern
+  const atomR = 40 + S.atom * 30;
+  ctx.save();
+  ctx.strokeStyle = `rgba(179,136,255,${0.3 + S.atom*0.3})`;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(cx, cy, atomR, 0, Math.PI*2);
+  ctx.stroke();
+  // Atom-Orbits
+  for (let i = 0; i < 3; i++){
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(t * 0.005 + i * Math.PI/3);
+    ctx.strokeStyle = `rgba(179,136,255,${0.15 + S.atom*0.15})`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, atomR + 15, atomR * 0.35, 0, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  // O2-Partikel (grün, steigen auf)
+  for (let i = 0; i < 8; i++){
+    const a = (i/8)*Math.PI*2 + t*0.008;
+    const r = 90 + S.o2 * 40;
+    const x = cx + Math.cos(a)*r;
+    const y = cy + Math.sin(a)*r - 40;
+    ctx.save();
+    ctx.globalAlpha = 0.4 + S.o2 * 0.3;
+    ctx.fillStyle = '#7ce0a8';
+    ctx.shadowColor = '#7ce0a8';
+    ctx.shadowBlur = 12;
+    ctx.beginPath();
+    ctx.arc(x, y, 3 + S.o2*2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+  // CO2-Partikel (gold, sinken)
+  for (let i = 0; i < 8; i++){
+    const a = (i/8)*Math.PI*2 + Math.PI/8 + t*0.006;
+    const r = 100 + S.co2 * 40;
+    const x = cx + Math.cos(a)*r;
+    const y = cy + Math.sin(a)*r + 40;
+    ctx.save();
+    ctx.globalAlpha = 0.4 + S.co2 * 0.3;
+    ctx.fillStyle = '#ffcc44';
+    ctx.shadowColor = '#ffcc44';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(x, y, 2.5 + S.co2*2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+  // H2O-Partikel (cyan, fließen)
+  for (let i = 0; i < 10; i++){
+    const a = (i/10)*Math.PI*2 + t*0.004;
+    const r = 130 + S.h2o * 30;
+    const wobble = Math.sin(t*0.02 + i) * 10;
+    const x = cx + Math.cos(a)*(r + wobble);
+    const y = cy + Math.sin(a)*(r + wobble) * 0.9;
+    ctx.save();
+    ctx.globalAlpha = 0.3 + S.h2o * 0.3;
+    ctx.fillStyle = '#5fc8ff';
+    ctx.shadowColor = '#5fc8ff';
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 2 + S.h2o*1.5, 4 + S.h2o*2, a, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // MOVE-Bokeh: zusätzliche freie Bewegung, deren Menge direkt vom MOVE-Wert
+  // gesteuert wird — mehr MOVE heißt sichtbar mehr Bewegung im Bild.
+  const bokehCount = Math.round(6 + S.move * 22);
+  for (let i = 0; i < bokehCount; i++){
+    const a = i * 2.399963 + t * (0.006 + (i%5)*0.002);
+    const r = 60 + ((i*53) % 260) + Math.sin(t*0.01+i)*18;
+    const x = cx + Math.cos(a) * r * 1.4;
+    const y = cy + Math.sin(a) * r * 0.75;
+    if (x < -20 || x > W+20 || y < 20 || y > H-20) continue;
+    ctx.save();
+    ctx.globalAlpha = 0.12 + 0.18 * S.move;
+    ctx.fillStyle = ['#68f6c0','#b388ff','#ffbd5c','#ff6d9d'][i%4];
+    ctx.beginPath();
+    ctx.arc(x, y, 1.2 + (i%3), 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ─── SC2: TRICHTER & KAMERA (Anime) ────────────────────
+function drawSC2(t){
+  rect(0, 0, W, H, '#06101c');
+
+  // Trichter-Hintergrund mit Anime-Radiallinien
+  ctx.save();
   for (let i = 0; i < 60; i++){
-    spawnSpark(480, 270, i%2 === 0 ? '#ffd93d' : '#ff8844');
+    const a = (i/60)*Math.PI*2;
+    ctx.strokeStyle = `rgba(108,201,255,${0.06 + i*0.001})`;
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(480 + Math.cos(a)*80, 270 + Math.sin(a)*80);
+    ctx.lineTo(480 + Math.cos(a)*900, 270 + Math.sin(a)*900);
+    ctx.stroke();
   }
-}
+  ctx.restore();
 
-function surviveAction(){
-  S.noah.survive = Math.min(1, S.noah.survive + 0.15);
-  S.noah.mode = 'survive';
-  if (window.NOAH && window.NOAH.surviveMode) window.NOAH.surviveMode();
-  S.o2 = Math.min(1, S.o2 + 0.05);
-  S.co2 = Math.max(0, S.co2 - 0.05);
-  S.h2o = Math.min(1, S.h2o + 0.05);
-  S.mana = Math.min(1, S.mana + 0.08);
-  S.aura = Math.min(1, S.aura + 0.08);
-  S.zen  = Math.min(1, S.zen  + 0.08);
-  surviveLog(`◈ SURVIVAL · Regeneration +15% · alle Elemente geboostet`, 'survive');
-  log('◈ SURVIVAL', 'survive');
-  for (let i = 0; i < 30; i++){
-    spawnSpark(480, 270, '#68f6c0');
+  // Kamera-Target
+  const focusX = lerp(180, 780, ease((t * 1.2) % 1));
+  const focusY = lerp(250, 320, ease((t * 1.2) % 1));
+
+  // Fokus-Rahmen
+  ctx.save();
+  ctx.strokeStyle = '#b9f3df';
+  ctx.lineWidth = 2;
+  const boxSize = 190 + Math.sin(t*4) * 6;
+  ctx.strokeRect(focusX - boxSize/2, focusY - boxSize*0.35, boxSize, boxSize*0.7);
+  // Ecken-Marker (Anime)
+  const cs = 18;
+  const bx = focusX - boxSize/2, by = focusY - boxSize*0.35, bw = boxSize, bh = boxSize*0.7;
+  ctx.strokeStyle = '#68f6c0';
+  ctx.lineWidth = 3;
+  [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(([x,y,dx,dy])=>{
+    ctx.beginPath();
+    ctx.moveTo(x, y + dy*cs);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x + dx*cs, y);
+    ctx.stroke();
+  });
+  ctx.restore();
+
+  // Crosshair
+  ctx.strokeStyle = '#ffbd5c';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(focusX - 20, focusY);
+  ctx.lineTo(focusX + 20, focusY);
+  ctx.moveTo(focusX, focusY - 20);
+  ctx.lineTo(focusX, focusY + 20);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(focusX, focusY, 26, 0, Math.PI*2);
+  ctx.stroke();
+
+  // Raster
+  ctx.strokeStyle = 'rgba(104,246,192,.12)';
+  ctx.lineWidth = 1;
+  for (let x = 100; x < 860; x += 40){
+    ctx.beginPath();
+    ctx.moveTo(x, 100); ctx.lineTo(x, 440);
+    ctx.stroke();
   }
+  for (let y = 100; y < 440; y += 40){
+    ctx.beginPath();
+    ctx.moveTo(100, y); ctx.lineTo(860, y);
+    ctx.stroke();
+  }
+
+  // Titel
+  text('TRICHTER', 60, 60, 22, '#ffbd5c', 'left', '700');
+  text('FOKUS / KAMERA-RASTER', 60, 92, 11, '#6cc9ff');
+  text('SC2 / VISUELLER FUNKTIONS-CUE', 24, 486, 12, '#6cc9ff', 'left', '700');
+  text('LENS CLICK / FOCUS LOCK', W-24, 488, 10, '#ffbd5c', 'right');
+
+  // Speed-Lines wenn Focusing
+  if ((t * 1.2) % 1 < 0.2){
+    drawSpeedLines(focusX, focusY, 30, 100, 340, 'rgba(108,201,255,.4)');
+  }
+
+  drawElementParticles();
 }
 
-function noahReset(){
-  S.noah = { active:false, survive:1.0, ark:0, load:0, mode:'standby' };
-  if (window.NOAH && window.NOAH.reset) window.NOAH.reset();
-  document.getElementById('noahPanel').classList.remove('active');
-  S.o2 = 0.84; S.co2 = 0.68; S.h2o = 0.76; S.atom = 0.72;
-  S.mana = 0.66; S.aura = 0.74; S.zen = 0.88;
-  surviveLog('⟲ NOAH · zurück auf Standby', 'warn');
-  log('⟲ NOAH reset', 'warn');
+// ─── SC3: NAVIGATION (Anime) ───────────────────────────
+function drawSC3(t){
+  rect(0, 0, W, H, '#061220');
+
+  // Stadtkarte (Anime-Hologramm)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(104,246,192,.14)';
+  ctx.lineWidth = 1;
+  for (let x = 60; x < 620; x += 44){
+    ctx.beginPath(); ctx.moveTo(x, 70); ctx.lineTo(x, 440); ctx.stroke();
+  }
+  for (let y = 70; y < 440; y += 44){
+    ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(620, y); ctx.stroke();
+  }
+  ctx.restore();
+
+  // Stadtblöcke
+  const blocks = [
+    [100, 140, 110, 50, '#1e4c4e'],
+    [260, 110, 90, 90, '#1b4148'],
+    [400, 180, 140, 60, '#1e4c4e'],
+    [140, 300, 90, 85, '#1b4148'],
+    [310, 290, 130, 95, '#1e4c4e'],
+    [480, 250, 70, 50, '#1b4148'],
+  ];
+  blocks.forEach(([x, y, w, h, c]) => {
+    rect(x, y, w, h, c);
+    ctx.strokeStyle = 'rgba(104,246,192,.4)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, y, w, h);
+  });
+
+  // Route zeichnet sich
+  const route = [[100, 400], [200, 355], [265, 370], [330, 275], [420, 270], [500, 190], [545, 155]];
+  const point = Math.floor(t * (route.length - 1));
+  ctx.save();
+  ctx.strokeStyle = '#ffbd5c';
+  ctx.lineWidth = 5;
+  ctx.shadowColor = '#ffbd5c';
+  ctx.shadowBlur = 14;
+  ctx.beginPath();
+  route.slice(0, point + 1).forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+  if (point < route.length - 1){
+    const a = route[point], b = route[point + 1];
+    const q = (t * (route.length - 1)) % 1;
+    ctx.lineTo(lerp(a[0], b[0], q), lerp(a[1], b[1], q));
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Marker
+  const dot = route[Math.min(route.length - 1, Math.floor(t * (route.length - 1)))];
+  ctx.save();
+  ctx.fillStyle = '#ff6d9d';
+  ctx.shadowColor = '#ff6d9d';
+  ctx.shadowBlur = 16;
+  ctx.beginPath();
+  ctx.arc(dot[0], dot[1], 9, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // Info-Panel
+  ctx.save();
+  ctx.fillStyle = 'rgba(6,18,24,.92)';
+  ctx.strokeStyle = '#68f6c0';
+  ctx.lineWidth = 1.5;
+  roundRect(650, 100, 270, 140, 6);
+  ctx.fill(); ctx.stroke();
+  text('◈ NAVIGATION', 670, 118, 12, '#68f6c0', 'left', '700');
+  text('ROUTE: CITY PLAZA', 670, 148, 10, '#d8f0e8');
+  text('KNOWLEDGE: ONLINE', 670, 170, 10, '#d8f0e8');
+  text('DISTANCE: 0.0 KM', 670, 192, 10, '#ffbd5c');
+  ctx.restore();
+
+  // Wissen-Panel
+  ctx.save();
+  ctx.fillStyle = 'rgba(6,18,24,.9)';
+  ctx.strokeStyle = '#2a5660';
+  roundRect(650, 260, 270, 130, 6);
+  ctx.fill(); ctx.stroke();
+  text('◈ WISSEN / OVERLAY', 670, 278, 11, '#ffbd5c', 'left', '700');
+  for (let i = 0; i < 5; i++){
+    const barW = 180 - (i%2) * 30;
+    rect(670, 308 + i*14, barW, 3, i === 2 ? '#68f6c0' : '#2c6664');
+  }
+  ctx.restore();
+
+  text('SC3 / NAVIGATION & WISSEN', 24, 486, 12, '#68f6c0', 'left', '700');
+  text('MAP PING / ROUTE DRAW', W - 24, 488, 10, '#ffbd5c', 'right');
+
+  drawElementParticles();
 }
 
-function spawnSpark(x, y, color){
-  const a = Math.random() * Math.PI * 2;
-  const sp = 1 + Math.random() * 3;
-  S.sparks.push({
-    x, y,
-    vx: Math.cos(a) * sp,
-    vy: Math.sin(a) * sp,
-    life: 1,
-    color,
-    size: 1.5 + Math.random() * 2,
+// ─── SC4: SPRACHSTEUERUNG (Anime) ──────────────────────
+function drawSC4(t){
+  rect(0, 0, W, H, '#0a0e20');
+  const g = ctx.createLinearGradient(0, 0, W, 0);
+  g.addColorStop(0, '#0c1230');
+  g.addColorStop(0.5, '#1a1030');
+  g.addColorStop(1, '#0a0e20');
+  ctx.fillStyle = g; ctx.fillRect(0, 25, W, H - 25);
+
+  text('SPRACHSTEUERUNG', 56, 60, 24, '#ff6d9d', 'left', '700');
+  text('INPUT → VERSTEHEN → ANTWORT', 58, 94, 11, '#8aa0bd');
+
+  // Waveform
+  const mid = 272;
+  ctx.strokeStyle = '#2a4a6a';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(42, mid); ctx.lineTo(918, mid); ctx.stroke();
+
+  ctx.save();
+  ctx.strokeStyle = '#68f6c0';
+  ctx.lineWidth = 3;
+  ctx.shadowColor = '#68f6c0';
+  ctx.shadowBlur = 14;
+  ctx.beginPath();
+  for (let x = 50; x < 910; x += 3){
+    const amp = 12 + 55 * Math.exp(-Math.pow((x - 480)/240, 2));
+    const y = mid + Math.sin(x * 0.075 + t * 34) * amp * (0.25 + 0.75 * Math.abs(Math.sin(x * 0.017 + t * 4)));
+    x === 50 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Waveform-Mirror unten (Anime)
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,109,157,.4)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let x = 50; x < 910; x += 3){
+    const amp = 6 + 28 * Math.exp(-Math.pow((x - 480)/240, 2));
+    const y = mid + 60 + Math.sin(x * 0.075 + t * 34) * amp;
+    x === 50 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Mic + Response
+  ctx.save();
+  ctx.fillStyle = 'rgba(15,28,45,.92)';
+  ctx.strokeStyle = '#3a6a80';
+  roundRect(64, 348, 256, 78, 6); ctx.fill(); ctx.stroke();
+  text('◈ MIC / INPUT', 84, 365, 10, '#6cc9ff', 'left', '700');
+  text('HELD', 84, 388, 20, '#d8f0e8', 'left', '700');
+  ctx.restore();
+
+  ctx.save();
+  ctx.fillStyle = 'rgba(34,18,40,.92)';
+  ctx.strokeStyle = '#ff6d9d';
+  roundRect(640, 348, 256, 78, 6); ctx.fill(); ctx.stroke();
+  text('◈ RESPONSE / OUTPUT', 660, 365, 10, '#ff6d9d', 'left', '700');
+  text('READY', 660, 388, 20, '#ffbd5c', 'left', '700');
+  ctx.restore();
+
+  // Bars in der Mitte
+  for (let i = 0; i < 12; i++){
+    const x = 340 + i * 24;
+    const h = 24 + Math.abs(Math.sin(t * 22 + i)) * 80;
+    ctx.fillStyle = i%2 ? '#6cc9ff' : '#ff6d9d';
+    ctx.globalAlpha = 0.85;
+    ctx.fillRect(x, 400 - h/2, 12, h);
+  }
+  ctx.globalAlpha = 1;
+
+  text('SC4 / SPRACHSTEUERUNG', 24, 486, 12, '#ff6d9d', 'left', '700');
+  text('VOICE GATE / RESPONSE PIP', W - 24, 488, 10, '#6cc9ff', 'right');
+
+  drawElementParticles();
+}
+
+// ─── SC5: DAS ARTEFAKT (Anime) ─────────────────────────
+function drawSC5(t){
+  rect(0, 0, W, H, '#040a14');
+  const pulse = 0.5 + 0.5 * Math.sin(t * 15);
+
+  // Aura-Ringe
+  for (let i = 0; i < 8; i++){
+    ctx.strokeStyle = `rgba(104,246,192,${0.10 + i * 0.025})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(480, 275, 95 + i * 32 + pulse * 8, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // Partikel-Orbits
+  for (let i = 0; i < 60; i++){
+    const a = i * 0.5 + t * 2;
+    const r = 130 + (i % 8) * 32;
+    const x = 480 + Math.cos(a) * r;
+    const y = 275 + Math.sin(a) * r * 0.6;
+    ctx.fillStyle = i%4 ? '#3fa08e' : '#ffbd5c';
+    ctx.globalAlpha = 0.6 + 0.3 * Math.sin(t*3 + i);
+    ctx.beginPath();
+    ctx.arc(x, y, 2 + (i%2), 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // Zentrales Phone (groß)
+  ctx.save();
+  ctx.translate(480, 275);
+  ctx.rotate(Math.sin(t * 2) * 0.03);
+  drawPhone(0, 0, 1.8, true, 'phone');
+  ctx.restore();
+
+  // Titel
+  text('DAS ARTEFAKT', W/2, 50, 24, '#ffbd5c', 'center', '700');
+  text('PERSONAL COMMUNICATOR / KEIN KLAPPMECHANISMUS', W/2, 84, 10, '#8aa8a0', 'center');
+
+  // Analog vs Digital
+  ctx.save();
+  ctx.fillStyle = 'rgba(6,18,24,.92)';
+  ctx.strokeStyle = '#8c6c60';
+  roundRect(60, 355, 250, 68, 6); ctx.fill(); ctx.stroke();
+  text('ANALOG', 80, 370, 10, '#d7ad88', 'left', '700');
+  text('NOTIZBUCH / WARTEN', 80, 392, 11, '#d8f0e8');
+  ctx.restore();
+
+  ctx.save();
+  ctx.fillStyle = 'rgba(6,18,24,.92)';
+  ctx.strokeStyle = '#68f6c0';
+  roundRect(650, 355, 250, 68, 6); ctx.fill(); ctx.stroke();
+  text('DIGITAL', 670, 370, 10, '#68f6c0', 'left', '700');
+  text('SOFORT ERREICHBAR', 670, 392, 11, '#d8f0e8');
+  ctx.restore();
+
+  text('SC5 / DAS ARTEFAKT', 24, 486, 12, '#ffbd5c', 'left', '700');
+  text('RISING HUM / HELD BREATH', W - 24, 488, 10, '#68f6c0', 'right');
+
+  drawElementParticles();
+}
+
+// ─── SC6: DIE POINTE (Anime) ───────────────────────────
+function drawSC6(t){
+  rect(0, 0, W, H, '#0a0818');
+  const g = ctx.createRadialGradient(480, 250, 20, 480, 250, 500);
+  g.addColorStop(0, '#3a1840');
+  g.addColorStop(0.45, '#181430');
+  g.addColorStop(1, '#040810');
+  ctx.fillStyle = g; ctx.fillRect(0, 25, W, H - 25);
+
+  // Glitch-Partikel (Dichte reagiert auf MOVE — mehr Bewegung, mehr Glitches)
+  const glitchCount = Math.round(90 + S.move * 90);
+  for (let i = 0; i < glitchCount; i++){
+    const a = i * 0.7 + t * 0.6;
+    const r = 35 + (i%14) * 26;
+    const x = 480 + Math.cos(a) * r;
+    const y = 270 + Math.sin(a) * r * 0.55;
+    ctx.fillStyle = i%4 ? '#ff6d9d' : '#ffbd5c';
+    ctx.globalAlpha = 0.7;
+    ctx.fillRect(x, y, 2 + (i%3), 2);
+  }
+  ctx.globalAlpha = 1;
+
+  text('D I E   P O I N T E', W/2, 120, 34, '#ff6d9d', 'center', '700');
+  text('FINAL CUE / HOLD', W/2, 180, 12, '#ffbd5c', 'center', '700');
+
+  // Linie
+  ctx.strokeStyle = '#714d78';
+  ctx.setLineDash([5, 7]);
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(155, 250); ctx.lineTo(805, 250);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Punkte
+  text('…', W/2, 255, 42, '#d8f0e8', 'center', '700');
+
+  text('DIE RUNTIME HÄLT DEN LETZTEN BLICK OFFEN', W/2, 355, 12, '#8aa4a0', 'center');
+
+  text('SC6 / END OF DIRECTOR CUE', 24, 486, 12, '#ff6d9d', 'left', '700');
+  text('GLITCH BURST / SILENCE', W - 24, 488, 10, '#ffbd5c', 'right');
+
+  drawElementParticles();
+}
+
+// ─── LEBENDIGE KAMERA (reagiert auf MOVE/ATEM) ────────
+// Die Kamera bewegt sich nie ganz still: ein feines Schweben,
+// das von MOVE (Bewegungs-Achse) und ATEM (Breath-Phase) angetrieben wird.
+function cameraOffset(){
+  const f = S.frame;
+  const moveAmp = 2 + S.move * 7;           // je höher MOVE, desto mehr Schweben
+  const breathAmp = 1 + (S.breathOn ? (S.breathPhase < 0.5 ? S.breathPhase*2 : (1-S.breathPhase)*2) * 3 : 0);
+  let ox = Math.sin(f*0.011) * moveAmp * 0.6 + Math.sin(f*0.003)*breathAmp*0.4;
+  let oy = Math.cos(f*0.014) * moveAmp * 0.4 + Math.sin(f*0.0065)*breathAmp*0.6;
+  const zoom = 1 + Math.sin(f*0.004) * 0.006 * (0.4 + S.move*0.8);
+  if (S.shake > 0){
+    ox += (Math.random()-0.5) * S.shake;
+    oy += (Math.random()-0.5) * S.shake;
+    S.shake *= 0.88;
+    if (S.shake < 0.05) S.shake = 0;
+  }
+  return {ox, oy, zoom};
+}
+
+// ─── RENDER DISPATCH ───────────────────────────────────
+function drawScene(index, local){
+  ctx.clearRect(0, 0, W, H);
+  if (S.booting){ drawBoot(); return; }
+
+  const cam = cameraOffset();
+  ctx.save();
+  ctx.translate(W/2, H/2);
+  ctx.scale(cam.zoom, cam.zoom);
+  ctx.translate(-W/2 + cam.ox, -H/2 + cam.oy);
+
+  switch(scenes[index].id){
+    case 'SC1': drawSC1(local); break;
+    case 'SC2': drawSC2(local); break;
+    case 'SC3': drawSC3(local); break;
+    case 'SC4': drawSC4(local); break;
+    case 'SC5': drawSC5(local); break;
+    case 'SC6': drawSC6(local); break;
+  }
+  drawSparks();
+  ctx.restore();
+  drawCRT();
+}
+
+// ─── BOOT ──────────────────────────────────────────────
+function drawBoot(){
+  rect(0, 0, W, H, '#040a12');
+  const phase = clamp(S.bootTime / 2.6);
+  text('AMIGA ANIME RUNTIME', 52, 52, 18, '#68f6c0', 'left', '700');
+  text('◈ ANIME · ATEM · WONDER · iki1uc', 52, 84, 22, '#ffbd5c', 'left', '700');
+  text('STORY: BEGEGNUNG MIT DER ZUKUNFT', 52, 122, 12, '#8aa8a0');
+
+  // Progress
+  ctx.strokeStyle = '#2f6970';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(52, 167, 856, 19);
+  rect(52, 167, 856 * phase, 19, '#68f6c0');
+
+  text(`LOADING CUES ${(phase * 100).toFixed(0).padStart(3, ' ')} %`, 52, 200, 11, '#68f6c0');
+
+  const blocks = ['CANVAS', 'SCENE BUS', 'PROMPTER', 'CUE BEEPS', 'ATEM CORE'];
+  blocks.forEach((b, i) => {
+    const active = phase > i / blocks.length;
+    rect(52 + i * 170, 255, 143, 55, active ? '#123b3b' : '#0a1b22');
+    ctx.strokeStyle = active ? '#68f6c0' : '#1e3a44';
+    ctx.strokeRect(52 + i * 170, 255, 143, 55);
+    text(active ? 'OK' : 'WAIT', 65 + i * 170, 267, 10, active ? '#68f6c0' : '#4a6a6e', 'left', '700');
+    text(b, 65 + i * 170, 286, 9, '#d8f0e8');
+  });
+
+  text('PRESS START RUNTIME TO ENTER THE WONDER', W/2, 404, 14, phase > 0.7 ? '#ff6d9d' : '#4a777d', 'center', '700');
+  text('DAS WUNDER IST UNTER UNS', W/2, 445, 11, '#b388ff', 'center');
+  text('[ 1960 FAN ] × [ ERZÄHLER ] × [ COMMUNICATOR ]', W/2, 480, 11, '#6cc9ff', 'center');
+
+  // Atem-Kern im Boot
+  const atomR = 30 + Math.sin(S.frame*0.05) * 8;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(179,136,255,.6)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(W - 120, 120, atomR, 0, Math.PI*2);
+  ctx.stroke();
+  ctx.restore();
+
+  drawCRT();
+}
+
+// ─── UI-UPDATE ─────────────────────────────────────────
+function fmt(sec, tenths=true){
+  sec = Math.max(0, sec);
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  const d = tenths ? '.' + Math.floor((sec%1)*10) : '';
+  return `${m}:${s}${d}`;
+}
+function sceneAt(time){
+  const t = Math.max(0, Math.min(time, MASTER_DURATION - 0.0001));
+  return scenes.findIndex(sc => t >= sc.start && t < sc.end);
+}
+function localFor(index){
+  const sc = scenes[index];
+  return clamp((S.time - sc.start) / sc.runtimeDuration);
+}
+
+function updateUI(){
+  const index = sceneAt(S.time);
+  const scene = scenes[index];
+  const local = localFor(index);
+  const cueIdx = Math.min(scene.cues.length - 1, Math.floor(local * scene.cues.length));
+  const cue = scene.cues[cueIdx];
+  const sceneSecs = local * scene.tabDuration;
+
+  document.getElementById('sceneCode').textContent = scene.id;
+  document.getElementById('sceneTitle').textContent = scene.title;
+  document.getElementById('sourceChip').textContent = scene.source;
+  document.getElementById('sceneProgress').style.width = `${local*100}%`;
+  document.getElementById('sceneTime').textContent = fmt(sceneSecs);
+  document.getElementById('masterTime').textContent = fmt(S.time);
+  document.getElementById('timelineScene').textContent = scene.id;
+  document.getElementById('timelineTime').textContent = `${fmt(S.time)} / ${fmt(MASTER_DURATION, false)}`;
+  document.getElementById('beatTag').textContent = cue[0];
+  document.getElementById('promptHeading').textContent = cue[1].toUpperCase();
+
+  const pr = document.getElementById('prompter');
+  pr.innerHTML = '';
+  const p1 = document.createElement('div'); p1.textContent = scene.prompt; pr.appendChild(p1);
+  const p2 = document.createElement('div'); p2.className = 'quote'; p2.style.marginTop = '10px'; p2.textContent = scene.dialogue; pr.appendChild(p2);
+
+  document.getElementById('directorText').textContent = scene.director;
+  const cl = document.getElementById('cueList');
+  cl.innerHTML = '';
+  scene.cues.forEach((c, i) => {
+    const li = document.createElement('li');
+    if (i === cueIdx) li.className = 'active';
+    li.innerHTML = `<b>${c[0]}</b><span>${c[1]}</span>`;
+    cl.appendChild(li);
+  });
+
+  const sfx = document.getElementById('sfxLog');
+  sfx.innerHTML = '';
+  scene.sfx.forEach((s, i) => {
+    const d = document.createElement('div'); d.className = 'sfx-line';
+    d.innerHTML = `<b>${String(i+1).padStart(2,'0')}</b><span>${s}</span>`;
+    sfx.appendChild(d);
+  });
+
+  [...document.querySelectorAll('.scene-tab')].forEach((t, i) => t.classList.toggle('active', i === index));
+  document.getElementById('timeline').value = S.time.toFixed(1);
+  document.getElementById('overlayLeft').textContent = `${scene.id} / ${scene.title}`;
+  document.getElementById('overlayRight').textContent = `${fmt(S.time)} / ${S.playing ? 'RUN' : 'HOLD'}`;
+  document.getElementById('canvasMode').textContent = S.booting ? 'ATEM-BOOT' : (S.playing ? 'LIVE / PLAYING' : 'LIVE / HOLD');
+  document.getElementById('runState').textContent = S.booting ? 'BOOT' : (S.playing ? 'PLAYING' : 'IDLE');
+
+  drawScene(index, local);
+}
+
+function updateControls(){
+  const btn = document.getElementById('startBtn');
+  btn.textContent = S.playing ? 'Ⅱ PAUSE RUNTIME' : '▶ START RUNTIME';
+  btn.classList.toggle('active', S.playing);
+  document.getElementById('cueBtn').textContent = `CUE-BEEPS: ${S.cueBeeps ? 'ON' : 'OFF'}`;
+  document.getElementById('cueBtn').classList.toggle('active', S.cueBeeps);
+  document.getElementById('breathBtn').textContent = `◈ ATEM: ${S.breathOn ? 'AN' : 'AUS'}`;
+  document.getElementById('breathBtn').classList.toggle('active', S.breathOn);
+  document.querySelectorAll('[data-speed]').forEach(b => b.classList.toggle('active', Number(b.dataset.speed) === S.speed));
+  updateUI();
+}
+
+function beep(kind='cue'){
+  if (!S.cueBeeps) return;
+  try {
+    if (!S.audio) S.audio = new (window.AudioContext || window.webkitAudioContext)();
+    const audio = S.audio;
+    if (audio.state === 'suspended') audio.resume();
+    const osc = audio.createOscillator();
+    const gain = audio.createGain();
+    osc.type = kind === 'scene' ? 'square' : 'triangle';
+    osc.frequency.value = kind === 'scene' ? 660 : 920;
+    gain.gain.setValueAtTime(0.0001, audio.currentTime);
+    gain.gain.exponentialRampToValueAtTime(kind === 'scene' ? 0.05 : 0.03, audio.currentTime + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + (kind === 'scene' ? 0.18 : 0.07));
+    osc.connect(gain); gain.connect(audio.destination);
+    osc.start(); osc.stop(audio.currentTime + 0.2);
+  } catch(_){}
+}
+
+// ─── TABS ─────────────────────────────────────────────
+function makeTabs(){
+  const el = document.getElementById('sceneTabs');
+  el.innerHTML = '';
+  scenes.forEach((sc, i) => {
+    const b = document.createElement('button');
+    b.className = 'scene-tab';
+    b.dataset.index = i;
+    b.dataset.color = sc.color;
+    b.innerHTML = `<strong>${sc.id}</strong> ${sc.title}<small>${sc.tabDuration}s CUE</small>`;
+    b.addEventListener('click', () => {
+      S.time = sc.start;
+      S.playing = false; S.booting = false;
+      updateControls();
+    });
+    el.appendChild(b);
+  });
+}
+function makeMarkers(){
+  const el = document.getElementById('markers');
+  el.innerHTML = '';
+  scenes.forEach((sc, i) => {
+    const m = document.createElement('span');
+    m.className = 'marker';
+    m.style.left = `${(sc.start / MASTER_DURATION) * 100}%`;
+    m.title = `${sc.id} / ${sc.title}`;
+    m.innerHTML = i === 0 ? '' : `<em>${sc.id}</em>`;
+    el.appendChild(m);
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// MAIN LOOP
-// ═══════════════════════════════════════════════════════════════════
-let lastT = performance.now();
-function loop(now){
-  const dt = Math.min(0.08, (now - lastT) / 1000);
-  lastT = now;
-  S.frame++;
-  if (S.booted) S.uptime += dt;
+// ─── EVENTS ───────────────────────────────────────────
+function bind(){
+  document.getElementById('startBtn').addEventListener('click', () => {
+    if (S.playing){ S.playing = false; S.booting = false; updateControls(); return; }
+    if (S.time >= MASTER_DURATION - 0.1) S.time = 0;
+    S.playing = true; S.booting = true; S.bootTime = 0;
+    S.lastFrame = performance.now();
+    beep('scene');
+    updateControls();
+  });
+  document.getElementById('stepBack').addEventListener('click', () => { S.playing = false; S.booting = false; S.time = Math.max(0, S.time - 5); updateControls(); });
+  document.getElementById('stepForward').addEventListener('click', () => { S.playing = false; S.booting = false; S.time = Math.min(MASTER_DURATION, S.time + 5); updateControls(); });
+  document.getElementById('cueBtn').addEventListener('click', () => { S.cueBeeps = !S.cueBeeps; updateControls(); });
+  document.getElementById('breathBtn').addEventListener('click', () => { S.breathOn = !S.breathOn; updateControls(); });
+  document.querySelectorAll('[data-speed]').forEach(b => b.addEventListener('click', () => { S.speed = Number(b.dataset.speed); updateControls(); }));
+  document.getElementById('timeline').addEventListener('input', e => { S.playing = false; S.booting = false; S.time = Number(e.target.value); updateControls(); });
+  document.getElementById('fullscreenBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input,button')) return;
+    if (e.code === 'Space'){ e.preventDefault(); document.getElementById('startBtn').click(); }
+    if (e.key === 'ArrowLeft'){ S.playing = false; S.time = Math.max(0, S.time - 5); updateControls(); }
+    if (e.key === 'ArrowRight'){ S.playing = false; S.time = Math.min(MASTER_DURATION, S.time + 5); updateControls(); }
+    if (e.key.toLowerCase() === 'f') document.getElementById('fullscreenBtn').click();
+    if (e.key.toLowerCase() === 'b') document.getElementById('breathBtn').click();
+    if (e.key === 'Home'){ S.playing = false; S.time = 0; updateControls(); }
+    if (e.key === 'End'){ S.playing = false; S.time = MASTER_DURATION - 0.1; updateControls(); }
+  });
+}
 
-  if (S.booted){
-    updateElements(dt);
-    drawAnimeCanvas();
-    drawArk();
+// ─── MAIN LOOP ────────────────────────────────────────
+let lastT = 0;
+function loop(now){
+  const dt = Math.min(0.08, (now - S.lastFrame) / 1000);
+  S.lastFrame = now;
+  S.frame++;
+
+  if (S.breathOn) updateElements(dt);
+  else { /* Atem aus, aber MAIN tickt weiter */ S.main.tick++; }
+
+  updateSparks(dt);
+
+  // Automatische Anime-Effekte (Rate steigt mit MOVE — mehr Bewegungs-Energie im System, mehr Funken)
+  if (Math.random() < 0.015 + S.move * 0.03){
+    const scene = scenes[sceneAt(S.time)];
+    const colors = ['#ffcc66','#68f6c0','#b388ff','#6cc9ff','#ff6d9d'];
+    spawnSpark(
+      Math.random() * W, Math.random() * H * 0.8 + 40,
+      colors[Math.floor(Math.random() * colors.length)],
+      1, Math.random() < 0.4 ? 'star' : 'spark'
+    );
   }
 
+  if (S.playing){
+    if (S.booting){
+      S.bootTime += dt * S.speed;
+      if (S.bootTime >= 2.6){ S.booting = false; beep('scene'); }
+    } else {
+      const before = sceneAt(S.time);
+      S.time += dt * S.speed;
+      if (S.time >= MASTER_DURATION){
+        S.time = MASTER_DURATION - 0.001;
+        S.playing = false;
+        beep('scene');
+      }
+      const after = sceneAt(S.time);
+      if (after !== before){
+        beep('scene');
+        S.shake = 10;
+        // Anime-Übergangs-Effekt
+        for (let i = 0; i < 30; i++){
+          spawnSpark(W/2, H/2, ['#68f6c0','#b388ff','#ffbd5c'][i%3], 1, 'star');
+        }
+      }
+    }
+  }
+  updateUI();
   requestAnimationFrame(loop);
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// BOOT
-// ═══════════════════════════════════════════════════════════════════
-const BOOT_LINES = [
-  ['▸ BIOS <b>ok</b> <span class="dim">· noah-slot mounted</span>', 140],
-  ['▸ <span class="cy">window.RUNTIME.js</span> <b>lädt</b> <span class="dim">· universum</span>', 180],
-  ['▸ <span class="cy">Loop.js</span> <b>startet</b> <span class="dim">· motor</span>', 160],
-  ['▸ <span class="cy">Event-Engine.js</span> <b>bindet</b> <span class="dim">· hand</span>', 160],
-  ['▸ <span class="cy">UI-Engine.js</span> <b>aktiv</b> <span class="dim">· gesicht</span>', 160],
-  ['▸ <span class="cy">Bridge.js</span> <b>verbindet</b> <span class="dim">· nervensystem</span>', 180],
-  ['▸ <span class="cy">NOAH.js</span> <b>init</b> <span class="dim">· identität · ark</span>', 200],
-  ['▸ <span class="cy">SLI.js</span> <b>logik</b> <span class="dim">· denkt</span>', 160],
-  ['▸ <span class="cy">brücke.js</span> <b>verbunden</b> <span class="dim">· sprache</span>', 160],
-  ['▸ <span class="cy">continuum-bridge.js</span> <b>raum</b> <span class="dim">· zeit</span>', 160],
-  ['▸ <span class="cy">vector.energie.js</span> <b>kraft</b> <span class="dim">· atem · atom · o2 · co2 · h2o</span>', 200],
-  ['▸ <b>ATEM</b> <span class="dim">· 4s zyklus startet</span>', 180],
-  ['▸ <b class="ark">NOAH</b> <span class="dim">· survival-option verfügbar</span>', 240],
-  ['▸ <b class="ark">ARK</b> <span class="dim">· 舟 bereit · rescue-modus aktiv</span>', 240],
-  ['▸ <b>ALLES LEBT</b> <span class="dim">· das wunder ist unter uns</span>', 320],
-];
-
-async function boot(){
-  const linesEl = document.getElementById('bootLines');
-  const barEl = document.getElementById('bootBar');
-  linesEl.innerHTML = '';
-
-  // Module laden (im Hintergrund)
-  S.moduleResults = await loadAllModules();
-
-  // Boot-Sequenz animieren
-  let i = 0, total = 0;
-  const totalDur = BOOT_LINES.reduce((a,b) => a+b[1], 0);
-
-  function next(){
-    if (i >= BOOT_LINES.length){
-      barEl.style.width = '100%';
-      setTimeout(() => {
-        document.getElementById('boot').classList.add('done');
-        S.booted = true;
-        startRuntime();
-      }, 400);
-      return;
-    }
-    const [txt, delay] = BOOT_LINES[i];
-    const div = document.createElement('div');
-    div.innerHTML = txt;
-    linesEl.appendChild(div);
-    total += delay;
-    barEl.style.width = ((total/totalDur)*100).toFixed(1)+'%';
-    i++;
-    setTimeout(next, delay);
-  }
-  next();
-}
-
-function startRuntime(){
-  // Module initialisieren
-  if (window.RUNTIME && window.RUNTIME.init) window.RUNTIME.init();
-  if (window.BRIDGE && window.BRIDGE.init) window.BRIDGE.init();
-  if (window.EVENTS && window.EVENTS.bind) window.EVENTS.bind();
-  if (window.UI && window.UI.init) window.UI.init();
-  if (window.NOAH && window.NOAH.init) window.NOAH.init();
-  if (window.SLI && window.SLI.init) window.SLI.init();
-  if (window.BRUECKE && window.BRUECKE.init) window.BRUECKE.init();
-  if (window.CONTINUUM && window.CONTINUUM.init) window.CONTINUUM.init();
-  if (window.VECTOR && window.VECTOR.init) window.VECTOR.init();
-  if (window.LOOP && window.LOOP.start) window.LOOP.start(() => {});
-
-  checkModules();
-
-  log('◈ NOAH · SURVIVAL RUNTIME geladen', 'noah');
-  log('▸ 10 module verbunden · alle systeme online', 'ok');
-  log('▸ NOAH ist die Überlebens-Option — jederzeit aktivierbar', 'noah');
-  log('▸ ARK 舟 kann starten, wenn das System kippt', 'ark');
-  log('▸ tasten: N=noah · A=ark · S=survive · R=reset · Space=puls', 'info');
-
-  surviveLog('◈ System bereit — NOAH wartet auf den Moment.', 'noah');
-  surviveLog('▲ ARK 舟 steht bereit — Überleben ist möglich.', 'ark');
-
-  // Erste Sparks
-  for (let i = 0; i < 30; i++){
-    setTimeout(() => spawnSpark(480, 270, ['#68f6c0','#ff8844','#ffd93d','#b388ff'][i%4]), i * 60);
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// BINDINGS
-// ═══════════════════════════════════════════════════════════════════
-function bind(){
-  document.getElementById('btnNoahOn').addEventListener('click', () => noahActivate('manuell'));
-  document.getElementById('btnArkLaunch').addEventListener('click', arkLaunch);
-  document.getElementById('btnSurvive').addEventListener('click', surviveAction);
-  document.getElementById('btnNoahReset').addEventListener('click', noahReset);
-
-  document.addEventListener('keydown', e => {
-    if (e.target.tagName === 'INPUT') return;
-    if (e.key === 'n' || e.key === 'N') noahActivate('taste');
-    if (e.key === 'a' || e.key === 'A') arkLaunch();
-    if (e.key === 's' || e.key === 'S') surviveAction();
-    if (e.key === 'r' || e.key === 'R') noahReset();
-    if (e.key === ' ') { e.preventDefault(); spawnSpark(480, 270, '#68f6c0'); }
-  });
-
-  document.getElementById('cmdInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter'){
-      const cmd = e.target.value.trim().toLowerCase();
-      e.target.value = '';
-      if (!cmd) return;
-      log(`noah> ${cmd}`, 'info');
-      if (cmd === 'noah') noahActivate('cli');
-      else if (cmd === 'ark') arkLaunch();
-      else if (cmd === 'survive') surviveAction();
-      else if (cmd === 'reset') noahReset();
-      else if (cmd === 'modules') log(`modules · ${S.moduleResults.map(m => m.id + ':' + m.source).join(' · ')}`, 'ok');
-      else if (cmd === 'atem') log(`atem · phase=${S.breathPhase.toFixed(2)} o2=${(S.o2*100).toFixed(0)}% co2=${(S.co2*100).toFixed(0)}% h2o=${(S.h2o*100).toFixed(0)}%`, 'ok');
-      else if (cmd === 'status') log(`status · noah=${S.noah.mode} survive=${(S.noah.survive*100).toFixed(0)}% ark=${(S.noah.ark*100).toFixed(0)}% load=${(S.noah.load*100).toFixed(0)}%`, 'ok');
-      else if (cmd === 'help') log('befehle: noah · ark · survive · modules · atem · status · reset', 'ok');
-      else log(`unbekannt: ${cmd}`, 'err');
-    }
-  });
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// START
-// ═══════════════════════════════════════════════════════════════════
+// ─── INIT ─────────────────────────────────────────────
+makeTabs();
+makeMarkers();
 bind();
-boot();
+updateControls();
 requestAnimationFrame(loop);
 
-// PUBLIC API
-window.NOAH_RUNTIME = {
-  noah: () => noahActivate('api'),
-  ark: () => arkLaunch(),
-  survive: () => surviveAction(),
-  reset: () => noahReset(),
-  state: () => ({
-    noah: { ...S.noah },
-    atem: { o2:S.o2, co2:S.co2, h2o:S.h2o, atom:S.atom, mana:S.mana, aura:S.aura, zen:S.zen },
-    modules: S.moduleResults,
-    uptime: S.uptime,
-  }),
-  modules: () => S.moduleResults,
-};
-window.NR = window.NOAH_RUNTIME;
-
-console.log('%c◈ NOAH · SURVIVAL RUNTIME geladen',
-  'color:#ff8844;font-weight:bold;font-size:14px;');
-console.log('→ window.NOAH_RUNTIME.noah() · .ark() · .survive() · .state()');
-console.log('→ NOAH ist die Überlebens-Option. ARK 舟 ist bereit.');
+})();
 </script>
 </body>
 </html>
